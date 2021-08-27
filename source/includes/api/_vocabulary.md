@@ -1150,6 +1150,10 @@ the tags that said vocabulary associates to that resource
 You can optionally pass a `limit` integer value as a query parameter if you wish to limit the number of vocabularies
 returned by calls to this endpoint. There is not full blown pagination support for this endpoint.
 
+You can also optionally pass a `env` string value as a query parameter if you wish to filter the [underlying lists of 
+resources](concepts.html#references-to-resources-with-environments) by their [environment](concepts.html#environments). 
+You can filter by multiple `env` values (`OR` logic) using a comma separated list of values.
+
 ### Getting a single vocabulary
 
 > Getting a single vocabulary, all its resources and tags
@@ -1211,6 +1215,10 @@ equal to the resource id) and the tags that said vocabulary associates to that r
 Keep in mind that there's an implicit application filter applied to the data returned - only vocabularies and
 associations for the corresponding application are returned. By default, this filter uses the `rw` value, but you can
 modify it with the `application` or `app` query parameters.
+
+You can also optionally pass a `env` string value as a query parameter if you wish to filter the [underlying lists of
+resources](concepts.html#references-to-resources-with-environments) by their [environment](concepts.html#environments). 
+You can filter by multiple `env` values (`OR` logic) using a comma separated list of values.
 
 ### Getting tags for single vocabulary
 
@@ -1298,6 +1306,10 @@ for vocabulary `vocabulary-id`
 
 You can also filter by multiple vocabularies using multiple query parameters with the formats described above. The
 result will contain any resource that matches either vocabulary/tags filters.
+
+You can also optionally pass a `env` string value as a query parameter if you wish to filter the [underlying lists of
+resources](concepts.html#references-to-resources-with-environments) by their [environment](concepts.html#environments).
+You can filter by multiple `env` values (`OR` logic) using a comma separated list of values.
 
 The filters described above do not take into account the `application` for which the vocabularies were defined. If you
 wish to only see results matching the vocabulary of a specific application, you can pass either an `app`

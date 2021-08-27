@@ -40,7 +40,7 @@ curl -X GET https://api.resourcewatch.org/v1/dataset
             "connectorType": "document",
             "provider": "csv",
             "userId": "58333dcfd9f39b189ca44c75",
-            "connectorUrl": "http://gfw2-data.s3.amazonaws.com/alerts-tsv/glad_headers.csv",
+            "connectorUrl": "https://gfw2-data.s3.amazonaws.com/alerts-tsv/glad_headers.csv",
             "sources": [],
             "tableName": "data",
             "status": "pending",
@@ -62,11 +62,11 @@ curl -X GET https://api.resourcewatch.org/v1/dataset
         }
   ],
   "links": {
-    "self": "http://api.resourcewatch.org/v1/dataset?page[number]=1&page[size]=10",
-    "first": "http://api.resourcewatch.org/v1/dataset?page[number]=1&page[size]=10",
-    "last": "http://api.resourcewatch.org/v1/dataset?page[number]=99&page[size]=10",
-    "prev": "http://api.resourcewatch.org/v1/dataset?page[number]=1&page[size]=10",
-    "next": "http://api.resourcewatch.org/v1/dataset?page[number]=2&page[size]=10"
+    "self": "https://api.resourcewatch.org/v1/dataset?page[number]=1&page[size]=10",
+    "first": "https://api.resourcewatch.org/v1/dataset?page[number]=1&page[size]=10",
+    "last": "https://api.resourcewatch.org/v1/dataset?page[number]=99&page[size]=10",
+    "prev": "https://api.resourcewatch.org/v1/dataset?page[number]=1&page[size]=10",
+    "next": "https://api.resourcewatch.org/v1/dataset?page[number]=2&page[size]=10"
   },
   "meta": {
     "total-pages": 99,
@@ -265,11 +265,11 @@ curl -X GET https://api.resourcewatch.org/v1/dataset?includes=metadata,widget
         }
     ],
     "links": {
-        "self": "http://api.resourcewatch.org/v1/dataset?includes=widget%2Cmetadata&page[number]=1&page[size]=10",
-        "first": "http://api.resourcewatch.org/v1/dataset?includes=widget%2Cmetadata&page[number]=1&page[size]=10",
-        "last": "http://api.resourcewatch.org/v1/dataset?includes=widget%2Cmetadata&page[number]=223&page[size]=10",
-        "prev": "http://api.resourcewatch.org/v1/dataset?includes=widget%2Cmetadata&page[number]=1&page[size]=10",
-        "next": "http://api.resourcewatch.org/v1/dataset?includes=widget%2Cmetadata&page[number]=2&page[size]=10"
+        "self": "https://api.resourcewatch.org/v1/dataset?includes=widget%2Cmetadata&page[number]=1&page[size]=10",
+        "first": "https://api.resourcewatch.org/v1/dataset?includes=widget%2Cmetadata&page[number]=1&page[size]=10",
+        "last": "https://api.resourcewatch.org/v1/dataset?includes=widget%2Cmetadata&page[number]=223&page[size]=10",
+        "prev": "https://api.resourcewatch.org/v1/dataset?includes=widget%2Cmetadata&page[number]=1&page[size]=10",
+        "next": "https://api.resourcewatch.org/v1/dataset?includes=widget%2Cmetadata&page[number]=2&page[size]=10"
     },
     "meta": {
         "total-pages": 223,
@@ -282,7 +282,7 @@ curl -X GET https://api.resourcewatch.org/v1/dataset?includes=metadata,widget
 > Loading layers for the given dataset
 
 ```shell
-curl -X GET http://api.resourcewatch.org/dataset?includes=layer
+curl -X GET https://api.resourcewatch.org/dataset?includes=layer
 ```
 
 > Loading the information about the user who authored the dataset
@@ -298,6 +298,8 @@ When fetching datasets, you can request additional entities to be loaded. The fo
 * `vocabulary` - loads all vocabulary entities associated with each dataset.
 * `metadata` - loads all metadata associated with each dataset.
 * `user` - loads the name, email address and role of the author of the dataset. If you do not issue this request as an `ADMIN` user, or if no user data is available, the `user` object will be empty. **Please keep in mind that, due to the limitations of the [underlying endpoint used to find users by ids](developer.html#finding-users-by-ids), the performance of the request while including user information might be degraded.**
+
+If you specified an `env` [filter](reference.html#filters) and would like to also [filter the included entities](concepts.html#references-to-resources-with-environments), you can provide the `filterIncludesByEnv=true` query parameter. This is only supported for included `widget` and `layer`.
 
 **Note:** If you include related entities (e.g. layers) with query filters, the filters will not cascade to the related entities.
 
@@ -334,7 +336,7 @@ curl -X GET "https://api.resourcewatch.org/v1/dataset/Timber-Production-RDC"
             "connectorType": "document",
             "provider": "csv",
             "userId": "58750a56dfc643722bdd02ab",
-            "connectorUrl": "http://wri-forest-atlas.s3.amazonaws.com/COD/temp/annual%20timber%20production%20DRC%20%28test%29%20-%20Sheet1.csv",
+            "connectorUrl": "https://wri-forest-atlas.s3.amazonaws.com/COD/temp/annual%20timber%20production%20DRC%20%28test%29%20-%20Sheet1.csv",
             "sources": [],
             "tableName": "index_51943691eebc4cb4bdfb057ad4fc2145",
             "status": "saved",
@@ -595,7 +597,7 @@ curl -X POST 'https://api.resourcewatch.org/v1/dataset' -d \
      "name": "Seasonal variability",
      "connectorType": "wms",
      "provider":"wms",
-     "connectorUrl":"http://gis-gfw.wri.org/arcgis/rest/services/prep/nex_gddp_indicators/MapServer/6?f=pjson"
+     "connectorUrl":"https://gis-gfw.wri.org/arcgis/rest/services/prep/nex_gddp_indicators/MapServer/6?f=pjson"
    }
  }
 '
@@ -674,8 +676,8 @@ Field           | Description                                                   
 --------------- | :------------------------------------------------------------------------------------: | ------------:  |
 `connectorType` | The type of connector. Must be set to `document`.                                      | `document`     |
 `provider`      | The type of data you are uploading. Must be one of the following: `csv`, `tsv`, `json` or `xml`. | `csv`, `tsv`, `json` or `xml` |
-`connectorUrl`  | URL from which to source data.                                                         | http://gis-gfw.wri.org/arcgis/rest/services/prep/nex_gddp_indicators/MapServer/6?f=pjson |
-`sources`       | List of URLs from which to source data.                                                | ['http://gis-gfw.wri.org/arcgis/rest/services/prep/nex_gddp_indicators/MapServer/6?f=pjson','http://gis-gfw.wri.org/arcgis/rest/services/prep/nex_gddp_indicators/MapServer/7?f=pjson'] |
+`connectorUrl`  | URL from which to source data.                                                         | https://gis-gfw.wri.org/arcgis/rest/services/prep/nex_gddp_indicators/MapServer/6?f=pjson |
+`sources`       | List of URLs from which to source data.                                                | ['https://gis-gfw.wri.org/arcgis/rest/services/prep/nex_gddp_indicators/MapServer/6?f=pjson','https://gis-gfw.wri.org/arcgis/rest/services/prep/nex_gddp_indicators/MapServer/7?f=pjson'] |
 `data`          | JSON DATA only for json connector if connectorUrl not present.                         | [{"key":"value1"},{"key":"value2"}]] |
 
 

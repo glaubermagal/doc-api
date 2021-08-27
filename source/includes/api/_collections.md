@@ -27,6 +27,7 @@ curl -X POST https://api.resourcewatch.org/v1/collection \
     {
       "id": "5f56170c1fca55001ad51779",
       "type": "collection",
+      "env": "production",
       "attributes": {
         "name": "Collection name",
         "ownerId": "5dd7b92abf56ca0011875ae2",
@@ -67,6 +68,7 @@ curl -X POST https://api.resourcewatch.org/v1/collection \
         "name": "Collection name",
         "ownerId": "5dd7b92abf56ca0011875ae2",
         "application": "rw",
+        "env": "production",
         "resources": [
           {
             "type": "dataset",
@@ -85,6 +87,7 @@ To create a collection, you should send a POST request to the `/v1/collection` e
 | -------------|:--------------------------------------------------------------: | -----:   | -----:
 | name         | Name of collection.                                             | Yes      | String
 | application  | The application this collection belongs to (defaults to `'rw'`). Read more about this field [here](concepts.html#applications). | No       | String
+| env          | Environment to which the collection belongs. Read more about this field in the [Environments concept section](concepts.html#environments). | No | String
 | resources    | Array of resources in the collection.                           | No       | Array of Objects
 
 ## Updating a collection
@@ -112,6 +115,7 @@ curl -X PATCH https://api.resourcewatch.org/v1/collection/:id \
         "name": "New name",
         "ownerId": "5dd7b92abf56ca0011875ae2",
         "application": "rw",
+        "env": "production",
         "resources": []
       }
     }
@@ -149,6 +153,7 @@ curl -X POST https://api.resourcewatch.org/v1/collection/:id/resource \
         "name": "New name",
         "ownerId": "5dd7b92abf56ca0011875ae2",
         "application": "rw",
+        "env": "production",
         "resources": [
           {
             "type": "dataset",
@@ -189,6 +194,7 @@ curl -X GET https://api.resourcewatch.org/v1/collection \
         "name": "Collection name",
         "ownerId": "5dd7b92abf56ca0011875ae2",
         "application": "rw",
+        "env": "production",
         "resources": [{
             "type": "dataset",
             "id": "123456789"            
@@ -221,6 +227,7 @@ curl -X GET https://api.resourcewatch.org/v1/collection \
         "name": "Collection name",
         "ownerId": "5dd7b92abf56ca0011875ae2",
         "application": "rw",
+        "env": "production",
         "resources": [{
             "type": "dataset",
             "id": "123456789",
@@ -248,6 +255,21 @@ curl -X GET https://api.resourcewatch.org/v1/collection?page[number]=2&page[size
 The Collections service adheres to the conventions defined in the [Pagination guidelines for the RW API](concepts.html#pagination), so we recommend reading that section for more details on how paginate your collections list.
 
 In the specific case of the Collections service, the default value for the `page[size]` query parameter is 9999999, instead of 10. However (as recommended in the pagination guidelines), you should not rely on the default page size and always provide a value tailored to your needs.
+
+### Filters
+
+> Filtering areas
+
+```shell
+curl -X GET https://api.resourcewatch.org/v1/collection?env=custom
+```
+
+The `/v1/collection` endpoint provides the following parameters to tailor the returned listing:
+
+Field       |             Description                                                                                                                          | Type    | Example    |
+----------- | :----------------------------------------------------------------------------------------------------------------------------------------------- | ------: | ---------: |
+env         | Environment to which the collection belongs. Multiple values can be combined using `,` as a separator. Does not support regexes. Read more about this field in the [Environments concept section](concepts.html#environments). | String      | any valid text. Defaults to `production`.
+
 
 ### Sorting
 
@@ -295,6 +317,7 @@ curl -X GET https://api.resourcewatch.org/v1/collection/:id \
         "name": "Collection name",
         "ownerId": "5dd7b92abf56ca0011875ae2",
         "application": "rw",
+        "env": "production",
         "resources": []
       }
     }
@@ -325,6 +348,7 @@ curl -X DELETE https://api.resourcewatch.org/v1/collection/:id \
         "name": "Collection name",
         "ownerId": "5dd7b92abf56ca0011875ae2",
         "application": "rw",
+        "env": "production",
         "resources": []
       }
     }
@@ -355,6 +379,7 @@ curl -X DELETE https://api.resourcewatch.org/v1/collection/:id/resource/:resourc
         "name": "Collection name",
         "ownerId": "5dd7b92abf56ca0011875ae2",
         "application": "rw",
+        "env": "production",
         "resources": []
       }
     }
@@ -389,6 +414,7 @@ curl -X POST https://api.resourcewatch.org/v1/collection/find-by-ids \
         "name": "Collection name",
         "ownerId": "5dd7b92abf56ca0011875ae2",
         "application": "rw",
+        "env": "production",
         "resources": []
       }
     }
@@ -429,6 +455,7 @@ You can filter the returned results by application by providing the `application
 | name         | Name of collection.                                             | String
 | ownerId      | Id of the user owner of this collection.                        | String
 | application  | The application this collection belongs to (defaults to `'rw'`). Read more about this field [here](concepts.html#applications). | String
+| env          | Environment to which the collection belongs. Read more about this field in the [Environments concept section](concepts.html#environments). | String
 | resources    | Array of resources in the collection.                           | Array of Objects
 | --- type     | The type of resource.                                           | String (dataset, layer, widget)
 | --- id       | The id of the resource.                                         | String

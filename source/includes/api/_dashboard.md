@@ -36,9 +36,7 @@ curl -X GET https://api.resourcewatch.org/v1/dashboard -H 'Authorization: Bearer
                 },
                 "user-id": "eb63867922e16e34ef3ce862",
                 "private": true,
-                "production": true,
-                "preproduction": false,
-                "staging": false,
+                "env": "production",
                 "application":  ["rw"],
                 "is-highlighted": false,
                 "is-featured": false,
@@ -90,6 +88,7 @@ private        | Filter dashboards by private status (true, false).             
 user           | Filter dashboards by author user id.                                              | Text
 user.role      | The role of the user who created the dashboard. If the requesting user does not have the ADMIN role, this filter is ignored. **Please keep in mind that, due to the limitations of the [underlying endpoint used to find user ids by role](developer.html#user-management), the performance of the request while using this filter might be degraded.** | `ADMIN`, `MANAGER` or `USER`
 application    | The application to which the dashboard belongs. Read more about this field [here](concepts.html#applications). | Text (single value)
+env            | Environment to which the dashboard belongs. Multiple values can be combined using `,` as a separator. Does not support regexes. Read more about this field in the [Environments concept section](concepts.html#environments). | Text
 is-highlighted | Filter dashboards by highlighted ones (true,false).                               | Boolean
 is-featured    | Filter dashboards by featured ones (true,false).                                  | Boolean
 author-title   | Filter dashboards by the title of the author of the dashboard.                    | Text
@@ -170,9 +169,7 @@ curl -X GET https://api.resourcewatch.org/v1/dashboard?includes=user
           },
           "user-id": "57ac9f9e29309063404573a2",
           "private": true,
-          "production": true,
-          "preproduction": false,
-          "staging": false,
+          "env": "production",
           "application":  ["rw"],
           "is-highlighted": false,
           "is-featured": false,
@@ -228,9 +225,7 @@ curl -X GET http://api.resourcewatch.org/dashboard/24
       },
       "user-id": "58f63c81bd32c60206ed6b12",
       "private": true,
-      "production": true,
-      "preproduction": false,
-      "staging": false,
+      "env": "production",
       "user": null,
       "is-highlighted": false,
       "is-featured": false,
@@ -268,9 +263,7 @@ curl -X POST https://api.resourcewatch.org/v1/dashboard \
                   "original": "..."
               },
               "private": true,
-              "production": true,
-              "preproduction": false,
-              "staging": false,
+              "env": "production",
               "application":  ["rw"],
               "is-highlighted": false,
               "is-featured": false,
@@ -302,9 +295,7 @@ curl -X POST https://api.resourcewatch.org/v1/dashboard \
             },
             "user-id": "eb63867922e16e34ef3ce862",
             "private": true,
-            "production": true,
-            "preproduction": false,
-            "staging": false,
+            "env": "production",
             "user": null,
             "application":  ["rw"],
             "is-highlighted": false,
@@ -337,6 +328,7 @@ production      | If the dashboard is available in the production environment.  
 preproduction   | If the dashboard is available in the preproduction environment.              | boolean
 staging         | If the dashboard is available in the staging environment.                    | boolean
 application     | Application(s) to which the dashboard belongs. Defaults to `["rw"]`. Read more about this field [here](concepts.html#applications). | array of strings
+env             | Environment to which the dashboard belongs. Read more about this field in the [Environments concept section](concepts.html#environments). | string
 is-highlighted  | If this dashboard is highlighted (`true`/`false`). Defaults to `false`. Only accessible to users with `ADMIN` role. | boolean
 is-featured     | If this dashboard is featured (`true`/`false`). Defaults to `false`. Can only be set by user with `ADMIN` role. | boolean
 author-title    | The title of the author of the dashboard.                                    | any valid text
@@ -380,9 +372,7 @@ curl -X PATCH https://api.resourcewatch.org/v1/dashboard/<id of the dashboard> \
             },
             "user-id": "eb63867922e16e34ef3ce862",
             "private": true,
-            "production": true,
-            "preproduction": false,
-            "staging": false,
+            "env": "production",
             "user": null,
             "application": ["rw"],
             "is-highlighted": false,
@@ -458,9 +448,7 @@ curl -X POST https://api.resourcewatch.org/v1/dashboard/<id>/clone \
             },
             "user-id": "1111167922e16e34ef3ce872",
             "private": true,
-            "production": true,
-            "preproduction": false,
-            "staging": false,
+            "env": "production",
             "application":  ["rw"],
             "is-highlighted": false,
             "is-featured": false,
@@ -483,6 +471,7 @@ The following attributes can be overwritten by providing new values in the reque
 - `description`
 - `content`
 - `published`
+- `env`
 - `summary`
 - `photo`
 - `private`

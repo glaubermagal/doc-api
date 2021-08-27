@@ -34,6 +34,7 @@ curl -X GET https://api.resourcewatch.org/v1/topic -H 'Authorization: Bearer exa
                 "description": "",
                 "content": "<p></p>\n<iframe width=\"500\" height=\"410\" src=\"/embed/widget/5ebeddda-8f3d-4e63-8a52-08e15c3e148c\" frameBorder=\"0\"></iframe>\n<p></p>\n<iframe width=\"500\" height=\"410\" src=\"/embed/widget/73c574b9-f9ab-4f77-87be-651ff8dac5fe\" frameBorder=\"0\"></iframe>\n<p>test1</p>\n",
                 "published": true,
+                "env": "production",
                 "photo": {
                     "cover": "https://s3.amazonaws.com/image.jpg",
                     "thumb": "https://s3.amazonaws.com/image.jpg",
@@ -55,10 +56,11 @@ Available filters parameters:
 
 Field     |                         Description                          |    Type
 --------- | :----------------------------------------------------------: | ------:
-published |   Filter topics by publishing status (true, false)       | Boolean
-private   |   Filter topics by private status (true, false)          | Boolean
-user      |           Filter topics by author user id                | Text
+published |   Filter topics by publishing status (true, false)           | Boolean
+private   |   Filter topics by private status (true, false)              | Boolean
+user      |           Filter topics by author user id                    | Text
 application | The application to which the topic belongs. Read more about this field [here](concepts.html#applications). | Text (single value)
+env       | Environment to which the topic belongs. Multiple values can be combined using `,` as a separator. Does not support regexes. Read more about this field in the [Environments concept section](concepts.html#environments). | String 
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/topic?user=57bc2608f098ce98007985e4&private=false
@@ -111,6 +113,7 @@ curl -X GET https://api.resourcewatch.org/v1/topic?includes=user
           "description": "test topic three description",
           "content": "test topic three description",
           "published": true,
+          "env": "production",
           "user-id": "57ac9f9e29309063404573a2",
           "application":  ["rw"],
           "user": {
@@ -139,16 +142,17 @@ Supported fields:
 
 Name          | Description                                                                  | Accepted values
 ------------- | ---------------------------------------------------------------------------- | ----------------------------
-name          | Short name for the topic                                                 | any valid text
-slug          | Unique identifier for the topic                                                 | any valid text
-summary       | Summary of the content of the topic                                      | any valid text
-description   | Description of the topic                                                 | any valid text
-content       | Content of the topic, typically encoded as a JSON string                 | any valid text
-published     | If the topic is in a publishable state                                   | boolean
-photo         | Object containing a set of image urls associated with the topic          | object
-user_id       | Id of the user who created the topic                                     | string with valid user id (not validated)
+name          | Short name for the topic                                                     | any valid text
+slug          | Unique identifier for the topic                                              | any valid text
+summary       | Summary of the content of the topic                                          | any valid text
+description   | Description of the topic                                                     | any valid text
+content       | Content of the topic, typically encoded as a JSON string                     | any valid text
+published     | If the topic is in a publishable state                                       | boolean
+photo         | Object containing a set of image urls associated with the topic              | object
+user_id       | Id of the user who created the topic                                         | string with valid user id (not validated)
 private       |                                                                              | boolean
 application   | Application(s) to which the topic belongs. Defaults to `["rw"]`. Read more about this field [here](concepts.html#applications). | array of strings
+env           | Environment to which the topic belongs. Read more about this field in the [Environments concept section](concepts.html#environments). | string
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/topics \
@@ -163,6 +167,7 @@ curl -X POST https://api.resourcewatch.org/v1/topics \
               "description": "",
               "content": "[{...}]",
               "published": false,
+              "env": "production",
               "photo": {
                   "cover": "...",
                   "thumb": "...",
@@ -188,6 +193,7 @@ curl -X POST https://api.resourcewatch.org/v1/topics \
             "description": "",
             "content": "[{...}]",
             "published": false,
+            "env": "production",
             "photo": {
                 "cover": "...",
                 "thumb": "...",
@@ -243,6 +249,7 @@ curl -X PATCH https://api.resourcewatch.org/v1/topics/<id of the topic> \
             "description": "Topic related with cities.",
             "content": "[{...}]",
             "published": false,
+            "env": "production",
             "photo": {
                 "cover": "...",
                 "thumb": "...",
@@ -278,6 +285,7 @@ curl -X POST https://api.resourcewatch.org/v1/topics/10/clone -H 'Authorization:
             "description": "",
             "content": "[{\"id\":1511952250652,\"type\":\"widget\",\"content\":{\"widgetId\":\"b9186ce9-78ae-418b-a6d3-d521283ce485\",\"categories\":[]}},...}]",
             "published": false,
+            "env": "production",
             "photo": {
                 "cover": "/system/topics/photos/data?1523301918",
                 "thumb": "/system/topics/photos/data?1523301918",
