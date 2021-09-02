@@ -4,7 +4,7 @@ This chapter covers the basic architectural details of the API. If you are new t
 
 ## Microservice architecture
 
-The RW API is built using a [microservices architecture](https://en.wikipedia.org/wiki/Microservices) using [Control Tower](https://github.com/control-tower/control-tower) as the gateway application.
+The RW API is built using a [microservices architecture](https://en.wikipedia.org/wiki/Microservices) using [Control Tower](https://github.com/resource-watch/control-tower) as the gateway application.
 
 In this configuration, Control Tower (CT) offers gateway and core functionality, like routing or user management, while user-facing functionality is provided by a set of microservices that communicate with each other and the external world through Control Tower.
 

@@ -4,7 +4,7 @@ This chapter covers Control Tower in depth - what it does and how it does it.
 
 ## Overview
 
-[Control Tower](https://github.com/control-tower/control-tower) is essentially a mix of 3 main concepts:
+[Control Tower](https://github.com/resource-watch/control-tower) is essentially a mix of 3 main concepts:
 - An API proxy/router
 - A lightweight management API
 - A plugin system to extend functionality and its own API.

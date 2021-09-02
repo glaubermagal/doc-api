@@ -25,6 +25,6 @@ Control Tower uses a Mongo database to store data like known microservices or en
 
 ## Plugin bootstrap and config
 
-During its first initialization, Control Tower will load plugin settings from [this file](https://github.com/control-tower/control-tower/blob/develop/app/src/migrations/init.js). It includes a list of plugins to be initialized, whether or not they should be active, and their default configuration. On subsequent executions, this information will be loaded from the database instead, so additional changes you may want to do should be done on the database, and not on this file.
+During its first initialization, Control Tower will load plugin settings from [this file](https://github.com/resource-watch/control-tower/blob/develop/app/src/migrations/init.js). It includes a list of plugins to be initialized, whether or not they should be active, and their default configuration. On subsequent executions, this information will be loaded from the database instead, so additional changes you may want to do should be done on the database, and not on this file.
 
 An important part of this file and of the corresponding database entries is plugin configuration. This data is stored within the `plugins` MongoDB collection managed by Control Tower but it's made available to plugins as they are initialized and ran.
