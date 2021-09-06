@@ -309,7 +309,8 @@ This endpoint supports the following filters as query string parameters:
 
 Filter       | Description                   | Type        | Default value
 ------------ | ----------------------------- | ----------- | ----------------
-application  | Applications associated to this concept - read more about this field [here](concepts.html#applications). | String | `"rw"`
+application  | Applications associated with this concept - read more about this field [here](concepts.html#applications). | String | `"rw"`
+env          | Only list datasets that have the specified [environment](concepts.html#environments). | String (can be a comma separated list of env values) | none
 
 ### Errors for querying similar datasets
 
@@ -373,6 +374,7 @@ This endpoint supports the following filters as query string parameters:
 Filter       | Description                   | Type        | Default value
 ------------ | ----------------------------- | ----------- | ----------------
 application  | Applications associated to this concept - read more about this field [here](concepts.html#applications). | String | `"rw"`
+env          | Only list datasets that have the specified [environment](concepts.html#environments). | String (can be a comma separated list of env values) | none
 
 ### Errors for querying similar datasets
 
@@ -452,7 +454,7 @@ If successful, the response will have status 200 OK, containing a list of datase
 > Filtering searched datasets by application:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/graph/query/similar-dataset-including-descendant/:dataset?application=gfw
+curl -X GET https://api.resourcewatch.org/v1/graph/query/search-datasets/:dataset?application=gfw
 ```
 
 This endpoint supports the following filters as query string parameters:
@@ -461,6 +463,7 @@ Filter       | Description                   | Type        | Default value
 ------------ | ----------------------------- | ----------- | ----------------
 application  | Applications associated with this concept - read more about this field [here](concepts.html#applications). | String | `"rw"`
 depth        | Limits the depth of the graph search. | Number | 15
+env          | Only list datasets that have the specified [environment](concepts.html#environments). | String (can be a comma separated list of env values) | none
 
 ### Errors for searching datasets by concepts
 
@@ -518,6 +521,7 @@ This endpoint supports the following filters as query string parameters:
 Filter       | Description                   | Type        | Default value
 ------------ | ----------------------------- | ----------- | ----------------
 application  | Applications associated to this concept - read more about this field [here](concepts.html#applications). | String | `"rw"`
+env          | Only list datasets that have the specified [environment](concepts.html#environments). | String (can be a comma separated list of env values) | none
 
 ### Errors for searching datasets by concepts and their synonyms
 
@@ -574,6 +578,7 @@ This endpoint supports the following filters as query string parameters:
 Filter       | Description                   | Type        | Default value
 ------------ | ----------------------------- | ----------- | ----------------
 application  | Applications associated to this concept - read more about this field [here](concepts.html#applications). | String | `"rw"`
+env          | Only list datasets that have the specified [environment](concepts.html#environments). | String (can be a comma separated list of env values) | none
 
 ## Most viewed datasets
 
@@ -627,6 +632,7 @@ Filter       | Description                   | Type        | Default value
 ------------ | ----------------------------- | ----------- | ----------------
 application  | Applications associated with this concept - read more about this field [here](concepts.html#applications). | String | `"rw"`
 limit        | Limits the number of results returned in the response. | Number | No limit applied - all results are returned.
+env          | Only list datasets that have the specified [environment](concepts.html#environments). | String (can be a comma separated list of env values) | none
 
 ## Most viewed datasets by user
 
@@ -681,6 +687,7 @@ Filter       | Description                   | Type        | Default value
 ------------ | ----------------------------- | ----------- | ----------------
 application  | Applications associated with this concept - read more about this field [here](concepts.html#applications). | String | `"rw"`
 limit        | Limits the number of results returned in the response. | Number | No limit applied - all results are returned.
+env          | Only list datasets that have the specified [environment](concepts.html#environments). | String (can be a comma separated list of env values) | none
 
 ### Errors for getting most viewed datasets by user
 
