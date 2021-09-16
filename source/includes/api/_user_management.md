@@ -323,6 +323,7 @@ This endpoint supports receiving a `callbackUrl` parameter (this can either be p
 Error code     | Error message  | Description
 -------------- | -------------- | --------------
 422            | Mail required. | You need to specify the email address in the request body.
+400            | Password recovery not allowed. Your email address is already associated with an account that uses a 3rd party login (Google/Facebook/Apple) | You are requesting a password request for an email address already associated with an existing user account, and said account was created using one of the available 3rd party social logins. You should log in using that social login provider (for security reasons, the RW API does not disclose which social login provider is associated with this email address).
 
 
 ## User details management
