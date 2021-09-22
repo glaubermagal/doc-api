@@ -35,6 +35,7 @@ includes:
   - api/dashboard
   - api/static_pages
   - api/tasks
+  - api/salesforce
   - api/user_management
   - api/microservices
   - api/troubleshooting
