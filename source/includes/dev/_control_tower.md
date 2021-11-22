@@ -2,6 +2,16 @@
 
 This chapter covers Control Tower in depth - what it does and how it does it.
 
+## An important note on Control Tower
+
+As of early 2021, **Control Tower usage has been removed from all production environments** in favor of [AWS API Gateway](https://aws.amazon.com/api-gateway/), and **deprecated as a local development tool**. In the future, we plan on using [Localstack](https://github.com/localstack/localstack) as a local replacement for AWS API Gateway. However, due to current Localstack limitations, that is not possible yet. As such, and temporarily, you can continue using Control Tower's `main` branch, which has since been simplified and stripped of non-core functionality, like user management, caching or logging.
+
+This version of CT requires the [Authorization](https://github.com/resource-watch/authorization) MS to be installed and running, as a way to support user management within the RW API infrastructure, and assumes the MSs run in predetermined TCP ports - check CT source code for details. 
+
+No form of support (including documentation) will be provided for this CT version, that will be removed as soon as Localstack fully supports the needed AWS API Gateway features. As such, all the docs present here covering Control Tower should be considered as deprecated, some of them actually being out of date / no longer accurate or functional.
+
+This version of CT should never, in any scenario, be deployed to a production grade environment.
+
 ## Overview
 
 [Control Tower](https://github.com/resource-watch/control-tower) is essentially a mix of 3 main concepts:
