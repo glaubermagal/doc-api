@@ -117,6 +117,111 @@ Other, more complex, field types, like `geometry` types, include additional deta
 
 For more information about the different types that can be found in Carto datasets please refer to [PostgreSQL's documentation on Data Types](https://www.postgresql.org/docs/11/datatype.html) or [PostGIS's documentation](https://postgis.net/docs/index.html). 
 
+### GFW
+
+> Example fields response for a GFW dataset
+
+```json
+{
+    "fields": [
+        {
+            "field_name": "umd_glad_landsat_alerts__date_conf",
+            "field_alias": null,
+            "field_description": null,
+            "field_values": null
+        },
+        {
+            "field_name": "umd_glad_landsat_alerts__date",
+            "field_alias": null,
+            "field_description": null,
+            "field_values": null
+        },
+        {
+            "field_name": "umd_glad_landsat_alerts__confidence",
+            "field_alias": null,
+            "field_description": null,
+            "field_values": [
+                "nominal",
+                "high",
+                "highest",
+                "not_detected"
+            ]
+        },
+        {
+            "field_name": "gfw_integrated_alerts__date_conf",
+            "field_alias": null,
+            "field_description": null,
+            "field_values": null
+        },
+        {
+            "field_name": "gfw_integrated_alerts__date",
+            "field_alias": null,
+            "field_description": null,
+            "field_values": null
+        },
+        {
+            "field_name": "gfw_integrated_alerts__confidence",
+            "field_alias": null,
+            "field_description": null,
+            "field_values": [
+                "nominal",
+                "high",
+                "highest",
+                "not_detected"
+            ]
+        },
+        {
+            "field_name": "umd_glad_sentinel2_alerts__date_conf",
+            "field_alias": null,
+            "field_description": null,
+            "field_values": null
+        },
+        {
+            "field_name": "umd_glad_sentinel2_alerts__date",
+            "field_alias": null,
+            "field_description": null,
+            "field_values": null
+        },
+        {
+            "field_name": "umd_glad_sentinel2_alerts__confidence",
+            "field_alias": null,
+            "field_description": null,
+            "field_values": [
+                "nominal",
+                "high",
+                "highest",
+                "not_detected"
+            ]
+        },
+        {
+            "field_name": "wur_radd_alerts__date_conf",
+            "field_alias": null,
+            "field_description": null,
+            "field_values": null
+        },
+        {
+            "field_name": "wur_radd_alerts__date",
+            "field_alias": null,
+            "field_description": null,
+            "field_values": null
+        },
+        {
+            "field_name": "wur_radd_alerts__confidence",
+            "field_alias": null,
+            "field_description": null,
+            "field_values": [
+                "nominal",
+                "high",
+                "highest",
+                "not_detected"
+            ]
+        }
+    ]
+}
+```
+
+The fields endpoint for GFW dataset returns an array of objects with each object containing field attributes including name, description and alias. Vector dataset fields include additional attributes indicating whether field is feature info and filter. Fields for raster dataset map to individual raster files associated with a dataset. For example, RADD Deforestation Alerts dataset has confidence field mapping to the primary raster dataset with possible values defined in `field_values` attribute and additional fields such as `is__landmark_indigenous_and_community_lands`, `is__gfw_oil_palm`, etc that correspond to contextual raster datasets used to conduct analysis on the alerts data. 
+
 ### ArcGIS feature layer
 
 > Example response for a ArcGIS dataset

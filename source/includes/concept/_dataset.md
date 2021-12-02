@@ -2,7 +2,7 @@
 
 One of the Resource Watch API's (RW API) goals is to provide a common interface for interacting with data hosted in different sources and formats. A **Dataset** is the Resource Watch's API way of providing users with access to data, while trying to, as much as possible, abstract and standardise operations that would otherwise fall on the user's hands to figure out. It's one of the cornerstones that many other API features build upon - and those features can help you get even more out of your data!
 
-**Example**: *A Resource Watch API dataset can represent data in a JSON file, hosted on [Carto](https://carto.com/) or [Google Earth Engine](https://earthengine.google.com/), to name a few. However, when accessing that data, you don't have to learn 3 different technologies - the Resource Watch API gives you a single, unified query interface.*
+**Example**: *A Resource Watch API dataset can represent data in a JSON file, hosted on [Carto](https://carto.com/), [Global Forest Watch](https://www.globalforestwatch.org/) or [Google Earth Engine](https://earthengine.google.com/), to name a few. However, when accessing that data, you don't have to learn 3 different technologies - the Resource Watch API gives you a single, unified query interface.*
 
 
 On top of **datasets**, the RW API offers multiple resources that allow you to access data in multiple formats. These will be covered later in full detail, but as an example, here are some ways in which you can access and use datasets:
@@ -23,6 +23,9 @@ Each dataset has a **provider** (json/carto/GEE/...) that must specified on crea
 #### Carto
 
 [Carto](https://carto.com/) is an open, powerful, and intuitive map platform for discovering and predicting key insights underlying the location data in our world.
+
+### Global Forest Watch
+[Global Forest Watch](https://www.globalforestwatch.org/) (GFW) is an online platform that provides data and tools for monitoring forests. By harnessing cutting-edge technology, GFW allows anyone to access near real-time information about where and how forests are changing around the world.
 
 #### ArcGIS feature layer
 
@@ -85,7 +88,7 @@ Each dataset provider has an associated **connector type**, which you can determ
 Connector type          | Providers                      
 ----------------------- | -------------- 
 document                | `csv`, `json`, `tsv`, `xml`          
-rest                    | `cartodb`, `featureservice`, `gee`, `bigquery`, `rasdaman`, `nexgddp`, `loca`           
+rest                    | `cartodb`, `gfw`, `featureservice`, `gee`, `bigquery`, `rasdaman`, `nexgddp`, `loca`           
 wms                     | `wms`        
 
 The connector type reflects an important aspect of a dataset: where is the actual data kept, and how is it accessed:

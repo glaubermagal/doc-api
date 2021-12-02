@@ -502,6 +502,52 @@ The `tableName` value of a carto-based dataset will automatically be filled with
 
 When creating a Carto based-dataset, the RW API will try to validate the `connectorUrl` by trying to connect to the corresponding Carto table - the result of this will determine if the dataset's status will be set to `saved` or `error`.
 
+### GFW datasets
+
+> Example of creating a dataset based on GFW data with the minimum fields required
+
+```shell
+curl -X POST https://api.resourcewatch.org/v1/dataset \
+-H "Authorization: Bearer <your-token>" \
+-H "Content-Type: application/json"  -d \
+'{
+  "dataset": {
+    "name":"RADD Deforestation Alerts",
+    "connectorType":"rest",
+    "provider":"gfw",
+    "connectorUrl":"https://data-api.globalforestwatch.org/dataset/wur_radd_alerts/latest",
+    "application":[
+      "gfw", 
+      "rw"
+    ]
+  }
+}'
+```
+
+To create a dataset connected to a GFW data source, besides the common required fields, you must provide the following required data:
+
+Field           | Description                                                                            | Example value   |
+--------------- | :------------------------------------------------------------------------------------: | --------------: |
+`connectorType` | The type of connector. Must be set to `rest`.                                          | `rest`          |
+`provider`      | The provider should be set to `gfw`.                                               | `gfw`       |
+`connectorUrl`  | The URL for the GFW table or file that this dataset will be using.                         | `https://data-api.globalforestwatch.org/dataset/wur_radd_alerts/latest` |
+
+The RW API will use the information above to directly query the GFW dataset specified on the `connectorUrl` field whenever this dataset is accessed on the RW API. This has a few implications that you should be aware of:
+
+- The GFW URL provided will be publicly visible to all RW API users.
+- The GFW REST API will see increased traffic.
+- Any changes made to the data hosted on GFW will be automatically reflected on the data served by the RW API for this dataset.
+- If you restructure or delete your GFW table or raster file, the corresponding RW API dataset will be in an invalid state, and you should delete it.
+
+The `tableName` value of a GFW-based dataset will automatically be filled with the name of the
+GFW table or raster file corresponding to the dataset.
+
+The `latest` path parameter in `connectionUrl` requests the most recent public version of
+the requested dataset in GFW. Alternatively, you may request a dataset by the version number
+if known. 
+
+When creating a GFW-based dataset, the RW API will try to validate the `connectorUrl` by trying to connect to the corresponding GFW table or raster file - the result of this will determine if the dataset's status will be set to `saved` or `error`.
+
 ### ArcGIS feature layer
 
 > Example of creating a dataset based on ArcGIS feature layer data with the minimum fields required

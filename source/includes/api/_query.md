@@ -141,6 +141,7 @@ Some dataset providers support receiving a `geostore` query parameter. When prov
 The following providers support this parameter:
 
 - CartoDB (`carto`)
+- Global Forest Watch (`gfw`)
 - ArcGIS (`featureservice`)
 - Google Earth Engine (`gee`)
 - BigQuery (`bigquery`)
@@ -232,6 +233,7 @@ The download endpoint allows you to download the results of the execution of a q
 - Google Earth Engine
 - Document-based datasets
 - Carto
+- GFW
 - BigQuery
 - ArcGIS FeatureService
 
@@ -346,6 +348,7 @@ Some dataset providers support receiving a `geostore` query parameter. When prov
 The following providers support this parameter:
 
 - CartoDB (`carto`)
+- Global Forest Watch (`gfw`)
 - ArcGIS (`featureservice`)
 - Google Earth Engine (`gee`)
 - BigQuery (`bigquery`)
@@ -498,6 +501,48 @@ CartoDB datasets can be queried using [PostGIS functions](https://postgis.net/do
 | YES | Using PostGIS functions in WHERE clause | [SELECT \* FROM sp\_richness WHERE ST\_METADATA(the\_raster\_webmercator) IS NOT NULL LIMIT 5](https://api.resourcewatch.org/v1/query/16df8ada-87cc-4907-adce-a98bc4e91856?sql=SELECT%20\*%20FROM%20sp\_richness%20WHERE%20ST\_METADATA(the\_raster\_webmercator)%20IS%20NOT%20NULL%20LIMIT%205) |
 | **NO** | **Using PostGIS functions in GROUP BY clause** | **[SELECT \* FROM sp\_richness GROUP BY ST\_SUMMARYSTATS(the\_raster\_webmercator, true) IS NOT NULL LIMIT 5](https://api.resourcewatch.org/v1/query/16df8ada-87cc-4907-adce-a98bc4e91856?sql=SELECT%20\*%20FROM%20sp\_richness%20GROUP%20BY%20ST\_SUMMARYSTATS(the\_raster\_webmercator%2C%20true)%20IS%20NOT%20NULL%20LIMIT%205)** |
 | YES | Using PostGIS functions in ORDER BY clause | [SELECT \* FROM sp\_richness ORDER BY ST\_METADATA(the\_raster\_webmercator) IS NOT NULL LIMIT 5](https://api.resourcewatch.org/v1/query/16df8ada-87cc-4907-adce-a98bc4e91856?sql=SELECT%20\*%20FROM%20sp\_richness%20ORDER%20BY%20ST\_METADATA(the\_raster\_webmercator)%20IS%20NOT%20NULL%20LIMIT%205) |
+
+### GFW Datasets
+
+This section describes the SQL support for querying datasets with provider `gfw`.
+
+| Supported | Feature | Example URL |
+|-----------|---------|-------------|
+| YES | SELECT: Selecting all columns using wildcard | [SELECT \* FROM data LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT \* FROM data LIMIT 5) | 
+| YES | SELECT: Count all rows | [SELECT count(\*) FROM data](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT count(\*) FROM data) | 
+| YES | SELECT: Selecting specific columns | [SELECT wdpa\_protected\_area\_\_iso, area\_\_ha FROM data LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT wdpa\_protected\_area\_\_iso, area\_\_ha FROM data LIMIT 5) | 
+| **NO** | **SELECT: Selecting DISTINCT values for specific columns** | **[SELECT DISTINCT wdpa\_protected\_area\_\_iso FROM data LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT DISTINCT wdpa\_protected\_area\_\_iso FROM data LIMIT 5)** | 
+| **NO** | **SELECT: Selecting columns AND counting all rows** | **[SELECT wdpa\_protected\_area\_\_iso, count(\*) FROM data LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT wdpa\_protected\_area\_\_iso, count(\*) FROM data LIMIT 5)** | 
+| YES | SELECT: Aliasing aggregate function results such as AVG in SELECT | [SELECT AVG(area\_\_ha) as alias FROM data LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT AVG(area\_\_ha) as alias FROM data LIMIT 5) | 
+| YES | SELECT: Usage of aggregate functions (AVG) in SELECT | [SELECT AVG(area\_\_ha) FROM data LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT AVG(area\_\_ha) FROM data LIMIT 5) | 
+| YES | SELECT: Usage of aggregate functions (MAX) in SELECT | [SELECT MAX(area\_\_ha) FROM data LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT MAX(area\_\_ha) FROM data LIMIT 5) | 
+| YES | SELECT: Usage of aggregate functions (MIN) in SELECT | [SELECT MIN(area\_\_ha) FROM data LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT MIN(area\_\_ha) FROM data LIMIT 5) | 
+| YES | SELECT: Usage of aggregate functions (SUM) in SELECT | [SELECT SUM(area\_\_ha) FROM data LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT SUM(area\_\_ha) FROM data LIMIT 5) | 
+| YES | FROM: Using dataset id in FROM statement | [SELECT \* FROM 94e2d0e4-4a13-4822-99ea-607175080e5d LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT \* FROM 94e2d0e4-4a13-4822-99ea-607175080e5d LIMIT 5) | 
+| YES | FROM: Using dataset slug in FROM statement | [SELECT \* FROM GADM-Burned-Areas-Adm2 LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT \* FROM GADM-Burned-Areas-Adm2 LIMIT 5) | 
+| YES | FROM: Using dataset tableName in FROM statement | [SELECT \* FROM data LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT \* FROM data LIMIT 5) | 
+| YES | WHERE: Greater than filtering | [SELECT \* FROM data WHERE area\_\_ha > 1000 LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT \* FROM data WHERE area\_\_ha > 1000 LIMIT 5) | 
+| YES | WHERE: Greater than or equal filtering | [SELECT \* FROM data WHERE area\_\_ha >= 1000 LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT \* FROM data WHERE area\_\_ha >= 1000 LIMIT 5) | 
+| YES | WHERE: Equality filtering | [SELECT \* FROM data WHERE area\_\_ha = 3000 LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT \* FROM data WHERE area\_\_ha = 3000 LIMIT 5) | 
+| YES | WHERE: Lower than filtering | [SELECT \* FROM data WHERE area\_\_ha < 50 LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT \* FROM data WHERE area\_\_ha < 50 LIMIT 5) | 
+| YES | WHERE: Lower than or equal filtering | [SELECT \* FROM data WHERE area\_\_ha <= 50 LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT \* FROM data WHERE area\_\_ha <= 50 LIMIT 5) | 
+| **NO** | **WHERE: Conjunction (AND) filtering** | **[SELECT \* FROM data WHERE area\_\_ha <= 50 AND {{numericColumn2}} > 0.1 LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT \* FROM data WHERE area\_\_ha <= 50 AND {{numericColumn2}} > 0.1 LIMIT 5)** | 
+| **NO** | **WHERE: Disjunction (OR) filtering** | **[SELECT \* FROM data WHERE area\_\_ha <= 50 OR {{numericColumn2}} > 0.1 LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT \* FROM data WHERE area\_\_ha <= 50 OR {{numericColumn2}} > 0.1 LIMIT 5)** | 
+| YES | WHERE: BETWEEN filtering | [SELECT \* FROM data WHERE area\_\_ha BETWEEN 1000 AND 50 LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT \* FROM data WHERE area\_\_ha BETWEEN 1000 AND 50 LIMIT 5) | 
+| **NO** | **WHERE: LIKE filtering** | **[SELECT \* FROM data WHERE wdpa\_protected\_area\_\_iso LIKE 'Design%' LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT \* FROM data WHERE wdpa\_protected\_area\_\_iso LIKE 'Design%' LIMIT 5)** | 
+| YES | GROUP BY: Group results by a single column | [SELECT wdpa\_protected\_area\_\_iso FROM data GROUP BY wdpa\_protected\_area\_\_iso LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT wdpa\_protected\_area\_\_iso FROM data GROUP BY wdpa\_protected\_area\_\_iso LIMIT 5) | 
+| YES | GROUP BY: Group results by multiple columns | [SELECT wdpa\_protected\_area\_\_iso, area\_\_ha FROM data GROUP BY wdpa\_protected\_area\_\_iso, area\_\_ha LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT wdpa\_protected\_area\_\_iso, area\_\_ha FROM data GROUP BY wdpa\_protected\_area\_\_iso, area\_\_ha LIMIT 5) | 
+| YES | GROUP BY: Aggregate functions used with GROUP BY statements | [SELECT wdpa\_protected\_area\_\_iso, COUNT(\*) as count FROM data GROUP BY wdpa\_protected\_area\_\_iso LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT wdpa\_protected\_area\_\_iso, COUNT(\*) as count FROM data GROUP BY wdpa\_protected\_area\_\_iso LIMIT 5) | 
+| **NO** | **GROUP BY: Special grouping by range function** | **[SELECT count(\*) FROM data GROUP BY range(area\_\_ha, 0,1,2,3,4) LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT count(\*) FROM data GROUP BY range(area\_\_ha, 0,1,2,3,4) LIMIT 5)** | 
+| YES | ORDER BY: Ordering results by one column | [SELECT wdpa\_protected\_area\_\_iso FROM data ORDER BY wdpa\_protected\_area\_\_iso LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT wdpa\_protected\_area\_\_iso FROM data ORDER BY wdpa\_protected\_area\_\_iso LIMIT 5) | 
+| YES | ORDER BY: Ordering results by one column descending | [SELECT wdpa\_protected\_area\_\_iso FROM data ORDER BY wdpa\_protected\_area\_\_iso DESC LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT wdpa\_protected\_area\_\_iso FROM data ORDER BY wdpa\_protected\_area\_\_iso DESC LIMIT 5) | 
+| YES | ORDER BY: Ordering results by multiple column | [SELECT wdpa\_protected\_area\_\_iso, area\_\_ha FROM data ORDER BY wdpa\_protected\_area\_\_iso, area\_\_ha LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT wdpa\_protected\_area\_\_iso, area\_\_ha FROM data ORDER BY wdpa\_protected\_area\_\_iso, area\_\_ha LIMIT 5) | 
+| YES | ORDER BY: Ordering results by multiple column descending | [SELECT wdpa\_protected\_area\_\_iso, area\_\_ha FROM data ORDER BY wdpa\_protected\_area\_\_iso, area\_\_ha DESC LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT wdpa\_protected\_area\_\_iso, area\_\_ha FROM data ORDER BY wdpa\_protected\_area\_\_iso, area\_\_ha DESC LIMIT 5) | 
+| YES | LIMIT: Limit the number of returned results | [SELECT wdpa\_protected\_area\_\_iso FROM data LIMIT 5](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT wdpa\_protected\_area\_\_iso FROM data LIMIT 5) | 
+| **NO** | **OFFSET: Offset the returned results** | **[SELECT wdpa\_protected\_area\_\_iso FROM data LIMIT {{limit}} OFFSET {{offset}}](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT wdpa\_protected\_area\_\_iso FROM data LIMIT {{limit}} OFFSET {{offset}})** | 
+| **NO** | **OFFSET: Offset the returned results using short syntax** | **[SELECT wdpa\_protected\_area\_\_iso FROM data LIMIT {{limit}}, {{offset}}](http://api.resourcewatch.org/v1/query/94e2d0e4-4a13-4822-99ea-607175080e5d?sql=SELECT wdpa\_protected\_area\_\_iso FROM data LIMIT {{limit}}, {{offset}})** | 
+
+*Note: This table was generated automatically with the help of [this repository](https://github.com/resource-watch/sql-compatibility-test). If you are maintaining the docs, please do not edit manually these tables.*
 
 ### ArcGIS Feature Service datasets
 
