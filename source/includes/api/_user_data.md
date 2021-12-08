@@ -238,7 +238,7 @@ You can only update user data for the user provided in the authentication token.
 | 403        | Forbidden.          | You do not have permission to access the requested data.                    |
 | 404        | User not found      | The requested user id does not have stored user data.                       |
 
-## Delete user data
+## Deleting user data
 
 > Delete user data for the given user id
 

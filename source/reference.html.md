@@ -37,6 +37,7 @@ includes:
   - api/tasks
   - api/salesforce
   - api/user_management
+  - api/user_data
   - api/microservices
   - api/troubleshooting
   - api/contact

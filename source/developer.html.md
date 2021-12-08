@@ -24,7 +24,6 @@ includes:
   - dev/areas_notification_emails
   - dev/subscriptions
   - dev/user_management
-  - dev/user_data
   - dev/graph
   - dev/fw_contextual_layers
 
