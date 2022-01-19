@@ -24,7 +24,7 @@ Each dataset has a **provider** (json/carto/GEE/...) that must specified on crea
 
 [Carto](https://carto.com/) is an open, powerful, and intuitive map platform for discovering and predicting key insights underlying the location data in our world.
 
-### Global Forest Watch
+#### Global Forest Watch
 [Global Forest Watch](https://www.globalforestwatch.org/) (GFW) is an online platform that provides data and tools for monitoring forests. By harnessing cutting-edge technology, GFW allows anyone to access near real-time information about where and how forests are changing around the world.
 
 #### ArcGIS feature layer

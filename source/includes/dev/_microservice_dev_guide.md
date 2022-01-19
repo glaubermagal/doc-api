@@ -22,9 +22,11 @@ As a developer of the RW API, your ultimate goal is to make an improvement to th
 - Write your code
 - Test your feature branch locally
 - Push your code to Github
-- Make a PR from your feature branch to `dev`
-- Wait for Travis' approval, then merge your code
-- Deploy your changes to the `dev` cluster for testing in a real-world infrastructure.
+- Make a PR from your feature branch to `dev` and request review from peers
+- Wait for Travis' and reviewer approval, then merge your code
+- [Optional] Deploy your changes to the `dev` cluster for testing in a real-world infrastructure.
+Check with team if changes require this level of testing and spin up
+cluster before deploying if it is in [hibernation](#rw-api-hibernation).
 - Make a PR from `dev` to `staging`, wait for Travis' approval, then merge your code.
 - Make an announcement about an upcoming changes, deploy to `staging` and test your code with real-world data.
 - Make a PR from `staging` to `production`, wait for Travis' approval, then merge your code.
