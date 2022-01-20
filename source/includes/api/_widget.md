@@ -810,14 +810,13 @@ The thumbnail process is asynchronous, meaning it may take up to one minute for 
 
 #### Errors for creating a widget
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | `<field>`: `<field>` can not be empty | Your are missing a required field value.
-400            | - `<field>`: must be a `<restriction>` | The value provided for the mentioned field does not match the requirements.
-401            | Unauthorized   | You are not authenticated.
-403            | Forbidden      | You are trying to create a widget with one or more `application` values that are not associated with your user account. 
-404            | Dataset not found | The provided dataset id does not exist. 
-
+| Error code | Error message                          | Description                                                                                                             |
+|------------|----------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| 400        | `<field>`: `<field>` can not be empty  | Your are missing a required field value.                                                                                |
+| 400        | - `<field>`: must be a `<restriction>` | The value provided for the mentioned field does not match the requirements.                                             |
+| 401        | Unauthorized                           | You are not authenticated.                                                                                              |
+| 403        | Forbidden                              | You are trying to create a widget with one or more `application` values that are not associated with your user account. |
+| 404        | Dataset not found                      | The provided dataset id does not exist.                                                                                 |
 
 ## Updating a widget
 
@@ -889,15 +888,14 @@ When a widget is updated, a new thumbnail is generated. Refer to [this section](
 
 #### Errors for updating a widget
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | - `<field>`: must be a `<restriction>` | The value provided for the mentioned field does not match the requirements.
-401            | Unauthorized   | You need to be logged in to be able to update a widget.
-403            | Forbidden      | You need to either have the `ADMIN` role, or have role `MANAGER` or `USER` and be the widget's owner (through the `userId` field of the widget) and belong to all the applications associated with the widget.
-403            | Forbidden      | You are trying to update a widget with one or more `application` values that are not associated with your user account. 
-404            | Widget with id <id> doesn't exist   | A widget with the provided id does not exist.
-404            | Dataset not found   | A dataset with the provided id does not exist.
-
+| Error code | Error message                          | Description                                                                                                                                                                                                    |
+|------------|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 400        | - `<field>`: must be a `<restriction>` | The value provided for the mentioned field does not match the requirements.                                                                                                                                    |
+| 401        | Unauthorized                           | You need to be logged in to be able to update a widget.                                                                                                                                                        |
+| 403        | Forbidden                              | You need to either have the `ADMIN` role, or have role `MANAGER` or `USER` and be the widget's owner (through the `userId` field of the widget) and belong to all the applications associated with the widget. |
+| 403        | Forbidden                              | You are trying to update a widget with one or more `application` values that are not associated with your user account.                                                                                        |
+| 404        | Widget with id <id> doesn't exist      | A widget with the provided id does not exist.                                                                                                                                                                  |
+| 404        | Dataset not found                      | A dataset with the provided id does not exist.                                                                                                                                                                 |
 
 ## Cloning a widget
 
@@ -1018,12 +1016,11 @@ When a widget is cloned, a new thumbnail is generated. Refer to [this section](r
 
 #### Errors for cloning a widget
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-401            | Unauthorized   | You need to be logged in to be able to clone a widget.
-403            | Forbidden      | You need to either have the `ADMIN` or `MANAGER` role, or have role `USER` and be the widget's owner (through the `userId` field of the widget) and belong to all the applications associated with the widget.
-404            | Widget with id <id> doesn't exist   | A widget with the provided id or slug does not exist.
-  
+| Error code | Error message                     | Description                                                                                                                                                                                                    |
+|------------|-----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 401        | Unauthorized                      | You need to be logged in to be able to clone a widget.                                                                                                                                                         |
+| 403        | Forbidden                         | You need to either have the `ADMIN` or `MANAGER` role, or have role `USER` and be the widget's owner (through the `userId` field of the widget) and belong to all the applications associated with the widget. |
+| 404        | Widget with id <id> doesn't exist | A widget with the provided id or slug does not exist.                                                                                                                                                          |
 
 ## Deleting a widget
 
@@ -1088,31 +1085,31 @@ This section gives you a complete view at the properties that are maintained as 
 
 You can find more details in the [source code](https://github.com/resource-watch/widget/blob/master/app/src/models/widget.model.js).
 
-Field name              | Type           | Required             | Default value              | Description                                                                  
------------------------ | -------------- | -------------------- |----------------------------| ---------------------------------------------------------------------------- 
-id                      | String         | Yes (autogenerated)  |                            | Unique Id of the widget. Auto generated on creation. Cannot be modified by users.
-dataset                 | String         | Yes                  |                            | Id of the dataset to which the widget corresponds. Set on widget creation, cannot be modified.   
-name                    | String         | Yes                  |                            | Name of the widget.                                                         
-slug                    | String         | Yes (autogenerated)  |                            | Slug of the widget. Auto generated on creation. Cannot be modified by users.        
-userId                  | String         | Yes (autopopulated)  |                            | Id of the user who created the widget. Set automatically on creation. Cannot be modified by users.
-description             | String         | No                   |                            | User defined description of the widget.
-source                  | String         | No                   |                            | Description of the source of the widget's data, as it's meant to be displayed to the end user.
-sourceUrl               | String         | No                   |                            | URL of the source of the data, as it's meant to be displayed to the end user.
-authors                 | String         | No                   |                            | Author or authors of the data displayed on the widget, as it's meant to be displayed to the end user.
-queryUrl                | String         | No                   |                            | URL of the RW API query or external URL containing the data displayed on the widget
-thumbnailUrl            | String         | No                   |                            | URL of a example thumbnail of the rendered widget.
-env                     | String         | Yes                  | production                 | Environment to which the widget belongs. Read more about this field in the [Environments concept section](concepts.html#environments).
-widgetConfig            | Object         | No                   |                            | Schema-less object meant to host widget behavior configuration.
-application             | Array          | Yes                  |                            | Applications associated with this widget. Read more about this field [here](concepts.html#applications).
-layerId                 | String         | No                   |                            | Id of the layer to which the widget corresponds.  
-verified                | Boolean        | Yes                  | false                      | 
-default                 | Boolean        | No                   | false                      | If the widget should be used as the dataset's default widget.
-protected               | Boolean        | Yes                  | false                      | If the widget is protected. A protected widget cannot be deleted.               
-defaultEditableWidget   | Boolean        | Yes                  | false                      | Used by the RW frontend to determine if a widget is the default widget displayed on the Explore detail page for a given dataset.
-template                | Boolean        | Yes                  | false                      | If true, this widget is not necessarily meant to be rendered as-is, but rather as a template for other widgets to be generated from.
-published               | Boolean        | Yes                  | true                       | If the widget is published or not.
-freeze                  | Boolean        | Yes                  | false                      | If true, the widget is meant to represent data from a specific snapshot taken at a given moment in time, as opposed to using a potentially mutable dataset. This data capturing functionality must be implemented by consuming applications, as this value has no logic associated with it on the API side.
-userName                | String         | No (autogenerated)   | null                       | Name of the user who created the widget. This value is used only internally, and is never directly exposed through the API. Cannot be modified by users.        
-userRole                | String         | No (autogenerated)   | null                       | Role of the user who created the widget. This value is used only internally, and is never directly exposed through the API. Cannot be modified by users. 
-createdAt               | Date           | No (autogenerated)   | <current date>             | Automatically maintained date of when the widget was created. Cannot be modified by users.                     
-updatedAt               | Date           | No (autogenerated)   | <current date>             | Automatically maintained date of when the widget was last updated. Cannot be modified by users.                
+| Field name            | Type    | Required            | Default value  | Description                                                                                                                                                                                                                                                                                                 |
+|-----------------------|---------|---------------------|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id                    | String  | Yes (autogenerated) |                | Unique Id of the widget. Auto generated on creation. Cannot be modified by users.                                                                                                                                                                                                                           |
+| dataset               | String  | Yes                 |                | Id of the dataset to which the widget corresponds. Set on widget creation, cannot be modified.                                                                                                                                                                                                              |
+| name                  | String  | Yes                 |                | Name of the widget.                                                                                                                                                                                                                                                                                         |
+| slug                  | String  | Yes (autogenerated) |                | Slug of the widget. Auto generated on creation. Cannot be modified by users.                                                                                                                                                                                                                                |
+| userId                | String  | Yes (autopopulated) |                | Id of the user who created the widget. Set automatically on creation. Cannot be modified by users.                                                                                                                                                                                                          |
+| description           | String  | No                  |                | User defined description of the widget.                                                                                                                                                                                                                                                                     |
+| source                | String  | No                  |                | Description of the source of the widget's data, as it's meant to be displayed to the end user.                                                                                                                                                                                                              |
+| sourceUrl             | String  | No                  |                | URL of the source of the data, as it's meant to be displayed to the end user.                                                                                                                                                                                                                               |
+| authors               | String  | No                  |                | Author or authors of the data displayed on the widget, as it's meant to be displayed to the end user.                                                                                                                                                                                                       |
+| queryUrl              | String  | No                  |                | URL of the RW API query or external URL containing the data displayed on the widget                                                                                                                                                                                                                         |
+| thumbnailUrl          | String  | No                  |                | URL of a example thumbnail of the rendered widget.                                                                                                                                                                                                                                                          |
+| env                   | String  | Yes                 | production     | Environment to which the widget belongs. Read more about this field in the [Environments concept section](concepts.html#environments).                                                                                                                                                                      |
+| widgetConfig          | Object  | No                  |                | Schema-less object meant to host widget behavior configuration.                                                                                                                                                                                                                                             |
+| application           | Array   | Yes                 |                | Applications associated with this widget. Read more about this field [here](concepts.html#applications).                                                                                                                                                                                                    |
+| layerId               | String  | No                  |                | Id of the layer to which the widget corresponds.                                                                                                                                                                                                                                                            |
+| verified              | Boolean | Yes                 | false          |                                                                                                                                                                                                                                                                                                             |
+| default               | Boolean | No                  | false          | If the widget should be used as the dataset's default widget.                                                                                                                                                                                                                                               |
+| protected             | Boolean | Yes                 | false          | If the widget is protected. A protected widget cannot be deleted.                                                                                                                                                                                                                                           |
+| defaultEditableWidget | Boolean | Yes                 | false          | Used by the RW frontend to determine if a widget is the default widget displayed on the Explore detail page for a given dataset.                                                                                                                                                                            |
+| template              | Boolean | Yes                 | false          | If true, this widget is not necessarily meant to be rendered as-is, but rather as a template for other widgets to be generated from.                                                                                                                                                                        |
+| published             | Boolean | Yes                 | true           | If the widget is published or not.                                                                                                                                                                                                                                                                          |
+| freeze                | Boolean | Yes                 | false          | If true, the widget is meant to represent data from a specific snapshot taken at a given moment in time, as opposed to using a potentially mutable dataset. This data capturing functionality must be implemented by consuming applications, as this value has no logic associated with it on the API side. |
+| userName              | String  | No (autogenerated)  | null           | Name of the user who created the widget. This value is used only internally, and is never directly exposed through the API. Cannot be modified by users.                                                                                                                                                    |
+| userRole              | String  | No (autogenerated)  | null           | Role of the user who created the widget. This value is used only internally, and is never directly exposed through the API. Cannot be modified by users.                                                                                                                                                    |
+| createdAt             | Date    | No (autogenerated)  | <current date> | Automatically maintained date of when the widget was created. Cannot be modified by users.                                                                                                                                                                                                                  |
+| updatedAt             | Date    | No (autogenerated)  | <current date> | Automatically maintained date of when the widget was last updated. Cannot be modified by users.                                                                                                                                                                                                             |

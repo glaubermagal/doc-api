@@ -673,14 +673,14 @@ The layer service was built to be very flexible, and not be restricted to specif
 
 #### Errors for creating a layer
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | `<field>`: `<field>` can not be empty | Your are missing a required field value.
-400            | - `<field>`: must be a `<restriction>` | The value provided for the mentioned field does not match the requirements.
-401            | Unauthorized   | You are not authenticated.
-403            | Forbidden      | You are trying to create a layer with one or more `application` values that are not associated with your user account. 
-404            | Dataset not found | The provided dataset id does not exist. 
-404            | Error: StatusCodeError: 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset not found\"}]} | The provided dataset exists but is not present on the [graph](reference.html#graph).
+| Error code | Error message                                                                                  | Description                                                                                                            |
+|------------|------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| 400        | `<field>`: `<field>` can not be empty                                                          | Your are missing a required field value.                                                                               |
+| 400        | - `<field>`: must be a `<restriction>`                                                         | The value provided for the mentioned field does not match the requirements.                                            |
+| 401        | Unauthorized                                                                                   | You are not authenticated.                                                                                             |
+| 403        | Forbidden                                                                                      | You are trying to create a layer with one or more `application` values that are not associated with your user account. |
+| 404        | Dataset not found                                                                              | The provided dataset id does not exist.                                                                                |
+| 404        | Error: StatusCodeError: 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset not found\"}]} | The provided dataset exists but is not present on the [graph](reference.html#graph).                                   |
 
 ## Updating a layer
 
@@ -706,14 +706,14 @@ To perform this operation, the following conditions must be met:
 
 #### Errors for updating a layer
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | - `<field>`: must be a `<restriction>` | The value provided for the mentioned field does not match the requirements.
-401            | Unauthorized   | You need to be logged in to be able to update a layer.
-403            | Forbidden      | You need to either have the `ADMIN` role, or have role `MANAGER` and be the layer's owner (through the `userId` field of the layer).
-403            | Forbidden      | You are trying to update a layer with one or more `application` values that are not associated with your user account. 
-404            | Layer with id <id> doesn't exist   | A layer with the provided id does not exist.
-404            | Dataset not found   | A dataset with the provided id does not exist.
+| Error code | Error message                          | Description                                                                                                                          |
+|------------|----------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| 400        | - `<field>`: must be a `<restriction>` | The value provided for the mentioned field does not match the requirements.                                                          |
+| 401        | Unauthorized                           | You need to be logged in to be able to update a layer.                                                                               |
+| 403        | Forbidden                              | You need to either have the `ADMIN` role, or have role `MANAGER` and be the layer's owner (through the `userId` field of the layer). |
+| 403        | Forbidden                              | You are trying to update a layer with one or more `application` values that are not associated with your user account.               |
+| 404        | Layer with id <id> doesn't exist       | A layer with the provided id does not exist.                                                                                         |
+| 404        | Dataset not found                      | A dataset with the provided id does not exist.                                                                                       |
 
 ## Deleting a layer
 
@@ -771,14 +771,13 @@ In order to delete a layer, the following conditions must be met:
 
 #### Errors for deleting a layer
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | Layer is protected | You are attempting to delete a layer that has `protected` set to prevent deletion.
-401            | Unauthorized   | You need to be logged in to be able to delete a layer.
-403            | Forbidden      | You need to either have the `ADMIN` role, or have role `MANAGER` and be the layer's owner (through the `userId` field of the layer)
-404            | Dataset not found | A dataset with the provided id does not exist.
-404            | Layer with id <id> doesn't exist   | A layer with the provided id does not exist.
-
+| Error code | Error message                    | Description                                                                                                                         |
+|------------|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|
+| 400        | Layer is protected               | You are attempting to delete a layer that has `protected` set to prevent deletion.                                                  |
+| 401        | Unauthorized                     | You need to be logged in to be able to delete a layer.                                                                              |
+| 403        | Forbidden                        | You need to either have the `ADMIN` role, or have role `MANAGER` and be the layer's owner (through the `userId` field of the layer) |
+| 404        | Dataset not found                | A dataset with the provided id does not exist.                                                                                      |
+| 404        | Layer with id <id> doesn't exist | A layer with the provided id does not exist.                                                                                        |
 
 ## Layer reference
 
@@ -786,31 +785,31 @@ This section gives you a complete view at the properties that are maintained as 
 
 You can find more details in the [source code](https://github.com/resource-watch/layer/blob/master/app/src/models/layer.model.js).
 
-Field name              | Type           | Required             | Default value              | Description                                                                  
------------------------ | -------------- | -------------------- |----------------------------| ---------------------------------------------------------------------------- 
-id                      | String         | Yes (autogenerated)  |                            | Unique Id of the layer. Auto generated on creation. Cannot be modified by users.    
-name                    | String         | Yes                  |                            | Name of the layer.              
-dataset                 | String         | Yes                  |                            | Id of the dataset to which the layer corresponds. Set on layer creation, cannot be modified.   
-slug                    | String         | Yes (autogenerated)  |                            | Slug of the layer. Auto generated on creation. Cannot be modified by users.  
-description             | String         | No                   |                            | User defined description of the layer.   
-application             | Array          | Yes                  |                            | Applications associated with this layer. Read more about this field [here](concepts.html#applications).
-iso                     | Array          | No                   |                            | List of ISO3 codes of the countries that relate to the layer. If empty (or contains a single element: 'global') then the layer is a global layer.
-provider                | String         | No                   |                            | Layer provider. It typically identifies the source service for the data displayed in the layer.
-type                    | String         | No                   |                            | Layer type.
-userId                  | String         | Yes (autopopulated)  |                            | Id of the user who created the layer. Set automatically on creation. Cannot be modified by users.
-default                 | Boolean        | No                   | false                      | If the layer should be used as the dataset's default layer.
-protected               | Boolean        | Yes                  | false                      | If the layer is protected. A protected layer cannot be deleted.               
-published               | Boolean        | Yes                  | true                       | If the layer is published or not.                                               
-env                     | String         | Yes                  | production                 | Environment to which the layer belongs. Read more about this field in the [Environments concept section](concepts.html#environments).
-applicationConfig       | Object         | No                   |                            | Schema-less object meant to host application-specific data or behavior configuration.
-layerConfig             | Object         | No                   |                            | Schema-less object meant to define layer specific data, like source of data, styling and animation settings.
-legendConfig            | Object         | No                   |                            | Schema-less object meant to define how a layer legend should be represented visually.
-staticImageConfig       | Object         | No                   |                            | 
-interactionConfig       | Object         | No                   |                            | Schema-less object meant to define interactive layer element behavior, ie.: how tooltips behave on click.
-userName                | String         | No (autogenerated)   | null                       | Name of the user who created the layer. This value is used only internally, and is never directly exposed through the API. Cannot be modified by users.        
-userRole                | String         | No (autogenerated)   | null                       | Role of the user who created the layer. This value is used only internally, and is never directly exposed through the API. Cannot be modified by users. 
-createdAt               | Date           | No (autogenerated)   | <current date>             | Automatically maintained date of when the layer was created. Cannot be modified by users.                     
-updatedAt               | Date           | No (autogenerated)   | <current date>             | Automatically maintained date of when the layer was last updated. Cannot be modified by users.                
+| Field name        | Type    | Required            | Default value  | Description                                                                                                                                             |
+|-------------------|---------|---------------------|----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id                | String  | Yes (autogenerated) |                | Unique Id of the layer. Auto generated on creation. Cannot be modified by users.                                                                        |
+| name              | String  | Yes                 |                | Name of the layer.                                                                                                                                      |
+| dataset           | String  | Yes                 |                | Id of the dataset to which the layer corresponds. Set on layer creation, cannot be modified.                                                            |
+| slug              | String  | Yes (autogenerated) |                | Slug of the layer. Auto generated on creation. Cannot be modified by users.                                                                             |
+| description       | String  | No                  |                | User defined description of the layer.                                                                                                                  |
+| application       | Array   | Yes                 |                | Applications associated with this layer. Read more about this field [here](concepts.html#applications).                                                 |
+| iso               | Array   | No                  |                | List of ISO3 codes of the countries that relate to the layer. If empty (or contains a single element: 'global') then the layer is a global layer.       |
+| provider          | String  | No                  |                | Layer provider. It typically identifies the source service for the data displayed in the layer.                                                         |
+| type              | String  | No                  |                | Layer type.                                                                                                                                             |
+| userId            | String  | Yes (autopopulated) |                | Id of the user who created the layer. Set automatically on creation. Cannot be modified by users.                                                       |
+| default           | Boolean | No                  | false          | If the layer should be used as the dataset's default layer.                                                                                             |
+| protected         | Boolean | Yes                 | false          | If the layer is protected. A protected layer cannot be deleted.                                                                                         |
+| published         | Boolean | Yes                 | true           | If the layer is published or not.                                                                                                                       |
+| env               | String  | Yes                 | production     | Environment to which the layer belongs. Read more about this field in the [Environments concept section](concepts.html#environments).                   |
+| applicationConfig | Object  | No                  |                | Schema-less object meant to host application-specific data or behavior configuration.                                                                   |
+| layerConfig       | Object  | No                  |                | Schema-less object meant to define layer specific data, like source of data, styling and animation settings.                                            |
+| legendConfig      | Object  | No                  |                | Schema-less object meant to define how a layer legend should be represented visually.                                                                   |
+| staticImageConfig | Object  | No                  |                |                                                                                                                                                         |
+| interactionConfig | Object  | No                  |                | Schema-less object meant to define interactive layer element behavior, ie.: how tooltips behave on click.                                               |
+| userName          | String  | No (autogenerated)  | null           | Name of the user who created the layer. This value is used only internally, and is never directly exposed through the API. Cannot be modified by users. |
+| userRole          | String  | No (autogenerated)  | null           | Role of the user who created the layer. This value is used only internally, and is never directly exposed through the API. Cannot be modified by users. |
+| createdAt         | Date    | No (autogenerated)  | <current date> | Automatically maintained date of when the layer was created. Cannot be modified by users.                                                               |
+| updatedAt         | Date    | No (autogenerated)  | <current date> | Automatically maintained date of when the layer was last updated. Cannot be modified by users.                                                          |
 
 ## Contextual layers
 
@@ -881,10 +880,10 @@ Sorting is currently not supported for contextual layers.
 
 #### Errors for getting contextual layers
 
-Error code | Error message                    | Description
----------- | -------------------------------- | ------------------------------------------------------------
-401        | Unauthorized                     | You haven't provided your authentication token.
-500        | Error while retrieving user team | An internal error occurred while fetching the request user's team.
+| Error code | Error message                    | Description                                                        |
+|------------|----------------------------------|--------------------------------------------------------------------|
+| 401        | Unauthorized                     | You haven't provided your authentication token.                    |
+| 500        | Error while retrieving user team | An internal error occurred while fetching the request user's team. |
 
 ### Creating a contextual layer for a user
 
@@ -928,11 +927,11 @@ You can create a contextual layer by calling a POST request, passing the relevan
 
 #### Errors for creating a contextual layer for a user
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | Bad Request    | The structure of the JSON request payload is not valid.
-401            | Unauthorized   | You haven't provided your authentication token.
-500            | Layer creation Failed. | The creation of the contextual layer failed, check if you are sending all the required fields.
+| Error code | Error message          | Description                                                                                    |
+|------------|------------------------|------------------------------------------------------------------------------------------------|
+| 400        | Bad Request            | The structure of the JSON request payload is not valid.                                        |
+| 401        | Unauthorized           | You haven't provided your authentication token.                                                |
+| 500        | Layer creation Failed. | The creation of the contextual layer failed, check if you are sending all the required fields. |
 
 ### Creating a contextual layer for a team
 
@@ -976,12 +975,12 @@ You can create a contextual layer by calling a POST request, passing the relevan
 
 #### Errors for creating a contextual layer for a team
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | Bad Request    | The structure of the JSON request payload is not valid.
-401            | Unauthorized   | You haven't provided your authentication token.
-500            | Layer creation Failed. | The creation of the contextual layer failed, check if you are sending all the required fields.
-500            | Team retrieval Failed. | An error occurred while fetching the information about the team with id provided, check you are providing a valid team id.
+| Error code | Error message          | Description                                                                                                                |
+|------------|------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| 400        | Bad Request            | The structure of the JSON request payload is not valid.                                                                    |
+| 401        | Unauthorized           | You haven't provided your authentication token.                                                                            |
+| 500        | Layer creation Failed. | The creation of the contextual layer failed, check if you are sending all the required fields.                             |
+| 500        | Team retrieval Failed. | An error occurred while fetching the information about the team with id provided, check you are providing a valid team id. |
 
 ### Updating a contextual layer
 
@@ -1029,12 +1028,12 @@ Updating contextual layers also has some caveats:
 
 #### Errors for updating a layer
 
-Error code     | Error message           | Description
--------------- | ----------------------- | ---------------------------------------------------------------------------------
-404            | Layer not found         | No contextual layer was found for the provided id.
-500            | Layer retrieval failed. | An error occurred while fetching the layer information from the database.
-500            | Team retrieval Failed.  | An error occurred while fetching the information about the team with id provided.
-500            | Layer update failed.    | An error occurred while saving the updated information of the contextual layer.
+| Error code | Error message           | Description                                                                       |
+|------------|-------------------------|-----------------------------------------------------------------------------------|
+| 404        | Layer not found         | No contextual layer was found for the provided id.                                |
+| 500        | Layer retrieval failed. | An error occurred while fetching the layer information from the database.         |
+| 500        | Team retrieval Failed.  | An error occurred while fetching the information about the team with id provided. |
+| 500        | Layer update failed.    | An error occurred while saving the updated information of the contextual layer.   |
 
 ### Deleting a contextual layer
 
@@ -1056,12 +1055,12 @@ If successful, the request to delete a contextual layer returns a 204 No Content
 
 #### Errors for deleting a layer
 
-Error code     | Error message           | Description
--------------- | ----------------------- | ---------------------------------------------------------------------------------
-404            | Layer not found         | No contextual layer was found for the provided id.
-500            | Layer retrieval failed. | An error occurred while fetching the layer information from the database.
-500            | Team retrieval Failed.  | An error occurred while fetching the information about the team with id provided.
-500            | Layer update failed.    | An error occurred while saving the updated information of the contextual layer.
+| Error code | Error message           | Description                                                                       |
+|------------|-------------------------|-----------------------------------------------------------------------------------|
+| 404        | Layer not found         | No contextual layer was found for the provided id.                                |
+| 500        | Layer retrieval failed. | An error occurred while fetching the layer information from the database.         |
+| 500        | Team retrieval Failed.  | An error occurred while fetching the information about the team with id provided. |
+| 500        | Layer update failed.    | An error occurred while saving the updated information of the contextual layer.   |
 
 ### Getting loss layer tiles
 
@@ -1079,9 +1078,9 @@ If successful, this endpoint returns a PNG file of the loss layer tile.
 
 #### Errors for getting loss layer tiles
 
-Error code     | Error message           | Description
--------------- | ----------------------- | ---------------------------------------------------------------------------------
-404            | Tile not found          | No tile was found for the parameters provided.
+| Error code | Error message  | Description                                    |
+|------------|----------------|------------------------------------------------|
+| 404        | Tile not found | No tile was found for the parameters provided. |
 
 ### Contextual layer reference
 
@@ -1089,15 +1088,15 @@ This section gives you a complete view of the properties that are maintained as 
 
 You can find more details in the [source code](https://github.com/gfw-api/fw-contextual-layers/blob/dev/app/src/models/layer.model.js).
 
-Field name  | Type    | Required            | Default value  | Description                                                                  
------------ | ------- | ------------------- |--------------- | -------------------------------------- 
-id          | String  | Yes (autogenerated) |                | Unique Id of the contextual layer. Auto-generated on creation. Cannot be modified by users.
-name        | String  | Yes                 |                | Name of the contextual layer.              
-description | String  | No                  |                | Description of the contextual layer.              
-url         | String  | Yes                 |                | URL to fetch tiles for the contextual layer.              
-isPublic    | Boolean | No                  | false          | If the contextual layer is publicly accessible.
-enabled     | Boolean | No                  | false          | If the contextual layer is enabled.
-owner       | Object  | No                  |                | Object containing information about the owner of the contextual layer.
-owner.type  | String  | Yes (auto-filled according to the endpoint used to create the contextual layer) |  | Type of the owner of the layer - can be `USER` or `TEAM`.
-owner.id    | String  | Yes (auto-filled according to the endpoint used to create the contextual layer) |  | Id of the user or team (according to the value of the `owner.type` attribute) owner of the contextual layer.
-createdAt   | Date    | No (autogenerated)  | <current date> | Automatically maintained date of when the contextual layer was created. Cannot be modified by users.
+| Field name  | Type    | Required                                                                        | Default value  | Description                                                                                                  |
+|-------------|---------|---------------------------------------------------------------------------------|----------------|--------------------------------------------------------------------------------------------------------------|
+| id          | String  | Yes (autogenerated)                                                             |                | Unique Id of the contextual layer. Auto-generated on creation. Cannot be modified by users.                  |
+| name        | String  | Yes                                                                             |                | Name of the contextual layer.                                                                                |
+| description | String  | No                                                                              |                | Description of the contextual layer.                                                                         |
+| url         | String  | Yes                                                                             |                | URL to fetch tiles for the contextual layer.                                                                 |
+| isPublic    | Boolean | No                                                                              | false          | If the contextual layer is publicly accessible.                                                              |
+| enabled     | Boolean | No                                                                              | false          | If the contextual layer is enabled.                                                                          |
+| owner       | Object  | No                                                                              |                | Object containing information about the owner of the contextual layer.                                       |
+| owner.type  | String  | Yes (auto-filled according to the endpoint used to create the contextual layer) |                | Type of the owner of the layer - can be `USER` or `TEAM`.                                                    |
+| owner.id    | String  | Yes (auto-filled according to the endpoint used to create the contextual layer) |                | Id of the user or team (according to the value of the `owner.type` attribute) owner of the contextual layer. |
+| createdAt   | Date    | No (autogenerated)                                                              | <current date> | Automatically maintained date of when the contextual layer was created. Cannot be modified by users.         |
