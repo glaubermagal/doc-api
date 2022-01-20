@@ -51,3 +51,28 @@ curl -X POST \
 ```
 
 This endpoint accepts two optional query parameters, `height` and `width`, that configure the size of the generated screenshot. Keep in mind that this endpoint works by rendering the `https://resourcewatch.org/embed/widget/<widget id>` URL with those dimensions applied to the viewport, and then captures the content of the `.widget-content` DOM element into an image file. As such, the resulting screenshot will have the proportional size of the corresponding DOM element within that viewport, and not the exact `height` and `width` specified.
+
+### Layer thumbnail
+
+This endpoint generates a thumbnail image for the provided layer and stores it on AWS S3.
+
+<aside class="notice">
+This endpoint does not validate the existence of the layer - you will not get a 404 HTTP error if you provided a non-existent layer id. 
+</aside>
+
+```shell
+curl -X POST \
+  http://api.resourcewatch.org/v1/webshot/layer/7b540186-9a9f-4e13-a6e8-f38e64fab2e1/thumbnail \
+  -H 'Authorization: Bearer <your-token>' \
+  -H 'Content-Type: application/json' \
+```
+
+```json
+{
+    "data": {
+        "layerThumbnail": "http://s3.amazonaws.com/resourcewatch/thumbnails/<filename>.png"
+    }
+}
+```
+
+This endpoint accepts two optional query parameters, `height` and `width`, that configure the size of the generated screenshot. Keep in mind that this endpoint works by rendering the `https://resourcewatch.org/embed/layer/<layer id>` URL with those dimensions applied to the viewport, and then captures the content of the `.layer-content` DOM element into an image file. As such, the resulting screenshot will have the proportional size of the corresponding DOM element within that viewport, and not the exact `height` and `width` specified.
