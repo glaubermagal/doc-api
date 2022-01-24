@@ -20,6 +20,11 @@ different RW API ecosystem apps and tools to share this common data storage, whi
 developers. To ensure this, make sure to properly store you application's data in the correct form -
 inside `applicationData`, indexed by your application's name.
 
+**Important:** User data, as defined managed by these endpoints, is not the same as user account, as managed by the 
+[User management](#user-management) endpoints. A user account is what you use to login and authenticate. User data is an 
+optional data storage feature, made available to anyone with an user account. Creating/updating/deleting a user account 
+does not automatically create/update/delete user data. 
+
 **Warning:** The data stored through these endpoints is individual to your user account, but it's not treated and
 confidential or sensitive. You should not store any sort of data that you would not like to see potentially disclosed,
 like passwords, sensitive and/or personal information, etc.
