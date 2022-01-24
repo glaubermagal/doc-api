@@ -26,6 +26,7 @@ curl -X GET https://api.resourcewatch.org/v1/area
         "application": "rw",
         "geostore": "8f77fe62cf15d5098ba0ee11c5126aa6",
         "userId": "58e22f662071c01c02f76a0f",
+        "env": "production",
         "createdAt": "2017-09-26T10:55:15.990Z",
         "updatedAt": "2017-09-26T10:55:15.990Z",
         "image": "",
@@ -48,6 +49,7 @@ curl -X GET https://api.resourcewatch.org/v1/area
         "application": "rw",
         "geostore": "b12640deba9d3c5012c5359dd5572e2d",
         "userId": "58e22f662071c01c02f76a0f",
+        "env": "production",
         "createdAt": "2017-09-26T10:58:50.226Z",
         "updatedAt": "2017-09-26T10:58:50.226Z",
         "image": "",
@@ -77,9 +79,10 @@ curl -X GET https://api.resourcewatch.org/v1/area?application=rw
 -H "Authorization: Bearer <your-token>"
 ```
 
-Parameter    |        Description |    Type |                                 Values |
------------- | :----------------: | ------: | -------------------------------------: |
-application  |        Application. Read more about this field [here](concepts.html#applications). |    Text |  Any Text, values separated by commas
+| Parameter   |                                 Description                                 | Type |                               Values |
+|-------------|:---------------------------------------------------------------------------:|-----:|-------------------------------------:|
+| application | Application. Read more about this field [here](concepts.html#applications). | Text | Any Text, values separated by commas |
+| env         | Environment. Read more about this field [here](concepts.html#environments). | Text |                                      |
 
 ### Pagination
 
@@ -121,11 +124,12 @@ Creates a new area
 
 ### Parameters
 
-Parameter | Description | Type | Values | Required |
---------- | :---------: | ---: | -----: | -------: |
-application | Application. Read more about this field [here](concepts.html#applications). | Text | Any Text, values separated by commas | Yes |
-name      | Name of the new area | Text | Any Text | Yes |
-geostore  | Geostore ID  | Text | Any Text | Yes |
+| Parameter   |                                 Description                                 | Type |                               Values | Required |
+|-------------|:---------------------------------------------------------------------------:|-----:|-------------------------------------:|---------:|
+| application | Application. Read more about this field [here](concepts.html#applications). | Text | Any Text, values separated by commas |      Yes |
+| name        |                            Name of the new area                             | Text |                             Any Text |      Yes |
+| geostore    |                                 Geostore ID                                 | Text |                             Any Text |      Yes |
+| env         | Environment. Read more about this field [here](concepts.html#environments). | Text |                             Any Text |       No |
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/area \
@@ -162,7 +166,8 @@ curl -X POST https://api.resourcewatch.org/v1/area?application=rw \
       "name": "Portugal area",
       "application": "rw",
       "geostore": "713899292fc118a915741728ef84a2a7",
-      "userId": "58e22f662071c01c02f76a0f",
+      "userId": "58e22f662071c01c02f76a0f",              
+      "env": "production",
       "createdAt": "2017-11-16T14:26:48.396Z",
       "updatedAt": "2017-11-16T14:26:48.396Z",
       "image": "",
@@ -186,14 +191,14 @@ Deletes an area
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/area/<area-id> \
--H "Authorization: Bearer <your-token>" \
+-H "Authorization: Bearer <your-token>"
 ```
 
 ### Example
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/area/59ca3213d08a7d001054522b \
--H "Authorization: Bearer <your-token>" \
+-H "Authorization: Bearer <your-token>"
 ```
 
 ## Get area
@@ -202,14 +207,14 @@ Gets all the information from an area
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/area/<area-id> \
--H "Authorization: Bearer <your-token>" \
+-H "Authorization: Bearer <your-token>"
 ```
 
 ### Example
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/area/59ca32ea3209db0014e9a7b7 \
--H "Authorization: Bearer <your-token>" \
+-H "Authorization: Bearer <your-token>"
 ```
 
 ```json
@@ -222,6 +227,7 @@ curl -X GET https://api.resourcewatch.org/v1/area/59ca32ea3209db0014e9a7b7 \
             "application": "rw",
             "geostore": "b12640deba9d3c5012c5359dd5572e2d",
             "userId": "58e22f662071c01c02f76a0f",
+            "env": "production",
             "createdAt": "2017-09-26T10:58:50.226Z",
             "updatedAt": "2017-09-26T10:58:50.226Z",
             "image": "",
