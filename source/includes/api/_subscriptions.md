@@ -169,18 +169,18 @@ For a detailed description of each field, check out the [Subscription reference]
 
 The `v1/subscriptions` endpoint supports the following optional query parameters as filters:
 
-Field       |  Description                                             | Type   | Default value
------------ | :------------------------------------------------------: | -----: | ---------------:
-application | Application to which the subscription is associated. Read more about this field [here](concepts.html#applications). | String | 'gfw'
-env         | The environment to which the subscription is associated. Read more about this field in the [Environments concept section](concepts.html#environments). | String | 'production'
+| Field       |                                                                      Description                                                                       |   Type | Default value |
+|-------------|:------------------------------------------------------------------------------------------------------------------------------------------------------:|-------:|--------------:|
+| application |                  Application to which the subscription is associated. Read more about this field [here](concepts.html#applications).                   | String |         'gfw' |
+| env         | The environment to which the subscription is associated. Read more about this field in the [Environments concept section](concepts.html#environments). | String |  'production' |
 
 **Deprecation notice:** the default value for the `application` filter (currently, `gfw`) will be removed and the `application` filter will then have no default value. We recommend reviewing your application to ensure you set and load the correct `application` explicitly.
 
 ### Errors for getting subscriptions
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-401            | Unauthorized   | No valid token was provided in the request headers.
+| Error code | Error message | Description                                         |
+|------------|---------------|-----------------------------------------------------|
+| 401        | Unauthorized  | No valid token was provided in the request headers. |
 
 ## Getting a subscription by id
 
@@ -223,11 +223,11 @@ If you know the id of a subscription, then you can access it directly by perform
 
 ### Errors for getting subscriptions by id
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | ID is not valid| The id provided is not a valid subscription id.
-401            | Unauthorized   | No valid token was provided in the request headers.
-404            | Subscription not found | Either no subscription exists with the provided id, or the subscription with the id provided is not owned by the user who performed the request.
+| Error code | Error message          | Description                                                                                                                                      |
+|------------|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| 400        | ID is not valid        | The id provided is not a valid subscription id.                                                                                                  |
+| 401        | Unauthorized           | No valid token was provided in the request headers.                                                                                              |
+| 404        | Subscription not found | Either no subscription exists with the provided id, or the subscription with the id provided is not owned by the user who performed the request. |
 
 ## Creating a subscription
 
@@ -286,10 +286,10 @@ If the creation of the subscription is successful, the HTTP response code will b
 
 ### Errors for creating subscriptions
 
-Error code     | Error message                       | Description
--------------- | ----------------------------------- | --------------
-400            | `<field>` required                  | You didn't provide one of the required fields.
-401            | Unauthorized                        | No valid token was provided in the request headers.
+| Error code | Error message      | Description                                         |
+|------------|--------------------|-----------------------------------------------------|
+| 400        | `<field>` required | You didn't provide one of the required fields.      |
+| 401        | Unauthorized       | No valid token was provided in the request headers. |
 
 ### Defining the datasets
 
@@ -327,10 +327,10 @@ curl -X POST "https://api.resourcewatch.org/v1/subscriptions" \
 
 A subscription can refer to a specific area of interest that has been created using the [RW API Areas service](reference.html#areas). If this is the case, you should first [create your area of interest](reference.html#create-area), grab its id and provide it in the `params.area` field of the request body when creating the subscription.
 
-Field         | Description                                                    | Type
-------------- | :------------------------------------------------------------: | ----------------:
-`params`      | Geographic area of the subscription                            | Object
-`params.area` | Id of area of interest from the [RW API Areas service](reference.html#areas) | String
+| Field         |                                 Description                                  |   Type |
+|---------------|:----------------------------------------------------------------------------:|-------:|
+| `params`      |                     Geographic area of the subscription                      | Object |
+| `params.area` | Id of area of interest from the [RW API Areas service](reference.html#areas) | String |
 
 #### Subscribing to a country, country region or subregion
 
@@ -384,11 +384,11 @@ curl -X POST "https://api.resourcewatch.org/v1/subscriptions" \
 
 A subscription can refer to a country, one of its regions, or a subregion within a region. Countries are identified by their ISO 3166-1 alpha-3 code - check [here](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) for a list of all the available country codes. Regions and subregions are identified by their respective GADM id, which can be obtained from GADM's dataset [here](https://gadm.org/data.html). When creating a subscription for a region, the country ISO must be specified. For subscribing to a subregion, both region and country ISO must be provided.
 
-Field                 | Description                                                    | Type
---------------------- | :------------------------------------------------------------: | ----------------:
-`params.iso.country`  | ISO 3-letter code of the country to subscribe                  | String
-`params.iso.region`   | Region id to subscribe                                         | String
-`params.iso.subregion`| Subregion id to subscribe (optional)                           | String
+| Field                  |                  Description                  |   Type |
+|------------------------|:---------------------------------------------:|-------:|
+| `params.iso.country`   | ISO 3-letter code of the country to subscribe | String |
+| `params.iso.region`    |            Region id to subscribe             | String |
+| `params.iso.subregion` |     Subregion id to subscribe (optional)      | String |
 
 #### Subscribing to a protected area from World Database on Protected Areas
 
@@ -415,9 +415,9 @@ curl -X POST "https://api.resourcewatch.org/v1/subscriptions" \
 
 A subscription can refer to a specific protected area by the id of that area in the World Database on Protected Areas. If this is the case, you should provide the WDPA id in the `params.wdpaid` field when creating the subscription. IDs of protected areas worldwide can be obtained from the [Protected Planet website](https://www.protectedplanet.net/).
 
-Field                 | Description                                                    | Type
---------------------- | :------------------------------------------------------------: | ----------------:
-`params.wdpaid`       | Id of the protected area in the WDPA                           | String
+| Field           |             Description              |   Type |
+|-----------------|:------------------------------------:|-------:|
+| `params.wdpaid` | Id of the protected area in the WDPA | String |
 
 #### Subscribing to a RW API geostore
 
@@ -444,9 +444,9 @@ curl -X POST "https://api.resourcewatch.org/v1/subscriptions" \
 
 A subscription can refer to a specific geostore that has been created using the [RW API Geostore service](reference.html#geostore). If this is the case, you should [create your geostore](reference.html#create-geostore) and use its id in the `params.geostore` field of the request body when creating the subscription.
 
-Field                 | Description                                                    | Type
---------------------- | :------------------------------------------------------------: | ----------------:
-`params.geostore`     | Id of the RW API geostore to subscribe to.                     | String
+| Field             |                Description                 |   Type |
+|-------------------|:------------------------------------------:|-------:|
+| `params.geostore` | Id of the RW API geostore to subscribe to. | String |
 
 #### Subscribing to a GFW Data API geostore
 
@@ -473,9 +473,9 @@ curl -X POST "https://api.resourcewatch.org/v1/subscriptions" \
 
 A subscription can refer to a specific geostore that has been created using the GFW Data API. If this is the case, you should check the docs for the GFW Data API and create your geostore, then use its id in the `params.geostoreDataApi` field of the request body when creating the subscription.
 
-Field                 | Description                                                    | Type
---------------------- | :------------------------------------------------------------: | ----------------:
-`params.geostoreDataApi` | Id of the GFW Data API geostore to subscribe to.            | String
+| Field                    |                   Description                    |   Type |
+|--------------------------|:------------------------------------------------:|-------:|
+| `params.geostoreDataApi` | Id of the GFW Data API geostore to subscribe to. | String |
 
 #### Subscribing to land use areas
 
@@ -510,10 +510,10 @@ The ids to be used for land use areas can be obtained from the following CartoDB
 * Wood fiber plantation IDs can be obtained from [this CartoDB table](https://wri-01.carto.com/tables/gfw_woodfiber/public/map).
 * Congo Basin logging road IDs can be obtained from [this CartoDB table](https://wri-01.carto.com/tables/osm_logging_roads/public/map).
 
-Field                 | Description                                                    | Type
---------------------- | :------------------------------------------------------------: | ----------------:
-`params.use`          | The type of land use you want to subscribe to. Can be one of `mining`, `logging`, `oilpalm` or `fiber`. | String
-`params.useid`        | The id of the land use area you want to subscribe to.          | String
+| Field          |                                               Description                                               |   Type |
+|----------------|:-------------------------------------------------------------------------------------------------------:|-------:|
+| `params.use`   | The type of land use you want to subscribe to. Can be one of `mining`, `logging`, `oilpalm` or `fiber`. | String |
+| `params.useid` |                          The id of the land use area you want to subscribe to.                          | String |
 
 ## Updating a subscription
 
@@ -579,12 +579,12 @@ If the update of the subscription is successful, the HTTP response code will be 
 
 ### Errors for updating subscriptions
 
-Error code     | Error message                       | Description
--------------- | ----------------------------------- | --------------
-400            | `<field>` required                  | You didn't provide one of the required fields.
-400            | Id is not valid                     | The id provided is not valid.
-401            | Unauthorized                        | No valid token was provided in the request headers.
-404            | Subscription not found              | Either a subscription with the id provided does not exist or it is not owned by the user who performed the request.
+| Error code | Error message          | Description                                                                                                         |
+|------------|------------------------|---------------------------------------------------------------------------------------------------------------------|
+| 400        | `<field>` required     | You didn't provide one of the required fields.                                                                      |
+| 400        | Id is not valid        | The id provided is not valid.                                                                                       |
+| 401        | Unauthorized           | No valid token was provided in the request headers.                                                                 |
+| 404        | Subscription not found | Either a subscription with the id provided does not exist or it is not owned by the user who performed the request. |
 
 ## Deleting subscriptions
 
@@ -626,11 +626,11 @@ To delete a subscription associated with your user account, you should use the D
 
 ### Errors for deleting subscriptions
 
-Error code     | Error message                       | Description
--------------- | ----------------------------------- | --------------
-400            | Id is not valid                     | The id provided is not valid.
-401            | Unauthorized                        | No valid token was provided in the request headers.
-404            | Subscription not found              | Either a subscription with the id provided does not exist or it is not owned by the user who performed the request.
+| Error code | Error message          | Description                                                                                                         |
+|------------|------------------------|---------------------------------------------------------------------------------------------------------------------|
+| 400        | Id is not valid        | The id provided is not valid.                                                                                       |
+| 401        | Unauthorized           | No valid token was provided in the request headers.                                                                 |
+| 404        | Subscription not found | Either a subscription with the id provided does not exist or it is not owned by the user who performed the request. |
 
 ## Confirming a subscription
 
@@ -762,11 +762,11 @@ The `v1/subscriptions/statistics` endpoint can be used to access all the data re
 
 This endpoint supports the following query parameters as filters:
 
-Field       |             Description                                                              | Type   | Default | Example    |
------------ | :----------------------------------------------------------------------------------: | -----: | ------: | ---------: |
-start       | The start of the date range to fetch the statistics. **This parameter is required.** | String | None    | 01-01-2020 |
-end         | The end of the date range to fetch the statistics. **This parameter is required.**   | String | None    | 02-20-2020 |
-application | The application for which the statistics will be fetched. Read more about this field [here](concepts.html#applications). | String | 'gfw'   | 'rw'       |
+| Field       |                                                       Description                                                        |   Type | Default |    Example |
+|-------------|:------------------------------------------------------------------------------------------------------------------------:|-------:|--------:|-----------:|
+| start       |                   The start of the date range to fetch the statistics. **This parameter is required.**                   | String |    None | 01-01-2020 |
+| end         |                    The end of the date range to fetch the statistics. **This parameter is required.**                    | String |    None | 02-20-2020 |
+| application | The application for which the statistics will be fetched. Read more about this field [here](concepts.html#applications). | String |   'gfw' |       'rw' |
 
 ### Grouped subscription statistics
 
@@ -834,11 +834,11 @@ The `v1/subscriptions/statistics-group` endpoint can be used to access data rega
 
 This endpoint supports the following query parameters as filters:
 
-Field       |             Description                                                              | Type   | Default | Example    |
------------ | :----------------------------------------------------------------------------------: | -----: | ------: | ---------: |
-start       | The start of the date range to fetch the statistics. **This parameter is required.** | String | None    | 01-01-2020 |
-end         | The end of the date range to fetch the statistics. **This parameter is required.**   | String | None    | 02-20-2020 |
-application | The application for which the statistics will be fetched. Read more about this field [here](concepts.html#applications). | String | 'gfw'   | 'rw'       |
+| Field       |                                                       Description                                                        |   Type | Default |    Example |
+|-------------|:------------------------------------------------------------------------------------------------------------------------:|-------:|--------:|-----------:|
+| start       |                   The start of the date range to fetch the statistics. **This parameter is required.**                   | String |    None | 01-01-2020 |
+| end         |                    The end of the date range to fetch the statistics. **This parameter is required.**                    | String |    None | 02-20-2020 |
+| application | The application for which the statistics will be fetched. Read more about this field [here](concepts.html#applications). | String |   'gfw' |       'rw' |
 
 ## Subscription reference
 
@@ -846,25 +846,25 @@ This section gives you a complete view at the properties that are maintained as 
 
 You can find more details in the [source code](https://github.com/gfw-api/gfw-subscription-api/blob/develop/app/src/models/subscription.js).
 
-Filter           | Type    | Required            | Default value       | Description
----------------- | ------- | ------------------- |-------------------- | ------------------------------------------------------------------
-id               | String  | Yes                 | (auto-generated)    | Unique Id of the subscription. Auto generated on creation. Cannot be modified by users.
-name             | String  | No                  |                     | The name of the subscription.
-confirmed        | Boolean | No                  | false               | If the subscription is confirmed or not. Cannot be modified by users, only through the usage of the confirm and unsubscribe endpoints. (TODO: missing refs!)
-resource         | Object  | Yes                 |                     | An object containing the data for who (or what) should be notified on dataset data changes.
-resource.type    | Enum    | Yes                 |                     | The type of resource to be notified. Can take the values of `EMAIL` (for an email notification) or `URL` for a webhook notification.
-resource.content | String  | Yes                 |                     | The object to be notified: should be a valid email case `resource.type` is `EMAIL`, and a valid URL case `resource.type` is `URL`.
-datasets         | Array   | No                  | `[]`                | An array of dataset ids that this subscription is tracking.
-datasetsQuery    | Array   | No                  | `[]`                | An alternative way of stating the datasets that this subscription is tracking. This field is an array of objects, check the rows below to see which properties each object should have.
-datasetsQuery[0].id | String   | No              |                     | An identifier for the dataset being subscribed.
-datasetsQuery[0].type | String   | No            |                     | A type for the dataset being subscribed.
-datasetsQuery[0].threshold | Number  | No | 0    | The threshold to be considered when checking for updates in the dataset's data. By default, it takes the value the value 0, but you can customize it to only get notified if there are at least (for instance) 5 updates to the dataset's data.
-datasetsQuery[0].lastSentDate | Date     | No    | (auto-generated)    | Value automatically updated to have set the last date when updates were detected in this dataset.
-datasetsQuery[0].lastSentDate | Date     | No    | (auto-generated)    | This value is automatically updated with the historical data of all the updates detected in the dataset's data.
-params           | Object  | No                  | `{}`                | Determines the area of interest that this subscription should track. Can contain information to narrow the updates being tracked (especially in the case of geo-referenced data).
-userId           | String  | Yes                 | (auto-populated)    | Id of the user who owns the subscription. Set automatically on creation. Cannot be modified by users.
-language         | String  | No                  | `'en'`              | The language for this subscription. Useful for customizing email notifications according to the language of the subscription. Possible values include `'en'`, `'es'`, `'fr'`, `'pt'` or `'zh'`.
-application      | String  | Yes                 | `'gfw'`             | Applications associated with this subscription. Read more about this field [here](concepts.html#applications).
-env              | String  | Yes                 | `'production'`      | Environment to which the subscription belongs. Read more about this field in the [Environments concept section](concepts.html#environments).
-createdAt        | Date    | No                  | (auto-populated)    | Automatically maintained date of when the subscription was created. Cannot be modified by users.
-updatedAt        | Date    | No                  | (auto-populated)    | Automatically maintained date of when the subscription was last updated. Cannot be modified by users.
+| Filter                        | Type    | Required | Default value    | Description                                                                                                                                                                                                                                     |
+|-------------------------------|---------|----------|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id                            | String  | Yes      | (auto-generated) | Unique Id of the subscription. Auto generated on creation. Cannot be modified by users.                                                                                                                                                         |
+| name                          | String  | No       |                  | The name of the subscription.                                                                                                                                                                                                                   |
+| confirmed                     | Boolean | No       | false            | If the subscription is confirmed or not. Cannot be modified by users, only through the usage of the confirm and unsubscribe endpoints. (TODO: missing refs!)                                                                                    |
+| resource                      | Object  | Yes      |                  | An object containing the data for who (or what) should be notified on dataset data changes.                                                                                                                                                     |
+| resource.type                 | Enum    | Yes      |                  | The type of resource to be notified. Can take the values of `EMAIL` (for an email notification) or `URL` for a webhook notification.                                                                                                            |
+| resource.content              | String  | Yes      |                  | The object to be notified: should be a valid email case `resource.type` is `EMAIL`, and a valid URL case `resource.type` is `URL`.                                                                                                              |
+| datasets                      | Array   | No       | `[]`             | An array of dataset ids that this subscription is tracking.                                                                                                                                                                                     |
+| datasetsQuery                 | Array   | No       | `[]`             | An alternative way of stating the datasets that this subscription is tracking. This field is an array of objects, check the rows below to see which properties each object should have.                                                         |
+| datasetsQuery[0].id           | String  | No       |                  | An identifier for the dataset being subscribed.                                                                                                                                                                                                 |
+| datasetsQuery[0].type         | String  | No       |                  | A type for the dataset being subscribed.                                                                                                                                                                                                        |
+| datasetsQuery[0].threshold    | Number  | No       | 0                | The threshold to be considered when checking for updates in the dataset's data. By default, it takes the value the value 0, but you can customize it to only get notified if there are at least (for instance) 5 updates to the dataset's data. |
+| datasetsQuery[0].lastSentDate | Date    | No       | (auto-generated) | Value automatically updated to have set the last date when updates were detected in this dataset.                                                                                                                                               |
+| datasetsQuery[0].lastSentDate | Date    | No       | (auto-generated) | This value is automatically updated with the historical data of all the updates detected in the dataset's data.                                                                                                                                 |
+| params                        | Object  | No       | `{}`             | Determines the area of interest that this subscription should track. Can contain information to narrow the updates being tracked (especially in the case of geo-referenced data).                                                               |
+| userId                        | String  | Yes      | (auto-populated) | Id of the user who owns the subscription. Set automatically on creation. Cannot be modified by users.                                                                                                                                           |
+| language                      | String  | No       | `'en'`           | The language for this subscription. Useful for customizing email notifications according to the language of the subscription. Possible values include `'en'`, `'es'`, `'fr'`, `'pt'` or `'zh'`.                                                 |
+| application                   | String  | Yes      | `'gfw'`          | Applications associated with this subscription. Read more about this field [here](concepts.html#applications).                                                                                                                                  |
+| env                           | String  | Yes      | `'production'`   | Environment to which the subscription belongs. Read more about this field in the [Environments concept section](concepts.html#environments).                                                                                                    |
+| createdAt                     | Date    | No       | (auto-populated) | Automatically maintained date of when the subscription was created. Cannot be modified by users.                                                                                                                                                |
+| updatedAt                     | Date    | No       | (auto-populated) | Automatically maintained date of when the subscription was last updated. Cannot be modified by users.                                                                                                                                           |
