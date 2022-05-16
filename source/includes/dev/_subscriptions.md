@@ -33,10 +33,9 @@ You can create a subscription for another user by providing the user id in the b
 
 This can only be done when performing requests from another microservice.
 
-Field         |                            Description                            |               Type | Required
-------------- | :---------------------------------------------------------------: | -----------------: |-----------:
-userId        | Id of the owner of the subscription - if not provided, it's set as the id of the user in the token. | String | No
-
+| Field  |                                             Description                                             |   Type | Required |
+|--------|:---------------------------------------------------------------------------------------------------:|-------:|---------:|
+| userId | Id of the owner of the subscription - if not provided, it's set as the id of the user in the token. | String |       No |
 
 ## Updating a subscription for another user
 
@@ -44,10 +43,9 @@ If the request comes from another microservice, then it is possible to modify su
 
 The following fields are available to be provided when modifying a subscription:
 
-Field         |                            Description                            |               Type | Required
-------------- | :---------------------------------------------------------------: | -----------------: |-----------:
-userId        | [Check here for more info](/developer.html#updating-a-subscription-for-another-user) | String | No
-
+| Field  |                                     Description                                      |   Type | Required |
+|--------|:------------------------------------------------------------------------------------:|-------:|---------:|
+| userId | [Check here for more info](/developer.html#updating-a-subscription-for-another-user) | String |       No |
 
 ## Finding subscriptions by ids
 
@@ -147,10 +145,10 @@ You can find all the subscriptions associated with a given user id using the fol
 
 This endpoint supports the following optional query parameters as filters:
 
-Field       |             Description                              |   Type |
------------ | :--------------------------------------------------: | -----: |
-application | Application to which the subscription is associated. Read more about the `application` field [here](concepts.html#applications). | String |
-env         | Environment to which the subscription is associated. Read more about this field in the [Environments concept section](concepts.html#environments). | String |
+| Field       |                                                                    Description                                                                     |   Type |
+|-------------|:--------------------------------------------------------------------------------------------------------------------------------------------------:|-------:|
+| application |          Application to which the subscription is associated. Read more about the `application` field [here](concepts.html#applications).          | String |
+| env         | Environment to which the subscription is associated. Read more about this field in the [Environments concept section](concepts.html#environments). | String |
 
 ## Finding all subscriptions
 
@@ -207,11 +205,11 @@ You can find all the subscriptions using the following endpoint.
 
 This endpoint supports the following optional query parameters as filters:
 
-Field          |             Description                              |   Type | Example      |
--------------- | :--------------------------------------------------: | -----: | -----------: |
-application    | Application to which the subscription is associated. Read more about the `application` field [here](concepts.html#applications). | String | 'rw'         |
-env            | Environment to which the subscription is associated. Read more about this field in the [Environments concept section](concepts.html#environments). | String | 'production' |
-updatedAtSince | Filter returned subscriptions by the updatedAt date being before the date provided. Should be a valid ISO date string. | String | '2020-03-25T09:16:22.068Z' |
-updatedAtUntil | Filter returned subscriptions by the updatedAt date being after the date provided. Should be a valid ISO date string. | String | '2020-03-25T09:16:22.068Z' |
-page[size]     | The number elements per page. The maximum allowed value is 100 and the default value is 10. | Number | 10 |
-page[number]   | The page to fetch. Defaults to 1.                    | Number | 1 |
+| Field          |                                                                    Description                                                                     |   Type |                    Example |
+|----------------|:--------------------------------------------------------------------------------------------------------------------------------------------------:|-------:|---------------------------:|
+| application    |          Application to which the subscription is associated. Read more about the `application` field [here](concepts.html#applications).          | String |                       'rw' |
+| env            | Environment to which the subscription is associated. Read more about this field in the [Environments concept section](concepts.html#environments). | String |               'production' |
+| updatedAtSince |               Filter returned subscriptions by the updatedAt date being before the date provided. Should be a valid ISO date string.               | String | '2020-03-25T09:16:22.068Z' |
+| updatedAtUntil |               Filter returned subscriptions by the updatedAt date being after the date provided. Should be a valid ISO date string.                | String | '2020-03-25T09:16:22.068Z' |
+| page[size]     |                            The number elements per page. The maximum allowed value is 100 and the default value is 10.                             | Number |                         10 |
+| page[number]   |                                                         The page to fetch. Defaults to 1.                                                          | Number |                          1 |
