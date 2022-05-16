@@ -213,3 +213,48 @@ This endpoint supports the following optional query parameters as filters:
 | updatedAtUntil |               Filter returned subscriptions by the updatedAt date being after the date provided. Should be a valid ISO date string.                | String | '2020-03-25T09:16:22.068Z' |
 | page[size]     |                            The number elements per page. The maximum allowed value is 100 and the default value is 10.                             | Number |                         10 |
 | page[number]   |                                                         The page to fetch. Defaults to 1.                                                          | Number |                          1 |
+
+## Testing a subscription
+
+```shell
+curl -X POST 'http://api.resourcewatch.org/v1/subscriptions/test-email-alerts' \
+-H "Authorization: Bearer <your-token>"
+--data-raw '{
+    "subId": "12345ae0895047001a1d0391",
+    "alert": "viirs-active-fires"
+}'
+```
+
+> Example response:
+
+```json
+{
+  "success": true
+}
+```
+
+This endpoint will, for a single subscription and alert type, run the pipeline that checks for data updates and issues the corresponding subscription notification email (depending on the subscription type). This process has no impact on the regularly scheduled alert email processing. This test endpoint will always try to send an email, even for subscriptions of type `URL` - for these, an `email` value must be passed on the request body, that will be used as the email address to which the test email will be sent.
+
+As required body values, you need to provide the id of the subscription and the alert type, as seen in the example.
+
+The following values can be optionally passed in the request body:
+
+| Field    | Description                                                                   | Default value                                 |
+|----------|-------------------------------------------------------------------------------|-----------------------------------------------|
+| email    | Address to which the subscription email will be sent.                         | The email address present in the subscription |
+| fromDate | Start date from which to query for data updates. Example format: "2022-05-17" | Two weeks ago from the current date           |
+| toDate   | End date until which to query for data updates. Example format: "2022-05-17"  | One week ago from the current date            |
+| language | Language in which to send the email.                                          | English                                       |
+
+#### Errors for testing a subscription
+
+| Error code | Error message                                                                                 | Description                                                              |
+|------------|-----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
+| 400        | Subscription id is required                                                                   | The `subId` subscription id value is missing from the POST request body. |
+| 400        | The alert provided is not supported for testing. Supported alerts: <list of supported values> | The provided `alert` value is not supported.                             |
+| 401        | Unauthorized                                                                                  | You need to be logged in to use this endpoint.                           |
+| 403        | Not authorized                                                                                | You need to have the `ADMIN` role to use this endpoint.                  |
+
+This endpoint is lacking error handling on a few common scenarios, in which situations it will reply with a success message, but internally fail silently:
+- In case you fail to provide an `email` value for an `URL` type subscription
+- In case you provide a `subId` that is invalid or otherwise does not match an actual existing subscription.
