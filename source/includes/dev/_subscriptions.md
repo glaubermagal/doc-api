@@ -217,7 +217,7 @@ This endpoint supports the following optional query parameters as filters:
 ## Testing a subscription
 
 ```shell
-curl -X POST 'http://api.resourcewatch.org/v1/subscriptions/test-email-alerts' \
+curl -X POST 'http://api.resourcewatch.org/v1/subscriptions/test-alert' \
 -H "Authorization: Bearer <your-token>"
 --data-raw '{
     "subId": "12345ae0895047001a1d0391",
@@ -233,28 +233,38 @@ curl -X POST 'http://api.resourcewatch.org/v1/subscriptions/test-email-alerts' \
 }
 ```
 
-This endpoint will, for a single subscription and alert type, run the pipeline that checks for data updates and issues the corresponding subscription notification email (depending on the subscription type). This process has no impact on the regularly scheduled alert email processing. This test endpoint will always try to send an email, even for subscriptions of type `URL` - for these, an `email` value must be passed on the request body, that will be used as the email address to which the test email will be sent.
+This endpoints will, for a single subscription and alert type, run the pipeline that checks for data updates and issues the corresponding subscription notification email or webhook callback. This process has no impact on the regularly scheduled alert email processing. 
 
-As required body values, you need to provide the id of the subscription and the alert type, as seen in the example.
+The endpoint requires two parameters: 
+- `subId`: The ID of the subscription to test.
+- `alert`: the type of the alert to process for the given subscription.
+
+With these two values, the endpoint will run the data processing pipeline and issue the associated action (send an email or call the webhook). Like a standard subscription pipeline processing, should this produce no results, no email/webhook will be triggered. 
 
 The following values can be optionally passed in the request body:
 
-| Field    | Description                                                                   | Default value                                 |
-|----------|-------------------------------------------------------------------------------|-----------------------------------------------|
-| email    | Address to which the subscription email will be sent.                         | The email address present in the subscription |
-| fromDate | Start date from which to query for data updates. Example format: "2022-05-17" | Two weeks ago from the current date           |
-| toDate   | End date until which to query for data updates. Example format: "2022-05-17"  | One week ago from the current date            |
-| language | Language in which to send the email.                                          | English                                       |
+| Field    | Description                                                                                    | Default value                                 |
+|----------|------------------------------------------------------------------------------------------------|-----------------------------------------------|
+| type     | If specified, overrides the subscription type. This is not persisted. Can be `URL` or `EMAIL`. | The type present in the subscription.         |
+| url      | URL (including protocol) used for the `URL` type subscriptions.                                | The url present in the subscription           |
+| email    | Address to which the subscription email will be sent on `EMAIL` type subscriptions.            | The email address present in the subscription |
+| fromDate | Start date from which to query for data updates. Example format: "2022-05-17"                  | One week ago from current date                |
+| toDate   | End date until which to query for data updates. Example format: "2022-05-17"                   | Current date                                  |
+| language | Language in which to send the email.                                                           | English                                       |
+
+Using these parameters, you can specify a custom email address or callback URL for test, and even modify the subscription type (for example, issue an email for a subscription that would normally call a webhook, or vice-versa). None of these changes are persisted to the subscription, which will retain its preexisting type and email address/callback URL.
 
 #### Errors for testing a subscription
 
-| Error code | Error message                                                                                 | Description                                                              |
-|------------|-----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
-| 400        | Subscription id is required                                                                   | The `subId` subscription id value is missing from the POST request body. |
-| 400        | The alert provided is not supported for testing. Supported alerts: <list of supported values> | The provided `alert` value is not supported.                             |
-| 401        | Unauthorized                                                                                  | You need to be logged in to use this endpoint.                           |
-| 403        | Not authorized                                                                                | You need to have the `ADMIN` role to use this endpoint.                  |
+| Error code | Error message                                                                                  | Description                                                              |
+|------------|------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
+| 400        | Subscription id is required                                                                    | The `subId` subscription id value is missing from the POST request body. |
+| 400        | The alert provided is not supported for testing. Supported alerts: <list of supported values>  | The provided `alert` value is not supported.                             |
+| 400        | The alert type provided is not supported. Supported alerts types: <list of supported values>   | The provided `type` value is not supported.                              |
+| 401        | Unauthorized                                                                                   | You need to be logged in to use this endpoint.                           |
+| 403        | Not authorized                                                                                 | You need to have the `ADMIN` role to use this endpoint.                  |
 
 This endpoint is lacking error handling on a few common scenarios, in which situations it will reply with a success message, but internally fail silently:
-- In case you fail to provide an `email` value for an `URL` type subscription
+- In case the subscription alert type is modified but the corresponding `email`/`url` is not provided
+- In case the `email`/`url` are invalid (either the provided override value, or the preexisting one in the subscription)
 - In case you provide a `subId` that is invalid or otherwise does not match an actual existing subscription.
