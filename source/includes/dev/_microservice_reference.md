@@ -59,17 +59,6 @@ true-color-tiles | [Github](https://github.com/gfw-api/true-color-tiles)        
 viirs-fires      | [Github](https://github.com/gfw-api/gfw-viirs-fires-api)        | [![Build Status](https://travis-ci.com/gfw-api/gfw-viirs-fires-api.svg?branch=dev)](https://travis-ci.com/gfw-api/gfw-viirs-fires-api) | [![Test Coverage](https://api.codeclimate.com/v1/badges/5978e5b572f6194cbe42/test_coverage)](https://codeclimate.com/github/gfw-api/gfw-viirs-fires-api/test_coverage) |
 
 
-## FW
-
-Name                   |                  URL                                             | Travis Status  | Code Coverage
----------------------- | :--------------------------------------------------------------: |--------------: |--------------: |
-forest-watcher-api     | [Github](https://github.com/gfw-api/forest-watcher)              | [![Build Status](https://travis-ci.com/gfw-api/forest-watcher.svg?branch=dev)](https://travis-ci.com/gfw-api/forest-watcher) | [![Test Coverage](https://api.codeclimate.com/v1/badges/dfce5cd3c6aa92bf95ea/test_coverage)](https://codeclimate.com/github/gfw-api/forest-watcher/test_coverage) | 
-forms                  | [Github](https://github.com/gfw-api/gfw-forms-api)               | [![Build Status](https://travis-ci.com/gfw-api/gfw-forms-api.svg?branch=dev)](https://travis-ci.com/gfw-api/gfw-forms-api) | [![Test Coverage](https://api.codeclimate.com/v1/badges/fead108699d985f0b266/test_coverage)](https://codeclimate.com/github/gfw-api/gfw-forms-api/test_coverage) | 
-fw-alerts              | [Github](https://github.com/gfw-api/fw-alerts)                   | [![Build Status](https://travis-ci.com/gfw-api/fw-alerts.svg?branch=dev)](https://travis-ci.com/gfw-api/fw-alerts) | [![Test Coverage](https://api.codeclimate.com/v1/badges/40d4b1e823a36f2041a4/test_coverage)](https://codeclimate.com/github/gfw-api/fw-alerts/test_coverage) | 
-fw-contextual-layers   | [Github](https://github.com/gfw-api/fw-contextual-layers)        | [![Build Status](https://travis-ci.com/gfw-api/fw-contextual-layers.svg?branch=dev)](https://travis-ci.com/gfw-api/fw-contextual-layers) | [![Test Coverage](https://api.codeclimate.com/v1/badges/c1954d5df380ff14aae1/test_coverage)](https://codeclimate.com/github/gfw-api/fw-contextual-layers/test_coverage) | 
-fw-teams               | [Github](https://github.com/gfw-api/fw-teams)                    | [![Build Status](https://travis-ci.com/gfw-api/fw-teams.svg?branch=dev)](https://travis-ci.com/gfw-api/fw-teams) | [![Test Coverage](https://api.codeclimate.com/v1/badges/67ef5c9f03336a7e5608/test_coverage)](https://codeclimate.com/github/gfw-api/fw-teams/test_coverage) | 
-                                                                                          
-
 ## Aqueduct
 
 Name                   |                  URL                                                        | Travis Status  | Code Coverage
