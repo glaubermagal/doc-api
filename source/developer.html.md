@@ -24,6 +24,7 @@ includes:
   - dev/areas_notification_emails
   - dev/subscriptions
   - dev/user_management
+  - dev/deletion
   - dev/graph
 
 logo: logo-rw.png

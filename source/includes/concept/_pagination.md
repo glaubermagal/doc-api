@@ -22,10 +22,10 @@ Many times, when you're calling RW API's list endpoints, there will be a lot of 
 
 The pagination strategy used across the RW API relies on two query parameters:
 
-Field          | Description                                                                      | Type   | Default
--------------- | -------------------------------------------------------------------------------- | -----: | --------:
-`page[size]`   | The number elements per page. **Values above 100 are not officially supported.** | Number | 10
-`page[number]` | The page number.                                                                 | Number | 1
+| Field          | Description                                                                      |   Type | Default |
+|----------------|----------------------------------------------------------------------------------|-------:|--------:|
+| `page[size]`   | The number elements per page. **Values above 100 are not officially supported.** | Number |      10 |
+| `page[number]` | The page number.                                                                 | Number |       1 |
 
 Keep in mind that, to work predictably, **you must always specify sorting criteria when fetching paginated results**. If sorting criteria is not provided, the overall order of the elements might change between requests. Pagination will still work, but the actual content of the pages might show missing and/or duplicate elements. Refer to the [general sorting guidelines](concepts.html#sorting) and the sorting section for the RW API resource you're loading for details on sorting options available for that resource type.
 
