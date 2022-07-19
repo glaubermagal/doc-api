@@ -1,7 +1,6 @@
 # Salesforce integration
 
-This service allows easy communication of RW API user data to [Salesforce](www.salesforce.com) for convenient [CRM](https://en.wikipedia.org/wiki/Customer_relationship_management) purposes.
-) 
+This service allows easy communication of RW API user data to [Salesforce](www.salesforce.com) for convenient [CRM](https://en.wikipedia.org/wiki/Customer_relationship_management) purposes. 
 
 ## Searching for user details
 
@@ -33,18 +32,17 @@ Returns the details associated with users matching the provided search criteria.
 
 ### Filters
 
-Parameter    |               Description |    Type |
------------- | :-----------------------: | ------: |
-email        | Email address of the user |    Text |
+| Parameter |        Description        | Type |
+|-----------|:-------------------------:|-----:|
+| email     | Email address of the user | Text |
 
 Currently, only filtering by `email` is supported. It is also required.
 
 #### Errors for searching for user details
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | "email" is required | The required `email` query parameter is missing in the request.
-
+| Error code | Error message       | Description                                                     |
+|------------|---------------------|-----------------------------------------------------------------|
+| 400        | "email" is required | The required `email` query parameter is missing in the request. |
 
 ## Logging user data update
 
@@ -69,30 +67,31 @@ A successful user data update logging returns an empty HTTP 201 response.
 
 ### Logging user data update parameters
 
-Parameter |  Type | Required |
---------- |  ---: | -------: |
-email     |  Text |      Yes |
-accountName     |  Text |       No |
-cityOfInterest     |  Text |       No |
-collabSummary     |  Text |       No |
-communityMemberType     |  Text |       No |
-countryOfInterest     |  Text |       No |
-gfwContactType     |  Text |       No |
-firstName     |  Text |       No |
-lastName     |  Text |       No |
-partnerType     |  Text |       No |
-preferredLanguage     |  Text |       No |
-primaryRole     |  Text |       No |
-sector     |  Text |       No |
-sourceOfContactCreation     |  Text |       No |
-stateDepartmentProvinceOfInterest     |  Text |       No |
-title     |  Text |       No |
-topicsOfInterest     |  Text |       No |
+| Parameter               | Type | Required |
+|-------------------------|-----:|---------:|
+| email                   | Text |      Yes |
+| countryOfInterest       | Text |       No |
+| firstName               | Text |       No |
+| lastName                | Text |       No |
+| primaryRole             | Text |       No |
+| primaryRoleOther        | Text |       No |
+| sector                  | Text |       No |
+| areaOrRegionOfInterest  | Text |       No |
+| title                   | Text |       No |
+| organizationName        | Text |       No |
+| topicsOfInterest        | Text |       No |
+| userCity                | Text |       No |
+| userState               | Text |       No |
+| userCountry             | Text |       No |
+| howDoYouUseGFW          | Text |       No |
+| howDoYouUseGFWOther     | Text |       No |
+| signUpForTesting        | Text |       No |
+| sourceOfContactCreation | Text |       No |
 
 
 #### Errors for logging user data update
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | "email" is required | The required `email` body parameter is missing in the request.
-400            | "\<field name\>" is an invalid field | The provided field name is not supported as a body parameter.
+| Error code | Error message                        | Description                                                    |
+|------------|--------------------------------------|----------------------------------------------------------------|
+| 400        | "email" is required                  | The required `email` body parameter is missing in the request. |
+| 400        | "\<field name\>" is an invalid field | The provided field name is not supported as a body parameter.  |
