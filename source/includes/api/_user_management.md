@@ -768,8 +768,15 @@ curl -X DELETE "https://api.resourcewatch.org/auth/user/<user_id>"
 }
 ```
 
-This endpoints deletes the user account with the given id. It's available to users with the `ADMIN` role. The response will contain the details of the user account that was deleted.
+This endpoints deletes the user account with the given id. It's available to users with the `ADMIN` role and to users who want to delete their own account. The response will contain the details of the user account that was deleted.
 
 <aside class="notice">
 This action only deletes the user account. Any resources (datasets, subscriptions, etc) that may be associated with this given user account are not modified or deleted.
 </aside>
+
+**Errors**
+
+Error code     | Error message  | Description
+-------------- | -------------- | --------------
+401            | Not authenticated. | You need to be logged in to use this endpoint.
+403            | Not authorized. | You need to have `ADMIN` role or be logged as the user to delete to use this endpoint.
