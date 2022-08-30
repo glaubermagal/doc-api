@@ -16,8 +16,9 @@ It's worth pointing out that endpoints that address a resource by id typically d
 In a nutshell, this means that:
 
 - When creating one of these resources, it will be set with the `production` environment, unless specified otherwise by you.
-- When listing these resources, the list will only show elements with the `production` environment, unless you explicitly filter by a different value
-- You may update a resource's environment using the corresponding update endpoint (there are special cases to this, please refer to the specific resource documentation)
+- When listing these resources, the list will only show elements with the `production` environment, unless you explicitly filter by a different value.
+- The query param `all` can be used to fetch resources from every environment and not just the default `production` filter. Only applicable to those endpoints that accept an `env` query param.
+- You may update a resource's environment using the corresponding update endpoint (there are special cases to this, please refer to the specific resource documentation).
 - Endpoints that address a resource by id, like fetching by id, updating or deleting, do not filter by environment.
 
 ### Which services support environments
