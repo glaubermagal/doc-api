@@ -2,12 +2,14 @@
 
 Certain RW API resources, like datasets, layers, or widgets, use the concept of `environment`, or `env`, as a way to help you manage your data's lifecycle. The main goal of `environments` is to give you an easy way to separate data that is ready to be used in production-grade interactions from data that is still being improved on.
 
-When you create a new resource, like a dataset, it's given the `production` env value by default. Similarly, if you list resources, there's an implicit default filter that only returns resourcesw whose `env` value is `production`. This illustrates two key concepts of `environments`:
+When you create a new resource, like a dataset, it's given the `production` env value by default. Similarly, if you list resources, there's an implicit default filter that only returns resources whose `env` value is `production`. This illustrates two key concepts of `environments`:
 
 - By default, when you create data on the RW API, it assumes it's in a production-ready state.
 - By default, when you list resources from the RW API, it assumes you want only to see production-ready data.
 
-However, you may want to modify this behavior. For example, let's say you want to create a new widget on the RW API and experiment with different configuration options without displaying it publicly. To achieve this, you can set a different `environment` on your widget - for example, `test`. Or you may want to deploy a staging version of your application that also relies on the same RW API but displays a different set of resources. You can set those resources to use the `staging` environment and have your application load only that environment, or load both `production` and `staging` resources simultaneously. Keep in mind that `production` is the only "special" value for the `environment` field. Apart from it, the `environment` can take any value you want, without having any undesired side-effects.
+However, you may want to modify this behavior. For example, let's say you want to create a new widget on the RW API and experiment with different configuration options without displaying it publicly. To achieve this, you can set a different `environment` on your widget - for example, `test`. Or you may want to deploy a staging version of your application that also relies on the same RW API but displays a different set of resources. You can set those resources to use the `staging` environment and have your application load only that environment, or load both `production` and `staging` resources simultaneously. You can also list resources in all environments, by using the special `all` query parameter value.
+
+Keep in mind that `production` (set by default) and `all` (not supported) are the only "special" values for the `environment` field. Apart from it, the `environment` can take any value you want, without having any undesired side-effects.
 
 Resources that use `environment` can also be updated with a new `environment` value, so you can use it to control how your data is displayed. Refer to the documentation of each resource to learn how you can achieve this.
 
@@ -16,8 +18,7 @@ It's worth pointing out that endpoints that address a resource by id typically d
 In a nutshell, this means that:
 
 - When creating one of these resources, it will be set with the `production` environment, unless specified otherwise by you.
-- When listing these resources, the list will only show elements with the `production` environment, unless you explicitly filter by a different value.
-- The query param `all` can be used to fetch resources from every environment and not just the default `production` filter. Only applicable to those endpoints that accept an `env` query param.
+- When listing these resources, the list will only show elements with the `production` environment, unless you explicitly filter by a different value. Filtering by `all` shows resources for all environments.
 - You may update a resource's environment using the corresponding update endpoint (there are special cases to this, please refer to the specific resource documentation).
 - Endpoints that address a resource by id, like fetching by id, updating or deleting, do not filter by environment.
 
