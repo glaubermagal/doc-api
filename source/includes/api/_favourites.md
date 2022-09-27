@@ -82,3 +82,15 @@ This endpoint deletes the favorite with id of the param. If the favorite belongs
 curl -X DELETE https://api.resourcewatch.org/v1/favourite/:id \
 -H "Authorization: Bearer <your-token>"
 ```
+
+## Delete a favourite by user id
+
+> To delete the favourite by user id, you have to do a DELETE request:
+
+```shell
+curl -X DELETE https://api.resourcewatch.org/v1/favourite/by-user/:userId \
+-H "Authorization: Bearer <your-token>"
+```
+
+This endpoint deletes the favourites where the userId on the param is found as its ownerId. Any user with ADMIN role can use this endpoint. Regular users can use this endpoint to delete the resources themselves own. Not being authenticated will return a 401, not being an ADMIN or not being logged as the user that owns the resources will return a 403.
+
