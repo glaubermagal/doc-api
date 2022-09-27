@@ -389,6 +389,37 @@ curl -X DELETE https://api.resourcewatch.org/v1/collection/:id/resource/:resourc
 
 Using this endpoint you can also delete a resource in a collection with the id, resource type and resource id of the param. If the collection belongs to other user or not exist, the endpoint returns 400.
 
+## Delete a collection by user id
+
+> To delete the collection by user id, you have to do a DELETE request:
+
+```shell
+curl -X DELETE https://api.resourcewatch.org/v1/collection/by-user/:userId \
+-H "Authorization: Bearer <your-token>"
+```
+
+> In case of success, the deleted collections are returned in the response body:
+
+```json
+{
+  "data": [
+    {
+      "id": "5f56170c1fca55001ad51779",
+      "type": "collection",
+      "attributes": {
+        "name": "Collection name",
+        "ownerId": "5dd7b92abf56ca0011875ae2",
+        "application": "rw",
+        "env": "production",
+        "resources": []
+      }
+    }
+  ]
+}
+```
+
+This endpoint deletes the collections where the userId on the param is found as its ownerId. Any user with ADMIN role can use this endpoint. Regular users can use this endpoint to delete the resources themselves own. Not being authenticated will return a 401, not being an ADMIN or not being logged as the user that owns the resources will return a 403.
+
 ## Finding collections by ids
 
 > To find collections by ids, you have to do a POST request:
