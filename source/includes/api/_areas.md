@@ -197,9 +197,90 @@ curl -X DELETE https://api.resourcewatch.org/v1/area/<area-id> \
 ### Example
 
 ```shell
-curl -X POST https://api.resourcewatch.org/v1/area/59ca3213d08a7d001054522b \
+curl -X DELETE https://api.resourcewatch.org/v1/area/59ca3213d08a7d001054522b \
 -H "Authorization: Bearer <your-token>"
 ```
+
+## Delete areas by user id
+
+Deletes an area by user id
+
+```shell
+curl -X DELETE https://api.resourcewatch.org/v1/area/by-user/<user-id> \
+-H "Authorization: Bearer <your-token>"
+```
+
+> Example response:
+
+```json
+{
+  "data": [
+    {
+      "type": "area",
+      "id": "59ca3213d08a7d001054522b",
+      "attributes": {
+        "name": "Test area France",
+        "application": "rw",
+        "geostore": "8f77fe62cf15d5098ba0ee11c5126aa6",
+        "userId": "58e22f662071c01c02f76a0f",
+        "env": "production",
+        "createdAt": "2017-09-26T10:55:15.990Z",
+        "updatedAt": "2017-09-26T10:55:15.990Z",
+        "image": "",
+        "datasets": [
+
+        ],
+        "use": {
+
+        },
+        "iso": {
+
+        }
+      }
+    },
+    {
+      "type": "area",
+      "id": "59ca32ea3209db0014e9a7b7",
+      "attributes": {
+        "name": "Test custom area",
+        "application": "rw",
+        "geostore": "b12640deba9d3c5012c5359dd5572e2d",
+        "userId": "58e22f662071c01c02f76a0f",
+        "env": "production",
+        "createdAt": "2017-09-26T10:58:50.226Z",
+        "updatedAt": "2017-09-26T10:58:50.226Z",
+        "image": "",
+        "datasets": [
+
+        ],
+        "use": {
+
+        },
+        "iso": {
+
+        }
+      }
+    }
+  ]
+}
+```
+
+
+### Example
+
+```shell
+curl -X DELETE https://api.resourcewatch.org/v1/area/by-user/59ca3213d08a7d001054522b \
+-H "Authorization: Bearer <your-token>"
+```
+
+This endpoint deletes all areas where the userId on the param is found. Any user with ADMIN role can use this endpoint. Regular users can use this endpoint to delete the areas they own. Not being authenticated will return a 401, not being an ADMIN or not being logged as the user that owns the areas will return a 403.
+
+### Errors for deleting areas by user id
+
+Error code     | Error message (example)       | Description
+-------------- | ----------------------------- | --------------
+401            | `Unauthorized`                | No token was provided.
+403            | `Not authorized`              | You are trying to delete the areas of an user that is not the same logged user or you are not an ADMIN user.
 
 ## Get area
 
