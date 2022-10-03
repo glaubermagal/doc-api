@@ -521,6 +521,56 @@ DELETing an area deletes the area with id provided and any associated subscripti
 | 403        | `Not authorized`        | You are trying to delete an area that is not owned by you and you are not an ADMIN user. |
 | 404        | `Area not found`        | The area with id provided does not exist.                                                |
 
+## Delete areas by user id
+
+Deletes an area by user id
+
+```shell
+curl -X DELETE https://api.resourcewatch.org/v2/area/by-user/:user-id \
+-H "Authorization: Bearer <your-token>"
+```
+
+> Example response:
+
+```json
+{
+    "data": [
+        {
+            "type": "area",
+            "id": "5e4d74c3ef240412c2d56a71",
+            "attributes": {
+                "application": "gfw",
+                "userId": "5e2f0eaf9de40a6c87dd9b7d",
+                "createdAt": "2020-02-19T12:17:01.176Z",
+                "datasets": [],
+                "use": {},
+                "env": "production",
+                "iso": {},
+                "admin": {},
+                "tags": [],
+                "status": "saved",
+                "public": false,
+                "fireAlerts": false,
+                "deforestationAlerts": false,
+                "webhookUrl": "",
+                "monthlySummary": false,
+                "subscriptionId": "5e4d273dce77c53768bc24f9",
+                "email": "your.email@resourcewatch.org",
+                "language": "en"
+            }
+        }
+    ]
+}
+```
+
+This endpoint deletes all areas where the userId on the param is found. Any user with ADMIN role can use this endpoint. Regular users can use this endpoint to delete the areas they own. Not being authenticated will return a 401, not being an ADMIN or not being logged as the user that owns the areas will return a 403.
+
+### Errors for deleting areas by user id
+
+Error code     | Error message (example)       | Description
+-------------- | ----------------------------- | --------------
+401            | `Unauthorized`                | No token was provided.
+403            | `Not authorized`              | You are trying to delete the areas of an user that is not the same logged user or you are not an ADMIN user.
 ## Update areas by geostore
 
 > Example request to update all areas that reference geostores with ids "123" and "234":
