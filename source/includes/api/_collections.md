@@ -424,7 +424,7 @@ This endpoint deletes the collections owned by the user with id `userId`. Any AD
 
 | Error code | Error message                      | Description                                                                           |
 |------------|------------------------------------|---------------------------------------------------------------------------------------|
-| 401        | Unauthorized                       | You need to be logged in to be able to delete user data.                              |
+| 401        | Unauthorized                       | You need to be logged in to be able to delete collections.                            |
 | 403        | Forbidden                          | You need to either have the `ADMIN` role, or call this endpoint with your own user id |
 
 ## Finding collections by ids

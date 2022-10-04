@@ -7,25 +7,22 @@ Remember — All favorite endpoints need to be authenticated.
 </aside>
 
 
-| Field             | Description                                                                     | Type
-| ------------------|:-----------------------------------------:                                      | -----:
-| id                | Name                                                                            | Text
-| resourceId        | Id of the resource                                                              | Text
-| resourceType      | Type of resource                                                                | Text (dataset, layer, widget)
-| userId            | Id of the owner user                                                            | Text
-| createdAt         | Creation date                                                                   | Date
-
-
+| Field        |     Description      |                          Type |
+|--------------|:--------------------:|------------------------------:|
+| id           |         Name         |                          Text |
+| resourceId   |  Id of the resource  |                          Text |
+| resourceType |   Type of resource   | Text (dataset, layer, widget) |
+| userId       | Id of the owner user |                          Text |
+| createdAt    |    Creation date     |                          Date |
 
 ## Create Favorite
 
 To create a favorite, you need to define all next fields in the request body. The required fields that compose a favorite are:
 
-| Field             | Description                                                                     | Type
-| ------------------|:-----------------------------------------:                                      | -----:
-| resourceId        | Id of the resource                                                              | Text
-| resourceType      | Type of resource                                                                | Text (dataset, layer, widget)
-
+| Field        |    Description     |                          Type |
+|--------------|:------------------:|------------------------------:|
+| resourceId   | Id of the resource |                          Text |
+| resourceType |  Type of resource  | Text (dataset, layer, widget) |
 
 > To create a favorite, you have to do a POST with the following body:
 
@@ -92,5 +89,34 @@ curl -X DELETE https://api.resourcewatch.org/v1/favourite/by-user/:userId \
 -H "Authorization: Bearer <your-token>"
 ```
 
-This endpoint deletes the favourites where the userId on the param is found as its ownerId. Any user with ADMIN role can use this endpoint. Regular users can use this endpoint to delete the resources themselves own. Not being authenticated will return a 401, not being an ADMIN or not being logged as the user that owns the resources will return a 403.
+
+> In case of success, the deleted favourites are returned in the response body:
+
+```json
+{
+  "data": [
+    {
+      "id": "5e6f6eb9bb494e001ab7e413",
+      "type": "favourite",
+      "attributes": {
+        "userId": "57ac9f9e2930906323e573a2",
+        "resourceType": "dataset",
+        "resourceId": "1e56170c1fca55001ad51779",
+        "createdAt": "2020-03-16T12:19:05.125Z",
+        "application": "rw"
+      }
+    }
+  ]
+}
+```
+
+This endpoint deletes the favourites owned by the user with id `userId`. Any ADMIN user can use this endpoint to delete data for any user, while users with USER or MANAGER roles can only delete their own data.
+
+
+#### Errors for deleting a favourites by user id
+
+| Error code | Error message                      | Description                                                                           |
+|------------|------------------------------------|---------------------------------------------------------------------------------------|
+| 401        | Unauthorized                       | You need to be logged in to be able to delete favourites.                             |
+| 403        | Forbidden                          | You need to either have the `ADMIN` role, or call this endpoint with your own user id |
 
