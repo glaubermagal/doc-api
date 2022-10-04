@@ -83,12 +83,12 @@ curl -X POST https://api.resourcewatch.org/v1/collection \
 
 To create a collection, you should send a POST request to the `/v1/collection` endpoint, providing an authentication token that identifies the user making the request. You also need to (or can) provide the following fields in the request body:
 
-| Field name   | Description                                                     | Required | Type
-| -------------|:--------------------------------------------------------------: | -----:   | -----:
-| name         | Name of collection.                                             | Yes      | String
-| application  | The application this collection belongs to (defaults to `'rw'`). Read more about this field [here](concepts.html#applications). | No       | String
-| env          | Environment to which the collection belongs. Read more about this field in the [Environments concept section](concepts.html#environments). | No | String
-| resources    | Array of resources in the collection.                           | No       | Array of Objects
+| Field name  |                                                                Description                                                                 | Required |             Type |
+|-------------|:------------------------------------------------------------------------------------------------------------------------------------------:|---------:|-----------------:|
+| name        |                                                            Name of collection.                                                             |      Yes |           String |
+| application |      The application this collection belongs to (defaults to `'rw'`). Read more about this field [here](concepts.html#applications).       |       No |           String |
+| env         | Environment to which the collection belongs. Read more about this field in the [Environments concept section](concepts.html#environments). |       No |           String |
+| resources   |                                                   Array of resources in the collection.                                                    |       No | Array of Objects |
 
 ## Updating a collection
 
@@ -168,10 +168,10 @@ curl -X POST https://api.resourcewatch.org/v1/collection/:id/resource \
 
 You can do a POST request to the `/v1/collection/:id/resource` to push a new resource to an existing collection. You also need to define the following fields in the request body:
 
-| Field             | Description                               | Type
-| ------------------|:-----------------------------------------:| -----:
-| type              | Type of resource being added              | Text (dataset, layer, widget)
-| id                | Id of the resource                        | Text
+| Field |         Description          |                          Type |
+|-------|:----------------------------:|------------------------------:|
+| type  | Type of resource being added | Text (dataset, layer, widget) |
+| id    |      Id of the resource      |                          Text |
 
 ## Getting collections for the request user
 
@@ -266,10 +266,9 @@ curl -X GET https://api.resourcewatch.org/v1/collection?env=custom
 
 The `/v1/collection` endpoint provides the following parameters to tailor the returned listing:
 
-Field       |             Description                                                                                                                          | Type    | Example    |
------------ | :----------------------------------------------------------------------------------------------------------------------------------------------- | ------: | ---------: |
-env         | Environment to which the collection belongs. Multiple values can be combined using `,` as a separator. Does not support regexes. Read more about this field in the [Environments concept section](concepts.html#environments). | String      | any valid text. Defaults to `production`.
-
+| Field | Description                                                                                                                                                                                                                    |   Type |                                   Example |
+|-------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------:|------------------------------------------:|
+| env   | Environment to which the collection belongs. Multiple values can be combined using `,` as a separator. Does not support regexes. Read more about this field in the [Environments concept section](concepts.html#environments). | String | any valid text. Defaults to `production`. |
 
 ### Sorting
 
@@ -418,7 +417,15 @@ curl -X DELETE https://api.resourcewatch.org/v1/collection/by-user/:userId \
 }
 ```
 
-This endpoint deletes the collections where the userId on the param is found as its ownerId. Any user with ADMIN role can use this endpoint. Regular users can use this endpoint to delete the resources themselves own. Not being authenticated will return a 401, not being an ADMIN or not being logged as the user that owns the resources will return a 403.
+This endpoint deletes the collections owned by the user with id `userId`. Any ADMIN user can use this endpoint to delete data for any user, while users with USER or MANAGER roles can only delete their own data.
+
+
+#### Errors for deleting a collection by user id
+
+| Error code | Error message                      | Description                                                                           |
+|------------|------------------------------------|---------------------------------------------------------------------------------------|
+| 401        | Unauthorized                       | You need to be logged in to be able to delete user data.                              |
+| 403        | Forbidden                          | You need to either have the `ADMIN` role, or call this endpoint with your own user id |
 
 ## Finding collections by ids
 
@@ -481,12 +488,12 @@ You can filter the returned results by application by providing the `application
 
 ## Collection reference
 
-| Field name   | Description                                                     | Type
-| -------------|:--------------------------------------------------------------: | -----:
-| name         | Name of collection.                                             | String
-| ownerId      | Id of the user owner of this collection.                        | String
-| application  | The application this collection belongs to (defaults to `'rw'`). Read more about this field [here](concepts.html#applications). | String
-| env          | Environment to which the collection belongs. Read more about this field in the [Environments concept section](concepts.html#environments). | String
-| resources    | Array of resources in the collection.                           | Array of Objects
-| --- type     | The type of resource.                                           | String (dataset, layer, widget)
-| --- id       | The id of the resource.                                         | String
+| Field name  |                                                                Description                                                                 |                            Type |
+|-------------|:------------------------------------------------------------------------------------------------------------------------------------------:|--------------------------------:|
+| name        |                                                            Name of collection.                                                             |                          String |
+| ownerId     |                                                  Id of the user owner of this collection.                                                  |                          String |
+| application |      The application this collection belongs to (defaults to `'rw'`). Read more about this field [here](concepts.html#applications).       |                          String |
+| env         | Environment to which the collection belongs. Read more about this field in the [Environments concept section](concepts.html#environments). |                          String |
+| resources   |                                                   Array of resources in the collection.                                                    |                Array of Objects |
+| --- type    |                                                           The type of resource.                                                            | String (dataset, layer, widget) |
+| --- id      |                                                          The id of the resource.                                                           |                          String |
