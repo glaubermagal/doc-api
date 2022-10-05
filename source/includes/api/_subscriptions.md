@@ -632,6 +632,54 @@ To delete a subscription associated with your user account, you should use the D
 | 401        | Unauthorized           | No valid token was provided in the request headers.                                                                 |
 | 404        | Subscription not found | Either a subscription with the id provided does not exist or it is not owned by the user who performed the request. |
 
+## Deleting subscriptions by user id
+
+> Example DELETE request for deleting a subscription by user id:
+
+```shell
+curl -X DELETE "https://api.resourcewatch.org/v1/subscriptions/by-user/<user_id>" \
+-H "Authorization: Bearer <your-token>"
+```
+
+> Example response:
+
+```json
+{
+  "data": [
+    {
+      "type": "subscription",
+      "id": "587cc014f3b3f6280058e478",
+      "attributes": {
+        "name": "Test subscription",
+        "createdAt": "2020-01-16T12:45:08.434Z",
+        "userId": "57a063da096c4eda523e99ae",
+        "resource": {
+          "type": "EMAIL",
+          "content": "example@wri.org"
+        },
+        "datasets": ["viirs-active-fires"],
+        "datasetsQuery": [],
+        "params": {
+          "geostore": "50601ff9257df221e808af427cb47701"
+        },
+        "confirmed": false,
+        "language": "en",
+        "env": "production"
+      }
+    }
+  ]
+}
+```
+
+To delete every subscription associated with a specific user account, the DELETE `v1/subscriptions/by-user/:userId` endpoint can be used. If the deletion process is successful, the HTTP response code will be 200 OK, and the response body will contain all the deleted subscriptions. This endpoint requires ADMIN access or to be logged as the same user that wants their subscriptions deleted.
+
+### Errors for deleting subscriptions by user id
+
+| Error code | Error message          | Description                                                                                                         |
+|------------|------------------------|---------------------------------------------------------------------------------------------------------------------|                                                                                     |
+| 401        | Unauthorized  | No valid token was provided in the request headers.                                                                 |
+| 403        | Forbidden     | Either the user logged is not the same as the user id that is going to be deleted or is not an ADMIN. |
+
 ## Confirming a subscription
 
 > Example GET request to confirm a subscription:
