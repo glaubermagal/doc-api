@@ -86,13 +86,13 @@ curl -X GET https://api.resourcewatch.org/v2/area?application=rw&public=true
 
 The `/v2/areas` endpoint provides the following parameters to tailor the returned listing:
 
-Field       |             Description                                                                                                                          | Type    | Example    |
------------ | :----------------------------------------------------------------------------------------------------------------------------------------------- | ------: | ---------: |
-application | Filter results by the application associated with the areas.                                                                                     | String  | 'gfw'      |
-status      | Filter results by the status of the area.                                                                                                        | String  | 'saved'    |
-public      | Filter results by the privacy status of the area.                                                                                                | Boolean | true       |
-env         | Environment to which the area belongs. Multiple values can be combined using `,` as a separator. Does not support regexes. Read more about this field in the [Environments concept section](concepts.html#environments). | String      | any valid text. Defaults to `production`.
-all         | Return all the areas instead of just the areas associated with user of the request. This filter will only be taken into account for ADMIN users. | Boolean | true       |
+| Field       | Description                                                                                                                                                                                                              |    Type |                                   Example |
+|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|-------------------------------------------|
+| application | Filter results by the application associated with the areas.                                                                                                                                                             |  String |                                     'gfw' |
+| status      | Filter results by the status of the area.                                                                                                                                                                                |  String |                                   'saved' |
+| public      | Filter results by the privacy status of the area.                                                                                                                                                                        | Boolean |                                      true |
+| env         | Environment to which the area belongs. Multiple values can be combined using `,` as a separator. Does not support regexes. Read more about this field in the [Environments concept section](concepts.html#environments). |  String | any valid text. Defaults to `production`. |
+| all         | Return all the areas instead of just the areas associated with user of the request. This filter will only be taken into account for ADMIN users.                                                                         | Boolean |                                      true |
 
 ### Sorting
 
@@ -118,9 +118,9 @@ The Areas v2 service currently supports sorting using the `sort` query parameter
 
 ### Errors for getting user areas
 
-Error code     | Error message (example)     | Description
--------------- | --------------------------- | ------------------------------------------------------------
-401            | `Unauthorized`              | No authorization token was provided.
+| Error code | Error message (example) | Description                          |
+|------------|-------------------------|--------------------------------------|
+| 401        | `Unauthorized`          | No authorization token was provided. |
 
 ### Implementation details
 
@@ -205,19 +205,19 @@ curl -X GET https://api.resourcewatch.org/v2/area?application=rw&public=true&all
 
 The filters for this endpoint are the same as the `/v2/areas` endpoint described above:
 
-Field       |             Description                                                                                                                          | Type    | Example    |
------------ | :----------------------------------------------------------------------------------------------------------------------------------------------- | ------: | ---------: |
-application | Filter results by the application associated with the areas. Read more about this field [here](concepts.html#applications).                                                                                    | String  | 'gfw'      |
-status      | Filter results by the status of the area.                                                                                                        | String  | 'saved'    |
-public      | Filter results by the privacy status of the area.                                                                                                | Boolean | true       |
-env         | Environment to which the area belongs. Multiple values can be combined using `,` as a separator. Does not support regexes. Read more about this field in the [Environments concept section](concepts.html#environments). | String      | any valid text. Defaults to `production`.
-all         | Return all the areas instead of just the areas associated with user of the request. This filter will only be taken into account for ADMIN users. | Boolean | true       |
+| Field       | Description                                                                                                                                                                                                              |    Type |                                   Example |
+|-------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|-------------------------------------------|
+| application | Filter results by the application associated with the areas. Read more about this field [here](concepts.html#applications).                                                                                              |  String |                                     'gfw' |
+| status      | Filter results by the status of the area.                                                                                                                                                                                |  String |                                   'saved' |
+| public      | Filter results by the privacy status of the area.                                                                                                                                                                        | Boolean |                                      true |
+| env         | Environment to which the area belongs. Multiple values can be combined using `,` as a separator. Does not support regexes. Read more about this field in the [Environments concept section](concepts.html#environments). |  String | any valid text. Defaults to `production`. |
+| all         | Return all the areas instead of just the areas associated with user of the request. This filter will only be taken into account for ADMIN users.                                                                         | Boolean |                                      true |
 
 ### Errors for getting all areas
 
-Error code     | Error message (example)     | Description
--------------- | --------------------------- | ------------------------------------------------------------
-401            | `Unauthorized`              | No authorization token was provided.
+| Error code | Error message (example) | Description                          |
+|------------|-------------------------|--------------------------------------|
+| 401        | `Unauthorized`          | No authorization token was provided. |
 
 ### Implementation details
 
@@ -268,10 +268,10 @@ If you know the id or the slug of a area, then you can access it directly - keep
 
 ### Errors for getting an area by its id
 
-Error code     | Error message (example)     | Description
--------------- | --------------------------- | ------------------------------------------------------------
-401            | `Unauthorized`              | No authorization token was provided.
-401            | `Area private`              | You are trying to get the information of a private area without being the owner of the area.
+| Error code | Error message (example) | Description                                                                                  |
+|------------|-------------------------|----------------------------------------------------------------------------------------------|
+| 401        | `Unauthorized`          | No authorization token was provided.                                                         |
+| 401        | `Area private`          | You are trying to get the information of a private area without being the owner of the area. |
 
 ### Implementation details
 
@@ -352,12 +352,12 @@ According to multiple factors (including the `geostore` that is associated with 
 
 ### Errors for creating an area
 
-Error code     | Error message (example)     | Description
--------------- | --------------------------- | ------------------------------------------------------------
-400            | `<field> can not be empty.` | You are missing a required field while creating the area.
-400            | `<field> is not valid.`     | You provided an invalid field while creating the area.
-400            | `geostore and geostoreDataApi are mutually exclusive, cannot provide both at the same time`     | You are trying to provide `geostore` and `geostoreDataApi` at the same time, and only one of the fields can be provided.
-401            | `Unauthorized`              | No token was provided.
+| Error code | Error message (example)                                                                     | Description                                                                                                              |
+|------------|---------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| 400        | `<field> can not be empty.`                                                                 | You are missing a required field while creating the area.                                                                |
+| 400        | `<field> is not valid.`                                                                     | You provided an invalid field while creating the area.                                                                   |
+| 400        | `geostore and geostoreDataApi are mutually exclusive, cannot provide both at the same time` | You are trying to provide `geostore` and `geostoreDataApi` at the same time, and only one of the fields can be provided. |
+| 401        | `Unauthorized`                                                                              | No token was provided.                                                                                                   |
 
 ### Email notifications
 
@@ -443,15 +443,15 @@ Please check the [Area model reference](reference.html#area-reference) for detai
 
 ### Errors for updating an area
 
-Error code     | Error message (example)       | Description
--------------- | ----------------------------- | --------------
-400            | `<field> can not be empty.`   | You are missing a required field while updating the area.
-400            | `<field> is invalid.`         | You provided an invalid field while updating the area.
-400            | `Id required`                 | No id was provided in the URL.
-400            | `geostore and geostoreDataApi are mutually exclusive, cannot provide both at the same time`     | You are trying to provide `geostore` and `geostoreDataApi` at the same time, and only one of the fields can be provided.
-401            | `Unauthorized`                | No token was provided.
-403            | `Not authorized`              | You are trying to update an area that is not owned by you and you are not an ADMIN user.
-404            | `Area not found`              | The area with id provided does not exist.
+| Error code | Error message (example)                                                                     | Description                                                                                                              |
+|------------|---------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| 400        | `<field> can not be empty.`                                                                 | You are missing a required field while updating the area.                                                                |
+| 400        | `<field> is invalid.`                                                                       | You provided an invalid field while updating the area.                                                                   |
+| 400        | `Id required`                                                                               | No id was provided in the URL.                                                                                           |
+| 400        | `geostore and geostoreDataApi are mutually exclusive, cannot provide both at the same time` | You are trying to provide `geostore` and `geostoreDataApi` at the same time, and only one of the fields can be provided. |
+| 401        | `Unauthorized`                                                                              | No token was provided.                                                                                                   |
+| 403        | `Not authorized`                                                                            | You are trying to update an area that is not owned by you and you are not an ADMIN user.                                 |
+| 404        | `Area not found`                                                                            | The area with id provided does not exist.                                                                                |
 
 ### Email notifications
 
@@ -489,13 +489,12 @@ DELETing an area deletes the area with id provided and any associated subscripti
 
 ### Errors for deleting an area
 
-Error code     | Error message (example)       | Description
--------------- | ----------------------------- | --------------
-400            | `Id required`                 | No id was provided in the URL.
-401            | `Unauthorized`                | No token was provided.
-403            | `Not authorized`              | You are trying to delete an area that is not owned by you and you are not an ADMIN user.
-404            | `Area not found`              | The area with id provided does not exist.
-
+| Error code | Error message (example) | Description                                                                              |
+|------------|-------------------------|------------------------------------------------------------------------------------------|
+| 400        | `Id required`           | No id was provided in the URL.                                                           |
+| 401        | `Unauthorized`          | No token was provided.                                                                   |
+| 403        | `Not authorized`        | You are trying to delete an area that is not owned by you and you are not an ADMIN user. |
+| 404        | `Area not found`        | The area with id provided does not exist.                                                |
 
 ## Update areas by geostore
 
@@ -600,10 +599,10 @@ Use this endpoint to synchronize each area information with the associated subsc
 
 This endpoint supports the following query parameters to control the execution of the sync:
 
-Field       |             Description                              |   Type | Example |
------------ | :--------------------------------------------------: | -----: | ------: |
-startDate   | The date from which the sync will be executed. All subscriptions that have been updated since this date will be synced with the existing areas. | String | 2020-03-18T09:45:56.476Z
-endDate     | The date until which the sync will be executed. All subscriptions that have been updated until this date will be synced with the existing areas. | String | 2020-03-25T09:45:56.476Z
+| Field     |                                                                   Description                                                                    |   Type |                  Example |
+|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------|--------|--------------------------|
+| startDate | The date from which the sync will be executed. All subscriptions that have been updated since this date will be synced with the existing areas.  | String | 2020-03-18T09:45:56.476Z |
+| endDate   | The date until which the sync will be executed. All subscriptions that have been updated until this date will be synced with the existing areas. | String | 2020-03-25T09:45:56.476Z |
 
 *Note: By default, the sync is done for the last week changes (i.e. the default value for the `startDate` parameter is one week ago and the default value for the `endDate` parameter is now).*
 
@@ -613,38 +612,38 @@ This section gives you a complete view at the properties that are maintained as 
 
 You can find more details in the [source code](https://github.com/gfw-api/gfw-area/blob/develop/app/src/models/area.modelV2.js).
 
-Field name     | Type    | Required            | Default value | Description |
--------------- | ------- | ------------------- |-------------- | ----------- | 
-id             | String  | Yes (autogenerated) |               | Unique Id of the area. Auto generated on creation. Cannot be modified by users.    
-name           | String  | No                  |               | Name of the area.
-application    | String  | Yes                 | 'gfw'         | The application this area belongs to.
-env                     | String         | Yes                  | production                 | Environment to which the area belongs. Read more about this field in the [Environments concept section](concepts.html#environments).
-geostore       | String  | No                  |               | If this area references a geostore obtained from [RW API's Geostore service](reference.html#geostore), the id of that geostore will be saved in this field.     
-geostoreDataApi| String  | No                  |               | If this area references a geostore obtained from the GFW Data API, the id of that geostore will be saved in this field.     
-wdpaId         | String  | No                  |               | If this area references a WDPA, the id of the WDPA will be saved in this field.     
-userId         | String  | Yes (autopopulated) |               | Id of the user who owns the area. Set automatically on creation. Cannot be modified by users.
-use            | Object  | No                  |               | If this area references a land use concession, this field will contain an object that identifies the concrete area referred.
-use.id         | String  | No                  |               | The id of the land use concession to track.
-use.name       | String  | No                  |               | The name of the land use concession to track. The supported values for this field include `mining` for [mining areas](http://api.resourcewatch.org/v1/dataset/c2142922-84d9-4564-8216-a4867b9e48c5), `logging` for [Congo Basin logging roads](https://wri-01.carto.com/tables/gfw_oil_palm/public/map), `oilpalm` for [palm oil plantations](https://wri-01.carto.com/tables/gfw_woodfiber/public/map) and `fiber` for [wood fiber plantations](https://wri-01.carto.com/tables/osm_logging_roads/public/map).
-iso            | Object  | No                  |               | If this area references an admin country or region, this field will contain an object that identifies the concrete area referred.
-iso.country    | String  | No                  |               | The [ISO 3166-1 alpha-3 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) of the country being referred by this area.
-iso.region     | String  | No                  |               | The [GADM id](https://gadm.org/data.html) of the region inside the country to reference (optional, you can reference the whole country, or just on specific region of the country).
-iso.subregion  | String  | No                  |               | The [GADM id](https://gadm.org/data.html) of the subregion inside the region to reference (optional, you can reference the whole region, or just on specific subregion of the region).
-admin          | Object  | No                  |               | Alternative syntax, see the `iso` field above.
-admin.adm0     | String  | No                  |               | Alternative syntax, see the `iso.country` field above.
-admin.adm1     | String  | No                  |               | Alternative syntax, see the `iso.region` field above.
-admin.adm2     | String  | No                  |               | Alternative syntax, see the `iso.subregion` field above.
-image          | String  | No                  |               | URL for an image representative of the area of interest.
-templateId     | String  | No                  |               | ?
-tags           | Array   | Yes                 | []            | Array of string tags that can be used to categorize areas.
-status         | String  | Yes                 | 'pending'     | The status of the area - can be one of `pending`, `saved` or `failed`. Cannot be modified by users. Initially, it is set as `pending`. Once all the data for the area is crunched and ready to be read, the status is updated to `saved` and an email is sent to the user. If errors occur, the status is set to `failed`.
-public         | Boolean | Yes                 | false         | If the area is public or private. Public area information can be accessed by other users.
-fireAlerts     | Boolean | Yes                 | false         | If the area subscribes to notifications on fire alerts - set this field to true if you wish to be notified about fire alerts in your area of interest.
-deforestationAlerts | Boolean | Yes                 | false         | If the area subscribes to notifications on deforestation alerts - set this field to true if you wish to be notified about deforestation alerts in your area of interest.
-monthlySummary | Boolean | Yes                 | false         | If the area subscribes to monthly summary notifications - set this field to true if you wish to be notified monthly about deforestation and fire alerts in your area of interest.
-email          | String  | No                  |               | The email that will be used as receiver of the notification emails.
-webhookUrl     | String  | No                  |               | Instead of receiving an email as notification, you can choose to receive a hit in the webhook URL you set in this field.
-language       | String  | No                  | 'en'          | The language in which you wish to receive the email notifications. `en`, `fr`, `zh`, `id`, `pt_BR` or `es_MX` are the supported values for this field. If any other value is provided, `en` is automatically set.
-subscriptionId | String  | No                  |               | If an area is returned as the reflection of an existing subscription in the Subscriptions service, this field will contain the id of the corresponding subscription.
-createdAt      | Date    | No (autogenerated)  | now           | Automatically maintained date of when the area was created. Cannot be modified by users.
-updatedAt      | Date    | No (autogenerated)  | now           | Automatically maintained date of when the area was last updated. Cannot be modified by users.
+| Field name          |  Type   | Required            | Default value | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+|---------------------|---------|---------------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id                  | String  | Yes (autogenerated) | <none>        | Unique Id of the area. Auto generated on creation. Cannot be modified by users.                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| name                | String  | No                  | <none>        | Name of the area.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| application         | String  | Yes                 | 'gfw'         | The application this area belongs to.                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| env                 | String  | Yes                 | production    | Environment to which the area belongs. Read more about this field in the [Environments concept section](concepts.html#environments).                                                                                                                                                                                                                                                                                                                                                                            |
+| geostore            | String  | No                  | <none>        | If this area references a geostore obtained from [RW API's Geostore service](reference.html#geostore), the id of that geostore will be saved in this field.                                                                                                                                                                                                                                                                                                                                                     |
+| geostoreDataApi     | String  | No                  | <none>        | If this area references a geostore obtained from the GFW Data API, the id of that geostore will be saved in this field.                                                                                                                                                                                                                                                                                                                                                                                         |
+| wdpaId              | String  | No                  | <none>        | If this area references a WDPA, the id of the WDPA will be saved in this field.                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| userId              | String  | Yes (autopopulated) | <none>        | Id of the user who owns the area. Set automatically on creation. Cannot be modified by users.                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| use                 | Object  | No                  | <none>        | If this area references a land use concession, this field will contain an object that identifies the concrete area referred.                                                                                                                                                                                                                                                                                                                                                                                    |
+| use.id              | String  | No                  | <none>        | The id of the land use concession to track.                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| use.name            | String  | No                  | <none>        | The name of the land use concession to track. The supported values for this field include `mining` for [mining areas](http://api.resourcewatch.org/v1/dataset/c2142922-84d9-4564-8216-a4867b9e48c5), `logging` for [Congo Basin logging roads](https://wri-01.carto.com/tables/gfw_oil_palm/public/map), `oilpalm` for [palm oil plantations](https://wri-01.carto.com/tables/gfw_woodfiber/public/map) and `fiber` for [wood fiber plantations](https://wri-01.carto.com/tables/osm_logging_roads/public/map). |
+| iso                 | Object  | No                  | <none>        | If this area references an admin country or region, this field will contain an object that identifies the concrete area referred.                                                                                                                                                                                                                                                                                                                                                                               |
+| iso.country         | String  | No                  | <none>        | The [ISO 3166-1 alpha-3 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) of the country being referred by this area.                                                                                                                                                                                                                                                                                                                                                                                     |
+| iso.region          | String  | No                  | <none>        | The [GADM id](https://gadm.org/data.html) of the region inside the country to reference (optional, you can reference the whole country, or just on specific region of the country).                                                                                                                                                                                                                                                                                                                             |
+| iso.subregion       | String  | No                  | <none>        | The [GADM id](https://gadm.org/data.html) of the subregion inside the region to reference (optional, you can reference the whole region, or just on specific subregion of the region).                                                                                                                                                                                                                                                                                                                          |
+| admin               | Object  | No                  | <none>        | Alternative syntax, see the `iso` field above.                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| admin.adm0          | String  | No                  | <none>        | Alternative syntax, see the `iso.country` field above.                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| admin.adm1          | String  | No                  | <none>        | Alternative syntax, see the `iso.region` field above.                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| admin.adm2          | String  | No                  | <none>        | Alternative syntax, see the `iso.subregion` field above.                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| image               | String  | No                  | <none>        | URL for an image representative of the area of interest.                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| templateId          | String  | No                  | <none>        | ?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| tags                |  Array  | Yes                 | []            | Array of string tags that can be used to categorize areas.                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| status              | String  | Yes                 | 'pending'     | The status of the area - can be one of `pending`, `saved` or `failed`. Cannot be modified by users. Initially, it is set as `pending`. Once all the data for the area is crunched and ready to be read, the status is updated to `saved` and an email is sent to the user. If errors occur, the status is set to `failed`.                                                                                                                                                                                      |
+| public              | Boolean | Yes                 | false         | If the area is public or private. Public area information can be accessed by other users.                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| fireAlerts          | Boolean | Yes                 | false         | If the area subscribes to notifications on fire alerts - set this field to true if you wish to be notified about fire alerts in your area of interest.                                                                                                                                                                                                                                                                                                                                                          |
+| deforestationAlerts | Boolean | Yes                 | false         | If the area subscribes to notifications on deforestation alerts - set this field to true if you wish to be notified about deforestation alerts in your area of interest.                                                                                                                                                                                                                                                                                                                                        |
+| monthlySummary      | Boolean | Yes                 | false         | If the area subscribes to monthly summary notifications - set this field to true if you wish to be notified monthly about deforestation and fire alerts in your area of interest.                                                                                                                                                                                                                                                                                                                               |
+| email               | String  | No                  | <none>        | The email that will be used as receiver of the notification emails.                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| webhookUrl          | String  | No                  | <none>        | Instead of receiving an email as notification, you can choose to receive a hit in the webhook URL you set in this field.                                                                                                                                                                                                                                                                                                                                                                                        |
+| language            | String  | No                  | 'en'          | The language in which you wish to receive the email notifications. `en`, `fr`, `zh`, `id`, `pt_BR` or `es_MX` are the supported values for this field. If any other value is provided, `en` is automatically set.                                                                                                                                                                                                                                                                                               |
+| subscriptionId      | String  | No                  | <none>        | If an area is returned as the reflection of an existing subscription in the Subscriptions service, this field will contain the id of the corresponding subscription.                                                                                                                                                                                                                                                                                                                                            |
+| createdAt           |  Date   | No (autogenerated)  | now           | Automatically maintained date of when the area was created. Cannot be modified by users.                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| updatedAt           |  Date   | No (autogenerated)  | now           | Automatically maintained date of when the area was last updated. Cannot be modified by users.                                                                                                                                                                                                                                                                                                                                                                                                                   |
