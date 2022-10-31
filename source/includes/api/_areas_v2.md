@@ -62,7 +62,7 @@ curl -X GET https://api.resourcewatch.org/v2/area
 }
 ```
 
-The `/v2/areas` endpoint returns all the areas of interest associated with the user who made the request. For a detailed description of each field, check out the [Area reference](reference.html/#area-reference) section.
+The `/v2/areas` endpoint returns all the areas of interest associated with the user who made the request. For a detailed description of each field, check out the [Area reference](reference.html#area-reference) section.
 
 ### Pagination
 
@@ -285,6 +285,8 @@ Try to find an area with the id provided:
 
 ## Creating an area
 
+> Example request to create an area
+
 ```shell
 curl -X POST https://api.resourcewatch.org/v2/area
 -H "Authorization: Bearer <your-token>" \
@@ -304,6 +306,18 @@ curl -X POST https://api.resourcewatch.org/v2/area
 }'
 ```
 
+> Example request to create an area with an associated image
+
+```shell
+curl --location --request POST 'https://api.resourcewatch.org/v2/area' \
+--header 'Authorization: Bearer <your-token>' \
+--form 'name="Example area"' \
+--form 'geostore="a15899292fc118a345741728ef84a21a"' \
+--form 'deforestationAlerts="true"' \
+--form 'deforestationAlertsType="glad-s2"' \
+--form 'image=@"/home/user/image.jpg"'
+```
+
 > Example response:
 
 ```json
@@ -318,7 +332,7 @@ curl -X POST https://api.resourcewatch.org/v2/area
             "userId": "5e2f0eaf9de40a6c87dd9b7d",
             "createdAt": "2020-02-19T18:19:51.485Z",
             "updatedAt": "2020-02-19T18:19:51.485Z",
-            "image": "",
+            "image": "https://s3.amazonaws.com/image.jpg",
             "env": "production",  
             "datasets": [],
             "tags": [],
@@ -336,7 +350,7 @@ curl -X POST https://api.resourcewatch.org/v2/area
 }
 ```
 
-Use this endpoint to create new areas. For a detailed description of each field that can be provided in the body of the request, check out the [Area reference](reference.html/#area-reference) section.
+Use this endpoint to create new areas. For a detailed description of each field that can be provided in the body of the request, check out the [Area reference](reference.html#area-reference) section.
 
 Keep in mind that you should provide one of the following when creating an area:
 
@@ -345,8 +359,6 @@ Keep in mind that you should provide one of the following when creating an area:
 * `wdpaid` with the id of a protected area if you are creating an area that references a protected area;
 * `iso` object with a valid country/region/subregion if you are creating an area that references an admin country/region/subregion;
 * `use` object with valid id and name of a land use concessioned area, if you are creating an area that references a land use area.
-
-Please check the [Area model reference](reference.html#area-reference) for details on what values each field is expected to provide.
 
 According to multiple factors (including the `geostore` that is associated with the area, if the area subscribes to `fireAlerts`, `deforestationAlerts`, etc.), there might be a period of time in which the data for the area is being generated. While that is the case, the area will have `status` set to `'pending'`. Once the area data is ready, the `status` of the area will be updated to `'saved'`.
 
@@ -380,6 +392,8 @@ The subscription is created only if the area has selected set to `true` at least
 
 ## Updating an area
 
+> Example request to update an area
+
 ```shell
 curl -X PATCH https://api.resourcewatch.org/v2/area/:id
 -H "Authorization: Bearer <your-token>" \
@@ -387,7 +401,6 @@ curl -X PATCH https://api.resourcewatch.org/v2/area/:id
  '{
     "name": "Example area",
     "application": "gfw",
-    "image": "",
     "tags": [],
     "public": false,
     "fireAlerts": true,
@@ -397,6 +410,18 @@ curl -X PATCH https://api.resourcewatch.org/v2/area/:id
     "email": "youremail@resourcewatch.org",
     "language": "en"
 }'
+```
+
+> Example request to update an area with an associated image
+
+```shell
+curl --location --request PATCH 'https://api.resourcewatch.org/v2/area/:id' \
+--header 'Authorization: Bearer <your-token>' \
+--form 'name="Example area"' \
+--form 'geostore="a15899292fc118a345741728ef84a21a"' \
+--form 'deforestationAlerts="true"' \
+--form 'deforestationAlertsType="glad-s2"' \
+--form 'image=@"/home/user/image.jpg"'
 ```
 
 > Example response:
@@ -413,7 +438,7 @@ curl -X PATCH https://api.resourcewatch.org/v2/area/:id
             "userId": "5e2f0eaf9de40a6c87dd9b7d",
             "createdAt": "2020-02-19T18:19:51.485Z",
             "updatedAt": "2020-05-29T22:17:12.176Z",
-            "image": "",
+            "image": "https://s3.amazonaws.com/image.jpg",
             "env": "production",
             "datasets": [],
             "tags": [],
@@ -431,7 +456,7 @@ curl -X PATCH https://api.resourcewatch.org/v2/area/:id
 }
 ```
 
-Use this endpoint to update an existing area. For a detailed description of each field that can be provided in the body of the request, check out the [Area reference](reference.html/#area-reference) section. Keep in mind that you must provide one of the following when updating an area:
+Use this endpoint to update an existing area. For a detailed description of each field that can be provided in the body of the request, check out the [Area reference](reference.html#area-reference) section. Keep in mind that you must provide one of the following when updating an area:
 
 * `geostore` with the id of a geostore object obtained from [RW API's Geostore service](reference.html#geostore), if you are updating an area that references a geostore;
 * `geostoreDataApi` with the id of a geostore object obtained from the GFW Data API, as an alternative way to update an area that references a geostore;
@@ -612,7 +637,7 @@ This section gives you a complete view at the properties that are maintained as 
 
 You can find more details in the [source code](https://github.com/gfw-api/gfw-area/blob/develop/app/src/models/area.modelV2.js).
 
-| Field name          |  Type   | Required            | Default value | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Field name          | Type    | Required            | Default value | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 |---------------------|---------|---------------------|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | id                  | String  | Yes (autogenerated) | <none>        | Unique Id of the area. Auto generated on creation. Cannot be modified by users.                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | name                | String  | No                  | <none>        | Name of the area.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
@@ -633,9 +658,9 @@ You can find more details in the [source code](https://github.com/gfw-api/gfw-ar
 | admin.adm0          | String  | No                  | <none>        | Alternative syntax, see the `iso.country` field above.                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | admin.adm1          | String  | No                  | <none>        | Alternative syntax, see the `iso.region` field above.                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | admin.adm2          | String  | No                  | <none>        | Alternative syntax, see the `iso.subregion` field above.                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| image               | String  | No                  | <none>        | URL for an image representative of the area of interest.                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| image               | String  | No                  | <none>        | URL for an image representative of the area of interest. When creating/updating areas, you can optionally attach a file to your request, which will be uploaded to a public image repository, and the URL for it will be returned in subsequent GET requests for said areas. Do not upload private/sensitive images.                                                                                                                                                                                            |
 | templateId          | String  | No                  | <none>        | ?                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| tags                |  Array  | Yes                 | []            | Array of string tags that can be used to categorize areas.                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| tags                | Array   | Yes                 | []            | Array of string tags that can be used to categorize areas.                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | status              | String  | Yes                 | 'pending'     | The status of the area - can be one of `pending`, `saved` or `failed`. Cannot be modified by users. Initially, it is set as `pending`. Once all the data for the area is crunched and ready to be read, the status is updated to `saved` and an email is sent to the user. If errors occur, the status is set to `failed`.                                                                                                                                                                                      |
 | public              | Boolean | Yes                 | false         | If the area is public or private. Public area information can be accessed by other users.                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | fireAlerts          | Boolean | Yes                 | false         | If the area subscribes to notifications on fire alerts - set this field to true if you wish to be notified about fire alerts in your area of interest.                                                                                                                                                                                                                                                                                                                                                          |
@@ -645,5 +670,5 @@ You can find more details in the [source code](https://github.com/gfw-api/gfw-ar
 | webhookUrl          | String  | No                  | <none>        | Instead of receiving an email as notification, you can choose to receive a hit in the webhook URL you set in this field.                                                                                                                                                                                                                                                                                                                                                                                        |
 | language            | String  | No                  | 'en'          | The language in which you wish to receive the email notifications. `en`, `fr`, `zh`, `id`, `pt_BR` or `es_MX` are the supported values for this field. If any other value is provided, `en` is automatically set.                                                                                                                                                                                                                                                                                               |
 | subscriptionId      | String  | No                  | <none>        | If an area is returned as the reflection of an existing subscription in the Subscriptions service, this field will contain the id of the corresponding subscription.                                                                                                                                                                                                                                                                                                                                            |
-| createdAt           |  Date   | No (autogenerated)  | now           | Automatically maintained date of when the area was created. Cannot be modified by users.                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| updatedAt           |  Date   | No (autogenerated)  | now           | Automatically maintained date of when the area was last updated. Cannot be modified by users.                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| createdAt           | Date    | No (autogenerated)  | now           | Automatically maintained date of when the area was created. Cannot be modified by users.                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| updatedAt           | Date    | No (autogenerated)  | now           | Automatically maintained date of when the area was last updated. Cannot be modified by users.                                                                                                                                                                                                                                                                                                                                                                                                                   |
