@@ -167,7 +167,7 @@ For a detailed description of each field, check out the [Subscription reference]
 
 ### Filters
 
-The `v1/subscriptions` endpoint supports the following optional query parameters as filters:
+The `/v1/subscriptions` endpoint supports the following optional query parameters as filters:
 
 | Field       |                                                                      Description                                                                       |   Type | Default value |
 |-------------|:------------------------------------------------------------------------------------------------------------------------------------------------------:|-------:|--------------:|
@@ -219,7 +219,7 @@ curl -X GET "https://api.resourcewatch.org/v1/subscriptions/<subscription_id>" \
 }
 ```
 
-If you know the id of a subscription, then you can access it directly by performing a GET request to the `v1/subscriptions/:id` endpoint. Keep in mind that this will only match subscriptions that are owned by the user who performed the request.
+If you know the id of a subscription, then you can access it directly by performing a GET request to the `/v1/subscriptions/:id` endpoint. Keep in mind that this will only match subscriptions that are owned by the user who performed the request.
 
 ### Errors for getting subscriptions by id
 
@@ -565,7 +565,7 @@ curl -X PATCH "https://api.resourcewatch.org/v1/subscriptions/<subscription_id>"
 }
 ```
 
-You can update subscriptions associated with you user account by using the PATCH `v1/subscriptions/:id` endpoint. Updating a subscription follows the same validations as when creating a new one - i.e. all required field values must be provided, even if they remain the same. Values for fields other than the following are optional. The minimum fields list you must specify to update a subscription is:
+You can update subscriptions associated with you user account by using the PATCH `/v1/subscriptions/:id` endpoint. Updating a subscription follows the same validations as when creating a new one - i.e. all required field values must be provided, even if they remain the same. Values for fields other than the following are optional. The minimum fields list you must specify to update a subscription is:
 
 * `datasets` or `datasetsQuery`
 * `resource` (which much include `resource.type` and `resource.content`)
@@ -622,7 +622,7 @@ curl -X DELETE "https://api.resourcewatch.org/v1/subscriptions/<subscription_id>
 }
 ```
 
-To delete a subscription associated with your user account, you should use the DELETE `v1/subscriptions/:id` endpoint. If the deletion of the subscription is successful, the HTTP response code will be 200 OK, and the response body will contain the deleted subscription object.
+To delete a subscription associated with your user account, you should use the DELETE `/v1/subscriptions/:id` endpoint. If the deletion of the subscription is successful, the HTTP response code will be 200 OK, and the response body will contain the deleted subscription object.
 
 ### Errors for deleting subscriptions
 
@@ -634,7 +634,7 @@ To delete a subscription associated with your user account, you should use the D
 
 ## Deleting subscriptions by user id
 
-> Example DELETE request for deleting a subscription by user id:
+> Example DELETE request for deleting subscriptions by user id:
 
 ```shell
 curl -X DELETE "https://api.resourcewatch.org/v1/subscriptions/by-user/<user_id>" \
@@ -671,16 +671,16 @@ curl -X DELETE "https://api.resourcewatch.org/v1/subscriptions/by-user/<user_id>
 }
 ```
 
-To delete every subscription associated with a specific user account, the DELETE `v1/subscriptions/by-user/:userId` endpoint can be used. If the deletion process is successful, the HTTP response code will be 200 OK, and the response body will contain all the deleted subscriptions. This endpoint requires ADMIN access or to be logged as the same user that wants their subscriptions deleted.
+To delete every subscription associated with a specific user account, the DELETE `/v1/subscriptions/by-user/:userId` endpoint can be used. If the deletion process is successful, the HTTP response code will be 200 OK, and the response body will contain all the deleted subscriptions. This endpoint requires microservice or ADMIN access, or being logged as the user that wants their subscriptions deleted.
 
 ### Errors for deleting subscriptions by user id
 
-| Error code | Error message          | Description                                                                                                         |
-|------------|------------------------|---------------------------------------------------------------------------------------------------------------------|                                                                                     |
-| 401        | Unauthorized  | No valid token was provided in the request headers.                                                                 |
-| 403        | Forbidden     | Either the user logged is not the same as the user id that is going to be deleted or is not an ADMIN. |
+| Error code | Error message   | Description                                                                                                           |
+|------------|-----------------|-----------------------------------------------------------------------------------------------------------------------|
+| 401        | Unauthorized    | No valid token was provided in the request headers.                                                                   |
+| 403        | Forbidden       | Either the user logged is not the same as the user id that is going to be deleted or is not an ADMIN or microservice. |
 
-## Confirming a subscription
+## Confirming a subscription`
 
 > Example GET request to confirm a subscription:
 
@@ -688,7 +688,7 @@ To delete every subscription associated with a specific user account, the DELETE
 curl -X GET "https://api.resourcewatch.org/v1/subscriptions/<subscription_id>/confirm"
 ```
 
-Upon creation of the subscription, a confirmation email is sent to the email of the user who created the subscription. This email will contain a link, which you will need to click in order to confirm the subscription. You can also confirm the subscription by performing a GET request to the `v1/subscriptions/:id/confirm` endpoint, as exemplified on the side.
+Upon creation of the subscription, a confirmation email is sent to the email of the user who created the subscription. This email will contain a link, which you will need to click in order to confirm the subscription. You can also confirm the subscription by performing a GET request to the `/v1/subscriptions/:id/confirm` endpoint, as exemplified on the side.
 
 *Manually calling this endpoint will redirect you to the GFW application.*
 
@@ -701,7 +701,7 @@ curl -X GET "https://api.resourcewatch.org/v1/subscriptions/<subscription_id>/se
 -H "Authorization: Bearer <your-token>"
 ```
 
-For convenience, the RW API offers an additional endpoint to resend the confirmation email. In order to do this, you should perform a GET request to the `v1/subscriptions/:id/send_confirmation`. As with most of the other subscription endpoints, please keep in mind that you must be authenticated in order to use this endpoint.
+For convenience, the RW API offers an additional endpoint to resend the confirmation email. In order to do this, you should perform a GET request to the `/v1/subscriptions/:id/send_confirmation`. As with most of the other subscription endpoints, please keep in mind that you must be authenticated in order to use this endpoint.
 
 This endpoint does not change the subscription - i.e. if the subscription was already confirmed, it stays that way. The confirmation email will always be sent, regardless if the subscription is confirmed or not.
 
@@ -718,7 +718,7 @@ curl -X GET "https://api.resourcewatch.org/v1/subscriptions/<subscription_id>/un
 
 **Note: When you unsubscribe, the underlying subscription resource is deleted.**.
 
-You can use the endpoint `v1/subscriptions/:id/unsubscribe` (exemplified on the side) for unsubscribing from a subscription. As with most of the other subscription endpoints, please keep in mind that you must be authenticated in order to use this endpoint.
+You can use the endpoint `/v1/subscriptions/:id/unsubscribe` (exemplified on the side) for unsubscribing from a subscription. As with most of the other subscription endpoints, please keep in mind that you must be authenticated in order to use this endpoint.
 
 ## Subscription statistics
 
@@ -804,7 +804,7 @@ curl -X GET "https://api.resourcewatch.org/v1/subscriptions/statistics?start=:st
 }
 ```
 
-The `v1/subscriptions/statistics` endpoint can be used to access all the data regarding the subscription notifications that have been sent.
+The `/v1/subscriptions/statistics` endpoint can be used to access all the data regarding the subscription notifications that have been sent.
 
 #### Filters
 
@@ -876,7 +876,7 @@ curl -X GET "https://api.resourcewatch.org/v1/subscriptions/statistics-group?sta
 }
 ```
 
-The `v1/subscriptions/statistics-group` endpoint can be used to access data regarding the subscription notifications that have been sent, grouped by the the dataset of the subscription. The output of this endpoint is a subset of the output of the `v1/subscriptions/statistics` endpoint.
+The `/v1/subscriptions/statistics-group` endpoint can be used to access data regarding the subscription notifications that have been sent, grouped by the the dataset of the subscription. The output of this endpoint is a subset of the output of the `/v1/subscriptions/statistics` endpoint.
 
 #### Filters
 
