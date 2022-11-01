@@ -523,8 +523,6 @@ DELETing an area deletes the area with id provided and any associated subscripti
 
 ## Delete areas by user id
 
-Deletes an area by user id
-
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v2/area/by-user/:user-id \
 -H "Authorization: Bearer <your-token>"
@@ -563,21 +561,21 @@ curl -X DELETE https://api.resourcewatch.org/v2/area/by-user/:user-id \
 }
 ```
 
-This endpoint deletes all areas where the userId on the param is found. Any user with ADMIN role can use this endpoint. Regular users can use this endpoint to delete the areas they own. Not being authenticated will return a 401, not being an ADMIN or not being logged as the user that owns the areas will return a 403.
+This endpoint deletes all areas for the provided `userId`. Any microservice or user with ADMIN role can use this endpoint. Regular users can use this endpoint to delete the areas they own.
 
 ### Errors for deleting areas by user id
 
-| Error code | Error message (example) | Description                                                                                                  |
-|------------|-------------------------|--------------------------------------------------------------------------------------------------------------|
-| 401        | `Unauthorized`          | No token was provided.                                                                                       |
-| 403        | `Not authorized`        | You are trying to delete the areas of an user that is not the same logged user or you are not an ADMIN user. |
+| Error code | Error message (example) | Description                                                                                                          |
+|------------|-------------------------|----------------------------------------------------------------------------------------------------------------------|
+| 401        | `Unauthorized`          | No token was provided.                                                                                               |
+| 403        | `Not authorized`        | You are trying to delete the areas of an user that is not the same logged user, not an ADMIN user or a microservice. |
 
 ## Update areas by geostore
 
 > Example request to update all areas that reference geostores with ids "123" and "234":
 
 ```shell
-curl -X POST https://api.resourcewatch.org/v2/area/update
+curl -X POST https://api.resourcewatch.org/v2/area/update \
 -H "Authorization: Bearer <your-token>" \
 -H "Content-Type: application/json" -d \
  '{
