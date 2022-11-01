@@ -203,8 +203,6 @@ curl -X DELETE https://api.resourcewatch.org/v1/area/59ca3213d08a7d001054522b \
 
 ## Delete areas by user id
 
-Deletes an area by user id
-
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/area/by-user/<user-id> \
 -H "Authorization: Bearer <your-token>"
@@ -265,22 +263,14 @@ curl -X DELETE https://api.resourcewatch.org/v1/area/by-user/<user-id> \
 }
 ```
 
-
-### Example
-
-```shell
-curl -X DELETE https://api.resourcewatch.org/v1/area/by-user/59ca3213d08a7d001054522b \
--H "Authorization: Bearer <your-token>"
-```
-
-This endpoint deletes all areas where the userId on the param is found. Any user with ADMIN role can use this endpoint. Regular users can use this endpoint to delete the areas they own. Not being authenticated will return a 401, not being an ADMIN or not being logged as the user that owns the areas will return a 403.
+This endpoint deletes all areas for the provided `userId`. Any microservice or user with ADMIN role can use this endpoint. Regular users can use this endpoint to delete the areas they own.
 
 ### Errors for deleting areas by user id
 
-Error code     | Error message (example)       | Description
--------------- | ----------------------------- | --------------
-401            | `Unauthorized`                | No token was provided.
-403            | `Not authorized`              | You are trying to delete the areas of an user that is not the same logged user or you are not an ADMIN user.
+| Error code | Error message (example) | Description                                                                                                          |
+|------------|-------------------------|----------------------------------------------------------------------------------------------------------------------|
+| 401        | `Unauthorized`          | No token was provided.                                                                                               |
+| 403        | `Not authorized`        | You are trying to delete the areas of an user that is not the same logged user, not an ADMIN user or a microservice. |
 
 ## Get area
 
