@@ -25,8 +25,8 @@ This interaction between Areas and Subscriptions is transparent for the API user
 > Example request to get all areas for the logged user:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v2/area
--H "Authorization: Bearer <your-token>"
+curl -X GET https://api.resourcewatch.org/v2/area \
+  -H "Authorization: Bearer <your-token>"
 ```
 
 > Example response:
@@ -131,8 +131,8 @@ Finds all areas for the user who requested the list of areas. For each area, if 
 > Example request to get ALL areas (only available for ADMIN users):
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v2/area?all=true
--H "Authorization: Bearer <your-token>"
+curl -X GET https://api.resourcewatch.org/v2/area?all=true \
+  -H "Authorization: Bearer <your-token>"
 ```
 
 > Example response:
@@ -167,11 +167,11 @@ curl -X GET https://api.resourcewatch.org/v2/area?all=true
         }
     ],
     "links": {
-        "self": "http://api.resourcewatch.org/v2/area?all=true&page[number]=1&page[size]=10",
-        "first": "http://api.resourcewatch.org/v2/area?all=true&page[number]=1&page[size]=10",
-        "last": "http://api.resourcewatch.org/v2/area?all=true&page[number]=1&page[size]=10",
-        "prev": "http://api.resourcewatch.org/v2/area?all=true&page[number]=1&page[size]=10",
-        "next": "http://api.resourcewatch.org/v2/area?all=true&page[number]=1&page[size]=10"
+        "self": "https://api.resourcewatch.org/v2/area?all=true&page[number]=1&page[size]=10",
+        "first": "https://api.resourcewatch.org/v2/area?all=true&page[number]=1&page[size]=10",
+        "last": "https://api.resourcewatch.org/v2/area?all=true&page[number]=1&page[size]=10",
+        "prev": "https://api.resourcewatch.org/v2/area?all=true&page[number]=1&page[size]=10",
+        "next": "https://api.resourcewatch.org/v2/area?all=true&page[number]=1&page[size]=10"
     },
     "meta": {
         "total-pages": 1,
@@ -228,8 +228,8 @@ Then, for each area in the Areas service database, if it has an associated subsc
 ## Getting an area by its id
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v2/area/:id
--H "Authorization: Bearer <your-token>"
+curl -X GET https://api.resourcewatch.org/v2/area/:id \
+  -H "Authorization: Bearer <your-token>"
 ```
 
 > Example response:
@@ -288,7 +288,7 @@ Try to find an area with the id provided:
 > Example request to create an area
 
 ```shell
-curl -X POST https://api.resourcewatch.org/v2/area
+curl -X POST https://api.resourcewatch.org/v2/area \
 -H "Authorization: Bearer <your-token>" \
 -H "Content-Type: application/json" -d \
  '{
@@ -299,7 +299,7 @@ curl -X POST https://api.resourcewatch.org/v2/area
     "public": false,
     "fireAlerts": true,
     "deforestationAlerts": true,
-    "webhookUrl": "http://example.com",
+    "webhookUrl": "https://example.com",
     "monthlySummary": true,
     "email": "youremail@resourcewatch.org",
     "language": "en"
@@ -340,7 +340,7 @@ curl --location --request POST 'https://api.resourcewatch.org/v2/area' \
             "public": false,
             "fireAlerts": true,
             "deforestationAlerts": true,
-            "webhookUrl": "http://example.com",
+            "webhookUrl": "https://example.com",
             "monthlySummary": true,
             "subscriptionId": "5e4d7c47dd8fa31290d548ae",
             "email": "youremail@resourcewatch.org",
@@ -395,7 +395,7 @@ The subscription is created only if the area has selected set to `true` at least
 > Example request to update an area
 
 ```shell
-curl -X PATCH https://api.resourcewatch.org/v2/area/:id
+curl -X PATCH https://api.resourcewatch.org/v2/area/:id \
 -H "Authorization: Bearer <your-token>" \
 -H "Content-Type: application/json" -d \
  '{
@@ -405,7 +405,7 @@ curl -X PATCH https://api.resourcewatch.org/v2/area/:id
     "public": false,
     "fireAlerts": true,
     "deforestationAlerts": true,
-    "webhookUrl": "http://example.com",
+    "webhookUrl": "https://example.com",
     "monthlySummary": true,
     "email": "youremail@resourcewatch.org",
     "language": "en"
@@ -446,7 +446,7 @@ curl --location --request PATCH 'https://api.resourcewatch.org/v2/area/:id' \
             "public": false,
             "fireAlerts": true,
             "deforestationAlerts": true,
-            "webhookUrl": "http://example.com",
+            "webhookUrl": "https://example.com",
             "monthlySummary": true,
             "subscriptionId": "5e4d7c47dd8fa31290d548ae",
             "email": "youremail@resourcewatch.org",
@@ -502,8 +502,8 @@ PATCHing an area is a bit more complex, and it comes down to 3 major cases:
 ## Deleting an area
 
 ```shell
-curl -X DELETE https://api.resourcewatch.org/v2/area/:id
--H "Authorization: Bearer <your-token>" \
+curl -X DELETE https://api.resourcewatch.org/v2/area/:id \
+  -H "Authorization: Bearer <your-token>" 
 ```
 
 > Returns 204 No Content in case of success.
@@ -638,8 +638,8 @@ If you want to understand more about how these emails are sent or how you can up
 ## Sync areas
 
 ```shell
-curl -X POST https://api.resourcewatch.org/v2/area/sync
--H "Authorization: Bearer <your-token>" \
+curl -X POST https://api.resourcewatch.org/v2/area/sync \
+  -H "Authorization: Bearer <your-token>"
 ```
 
 > Example response:
