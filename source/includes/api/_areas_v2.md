@@ -567,10 +567,11 @@ This endpoint deletes all areas where the userId on the param is found. Any user
 
 ### Errors for deleting areas by user id
 
-Error code     | Error message (example)       | Description
--------------- | ----------------------------- | --------------
-401            | `Unauthorized`                | No token was provided.
-403            | `Not authorized`              | You are trying to delete the areas of an user that is not the same logged user or you are not an ADMIN user.
+| Error code | Error message (example) | Description                                                                                                  |
+|------------|-------------------------|--------------------------------------------------------------------------------------------------------------|
+| 401        | `Unauthorized`          | No token was provided.                                                                                       |
+| 403        | `Not authorized`        | You are trying to delete the areas of an user that is not the same logged user or you are not an ADMIN user. |
+
 ## Update areas by geostore
 
 > Example request to update all areas that reference geostores with ids "123" and "234":
