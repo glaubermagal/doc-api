@@ -521,7 +521,7 @@ DELETing an area deletes the area with id provided and any associated subscripti
 | 403        | `Not authorized`        | You are trying to delete an area that is not owned by you and you are not an ADMIN user. |
 | 404        | `Area not found`        | The area with id provided does not exist.                                                |
 
-## Delete areas by user id
+## Deleting areas by user id
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v2/area/by-user/:user-id \

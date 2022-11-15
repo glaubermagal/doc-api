@@ -1288,6 +1288,14 @@ vocabulary-related data and metadata from the original dataset to the new one.
 
 ## Deleting a dataset
 
+> Example request for deleting a dataset
+
+```shell
+curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id> \
+-H "Authorization: Bearer <your-token>"
+-H "Content-Type: application/json"
+```
+
 Use this endpoint if you wish to delete a dataset. Deleting a dataset of type document (`connectorType` with
 value `document`) will cause the API's internal copy of said data to be deleted. Dataset types that proxy data from an
 external source (ie. carto, gee, etc) will be deleted without modifying said external source.
@@ -1309,14 +1317,6 @@ In order to delete a dataset, the following conditions must be met:
 - the user must be logged in and belong to the same application as the dataset
 - the user must comply with [the RW API role-based access control guidelines](concepts.html#role-based-access-control).
 
-> Example request for deleting a dataset
-
-```shell
-curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id> \
--H "Authorization: Bearer <your-token>"
--H "Content-Type: application/json"
-```
-
 #### Errors for deleting a dataset
 
 | Error code | Error message                      | Description                                                                                                                             |
@@ -1326,6 +1326,130 @@ curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id> \
 | 403        | Forbidden                          | You need to either have the `ADMIN` role, or have role `MANAGER` and be the dataset's owner (through the `userId` field of the dataset) |
 | 403        | Forbidden                          | You are trying to delete a dataset with one or more `application` values that are not associated with your user account.                |
 | 404        | Dataset with id <id> doesn't exist | A dataset with the provided id does not exist.                                                                                          |
+
+## Deleting datasets by user id
+
+> Example request for deleting a dataset
+
+```shell
+curl -X DELETE https://api.resourcewatch.org/v1/dataset/by-user/<user-id> \
+-H "Authorization: Bearer <your-token>"
+-H "Content-Type: application/json"
+```
+
+> Example response:
+
+```json
+{
+    "deletedDatasets": [
+      {
+        "id": "aef2be42-1ee8-4069-a55a-16a988f2b7a0",
+        "type": "dataset",
+        "attributes": {
+          "name": "Glad points",
+          "slug": "Glad-points-1490086842129",
+          "type": null,
+          "subtitle": null,
+          "application": [
+            "data4sdgs"
+          ],
+          "dataPath": null,
+          "attributesPath": null,
+          "connectorType": "document",
+          "provider": "csv",
+          "userId": "58333dcfd9f39b189ca44c75",
+          "connectorUrl": "https://gfw2-data.s3.amazonaws.com/alerts-tsv/glad_headers.csv",
+          "sources": [],
+          "tableName": "data",
+          "status": "pending",
+          "published": true,
+          "protected": false,
+          "overwrite": false,
+          "env": "production",
+          "geoInfo": false,
+          "legend": {
+            "date": [],
+            "region": [],
+            "country": []
+          },
+          "clonedHost": {},
+          "errorMessage": null,
+          "updatedAt": "2017-01-13T10:45:46.368Z",
+          "widgetRelevantProps": [],
+          "layerRelevantProps": []
+        }
+      }
+    ],
+    "protectedDatasets": [
+      {
+        "id": "00f2be42-1ee8-4069-a55a-16a988f2b762",
+        "type": "dataset",
+        "attributes": {
+          "name": "Fires data",
+          "slug": "fires-data-1490086842163",
+          "type": null,
+          "subtitle": null,
+          "application": [
+            "data4sdgs"
+          ],
+          "dataPath": null,
+          "attributesPath": null,
+          "connectorType": "document",
+          "provider": "csv",
+          "userId": "58333dcfd9f39b189ca44c75",
+          "connectorUrl": "https://gfw2-data.s3.amazonaws.com/alerts-tsv/fires.csv",
+          "sources": [],
+          "tableName": "data",
+          "status": "pending",
+          "published": true,
+          "protected": true,
+          "overwrite": false,
+          "env": "production",
+          "geoInfo": false,
+          "legend": {
+            "date": [],
+            "region": [],
+            "country": []
+          },
+          "clonedHost": {},
+          "errorMessage": null,
+          "updatedAt": "2017-01-13T10:45:46.368Z",
+          "widgetRelevantProps": [],
+          "layerRelevantProps": []
+        }
+      }
+    ]
+}
+```
+
+
+Use this endpoint if you wish to delete all datasets associated with a user. Deleting datasets of type document (`connectorType` with
+value `document`) will cause the API's internal copy of said data to be deleted. Dataset types that proxy data from an
+external source (ie. carto, gee, etc) will be deleted without modifying said external source.
+
+Unlike what happens when deleting a single dataset by id, deleting all datasets for a user does **not** validate if the datasets
+belong to different `applications` and prevents their actual deletion based on that - datasets will be deleted even if they
+are part of `applications` that the user is not associated with.
+
+Besides deleting the datasets themselves, this endpoint also deletes graph vocabularies, layers, widgets and metadata related
+with the datasets themselves. For each dataset, these delete operations are issued in this order, and prior to deleting 
+the dataset itself, but are not atomic - if one of them fails, the following ones are canceled, but the already deleted 
+elements are not restored. Any other datasets associated with the given user may or may not be deleted, as the operation
+occurs internally in an asynchronous fashion.
+
+Any microservice or user with ADMIN role can use this endpoint. Regular users can use this endpoint to delete the datasets they own.
+
+The response includes two lists of datasets:
+- `deletedDatasets`: an unpaginated list of all datasets that were deleted as part of this operation.
+- `protectedDatasets`: an unpaginated list of all datasets associated with the provided user, that have `protected` status set to `true`, 
+and thus were not deleted.
+
+#### Errors for deleting datasets by user id
+
+| Error code | Error message                      | Description                                                                                                              |
+|------------|------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| 401        | Unauthorized                       | You need to be logged in to be able to delete a dataset.                                                                 |
+| 403        | Forbidden                          | You are trying to delete the datasets of an user that is not the same logged user, not an ADMIN user or a microservice   |
 
 ## Dataset automatic synchronization
 
