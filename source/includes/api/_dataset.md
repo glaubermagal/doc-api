@@ -1329,7 +1329,7 @@ In order to delete a dataset, the following conditions must be met:
 
 ## Deleting datasets by user id
 
-> Example request for deleting a dataset
+> Example request for deleting datasets by user id
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/dataset/by-user/<user-id> \
@@ -1446,10 +1446,10 @@ and thus were not deleted.
 
 #### Errors for deleting datasets by user id
 
-| Error code | Error message                      | Description                                                                                                              |
-|------------|------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
-| 401        | Unauthorized                       | You need to be logged in to be able to delete a dataset.                                                                 |
-| 403        | Forbidden                          | You are trying to delete the datasets of an user that is not the same logged user, not an ADMIN user or a microservice   |
+| Error code | Error message                      | Description                                                                                                            |
+|------------|------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| 401        | Unauthorized                       | You need to be logged in to be able to delete datasets.                                                                |
+| 403        | Forbidden                          | You are trying to delete the datasets of an user that is not the same logged user, not an ADMIN user or a microservice |
 
 ## Dataset automatic synchronization
 
