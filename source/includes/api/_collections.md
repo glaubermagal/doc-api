@@ -173,7 +173,7 @@ You can do a POST request to the `/v1/collection/:id/resource` to push a new res
 | type  | Type of resource being added | Text (dataset, layer, widget) |
 | id    |      Id of the resource      |                          Text |
 
-## Getting collections for the request user
+## Getting collections
 
 > To get all collections of the logged user, you have to do a GET request:
 
@@ -258,7 +258,7 @@ In the specific case of the Collections service, the default value for the `page
 
 ### Filters
 
-> Filtering areas
+> Filtering collections by environment
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/collection?env=custom
@@ -266,9 +266,10 @@ curl -X GET https://api.resourcewatch.org/v1/collection?env=custom
 
 The `/v1/collection` endpoint provides the following parameters to tailor the returned listing:
 
-| Field | Description                                                                                                                                                                                                                    |   Type |                                   Example |
-|-------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------:|------------------------------------------:|
-| env   | Environment to which the collection belongs. Multiple values can be combined using `,` as a separator. Does not support regexes. Read more about this field in the [Environments concept section](concepts.html#environments). | String | any valid text. Defaults to `production`. |
+| Field  | Description                                                                                                                                                                                                                    |   Type |                                   Example |
+|--------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------:|------------------------------------------:|
+| env    | Environment to which the collection belongs. Multiple values can be combined using `,` as a separator. Does not support regexes. Read more about this field in the [Environments concept section](concepts.html#environments). | String | any valid text. Defaults to `production`. |
+| userId | List collections for different user than the one making the request. Only available for `ADMIN` users or requests from other microservices.                                                                                    | String |                        any valid user id. |
 
 ### Sorting
 
