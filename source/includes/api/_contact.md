@@ -2,29 +2,50 @@
 
 The following contact endpoints are available
 
-
 ## Contact us
 
-Sends a contact form including a topic, email address, and a message. 
-
-
-### Example
-
-Contact form sent using the type `General question or feedback`, the email address `example@example.com` and the message `This is a text`:
+> Example request with the minimum required data
 
 ```shell
-curl -X POST https://api.resourcewatch.org/v1/contact-us \
+curl -X POST https://api.resourcewatch.org/v1/form/contact-us \
 -H "Content-Type: application/json" -d \
     '{
-        "topic": "General question or feedback",
         "email": "example.example@vizzuality.com",
-        "text": "This is a test"
+        "message": "This is a test"
     }'
 ```
 
+> Example request with complete data
+
+```shell
+curl -X POST https://api.resourcewatch.org/v1/form/contact-us \
+-H "Content-Type: application/json" -d \
+    '{
+        "email": "example.example@vizzuality.com",
+        "message": "This is a test",
+        "language": "es_MX",
+        "tool": "fw",
+        "topic": "data-related-inquiry"
+    }'
+```
+
+Sends a contact form including an origin email address and a message. It can also optionally include:
+
+- `language`: One of the following supported values: `en`, `es_MX`, `fr`, `id`, `pt_BR` or `zh`. Defaults to `en`.
+- `topic`: One of the following supported values: `report-a-bug-or-error`, `provide-feedback`, `data-related-inquiry`
+  or `general-inquiry`. Defaults to `general-inquiry`.
+- `tool`: One of the following supported values: `gfw`, `gfw-pro`, `fw`, `blog`, `map-builder` or `not-applicable`.
+  Defaults to `not-applicable`
+
+The `language` value is used as a reference for future communication with the user. `topic` and `tool` are used to
+internally better determine the communication path the request must follow in order to reach the desired person that
+will handle it.
+
+On success, a 200 HTTP code with no response body is returned.
+
 ## Requesting a webinar
 
-> To create a new webinar request, you need to provide at least the following details:
+> Example request for a webinar
 
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/form/request-webinar" \
@@ -33,14 +54,10 @@ curl -X POST "https://api.resourcewatch.org/v1/form/request-webinar" \
 '{
     "name": "Example name",
     "email": "example@email.com",
-    "description": "Example description"
+    "request": "Example request text"
 }'
 ```
 
-> Successful response: 204 No Content
-
-In order to request a new webinar, you should make a POST request to the `form/request-webinar` endpoint, providing at least a `name` and an `email` in the request body. You can also optionally provide a `description`.
-
-Webinar requests are pushed into a Google Spreadsheet (using the Google Sheets API). Staging webinar requests are located [here](https://docs.google.com/spreadsheets/d/1JsXX7aE_XlJm-WWhs6wM5IW0UfLi-K9OmOx0mkIb0uA/edit?usp=sharing), and production webinar requests are located [here](https://docs.google.com/spreadsheets/d/1zqiimFua1Lnm9KM4ki_njCaMuRhaPBif30zbvxIZWa4/edit?usp=sharing).
-
-In case of success, this endpoint
+This endpoint allows users to request a webinar. Internally, it sends the user submitted information to a WRI staff
+member, via email. The user must provide their name, email address, and a request text, all of which will be included
+in the above mentioned email. A successful request returns an HTTP 204 response. 
