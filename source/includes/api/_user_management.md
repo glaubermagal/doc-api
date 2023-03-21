@@ -974,6 +974,112 @@ Updating a user's account details may invalidate their token and cause their app
 | 401        | Not authenticated. | You need to be logged in to use this endpoint.          |
 | 403        | Not authorized.    | You need to have the `ADMIN` role to use this endpoint. |
 
+
+### Getting all resources for a user id
+
+> Get all resource for a user by its id
+
+```shell
+curl -L "https://api.resourcewatch.org/auth/user/<user_id>/resources"
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer <your-token>"
+```
+
+> Response
+
+```json
+{
+  "datasets": {
+    "data": [],
+    "count": 0
+  },
+  "layers": {
+    "data": [],
+    "count": 0
+  },
+  "widgets": {
+    "data": [],
+    "count": 0
+  },
+  "userAccount": {
+    "data": {
+      "id": "<user_id>",
+      "_id": "<user_id>",
+      "email": "john.doe@sample.com",
+      "provider": "local",
+      "role": "USER",
+      "extraUserData": {
+        "apps": [
+          "gfw"
+        ]
+      },
+      "createdAt": "2023-03-10T23:05:41.000Z",
+      "updatedAt": "2023-03-10T23:08:28.000Z"
+    },
+    "count": 1
+  },
+  "userData": {
+    "data": [],
+    "count": 0
+  },
+  "collections": {
+    "data": [],
+    "count": 0
+  },
+  "favourites": {
+    "data": [],
+    "count": 0
+  },
+  "areas": {
+    "data": [],
+    "count": 0
+  },
+  "stories": {
+    "data": [],
+    "count": 0
+  },
+  "subscriptions": {
+    "data": [],
+    "count": 0
+  },
+  "dashboards": {
+    "data": [],
+    "count": 0
+  },
+  "profiles": {
+    "data": [],
+    "count": 0
+  },
+  "topics": {
+    "data": [],
+    "count": 0
+  }
+}
+```
+
+This endpoints allows users to get a list of all the resources they own (through their `userId` or equivalent property)
+on the RW API. It's available to users with the `ADMIN` role, and will list resources of the following type:
+
+- Dataset
+- Layer
+- Widget
+- User data
+- Collection
+- Favourite
+- Areas
+- Stories
+- Subscription
+- Profile
+- Topic
+- Dashboard
+
+**Errors**
+
+| Error code | Error message      | Description                                             |
+|------------|--------------------|---------------------------------------------------------|
+| 401        | Not authenticated. | You need to be logged in to use this endpoint.          |
+| 403        | Not authorized.    | You need to have the `ADMIN` role to use this endpoint. |
+
 ### Deleting a user
 
 > Deletes a user by its id
@@ -1013,9 +1119,27 @@ curl -X DELETE "https://api.resourcewatch.org/auth/user/<user_id>"
 This endpoints deletes the user account with the given id. It's available to users with the `ADMIN` role and to users
 who want to delete their own account. The response will contain the details of the user account that was deleted.
 
-<aside class="notice">
-This action only deletes the user account. Any resources (datasets, subscriptions, etc) that may be associated with this given user account are not modified or deleted.
-</aside>
+Besides the actual user account, this action also deletes all resources of the following types that belong (through
+their `userId` or equivalent property) to the user:
+
+- Dataset
+- Layer
+- Widget
+- User data
+- Collection
+- Favourite
+- Areas
+- Stories
+- Subscription
+- Profile
+- Topic
+- Dashboard
+
+The deletion of the above resources is done using a "best effort" approach: if some/all of them fail, the user deletion
+process will not be stopped or error, and the user account will be deleted anyways. When a user is deleted, a
+corresponding [deletion](developer.html#user-deletion) is created, which can be used to track the success/failure of the
+different resource deletion process. Managing deletion resources is considered a RW API developer feature, and it's not
+meant to be used by regular RW API users.
 
 **Errors**
 
