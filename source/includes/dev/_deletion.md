@@ -2,22 +2,21 @@
 
 A User Deletion (or simply 'deletion') is a record of a user's deletion process. This record is created when a user
 deletion is requested, and tracks the process of deleting all of that user's data from the RW API. Note that a deletion,
-by itself, has no functional implication - creating a deletion will not delete a user account or any of its data, for example.
+by itself, has no functional implication - creating a deletion will not delete a user account or any of its data, for
+example.
 It works solely as a tracking mechanism for the user's deletion process.
 
 Each deletion model record has an overall `status` field, that can be either `pending` or `done` - the former indicates
-that the deletion process is still in progress, and not all user data has been deleted; the latter indicates that the
-deletion process has completed, and no user data remains in the RW API databases.
+that the deletion process was not fully completed automatically (there are still user resources left to be deleted); the
+latter indicates that the deletion process has completed, and no user data remains in the RW API databases.
 
 The exception to this is the deletion record itself, which will remain after the user data deletion process is
 completed. However, the deletion record does not contain any user personal information, nor does it contain any
 information uploaded by the user, and as such outside of the scope of deleting all user data from the platform.
 
 Each deletion model record also has a series of boolean typed fields, each of which referring to a type of resource the
-RW API stores
-and that can uploaded by a user (dataset, widget, layer, etc). These fields are meant to track which of these resources
-have
-been successfully deleted.
+RW API stores and that can uploaded by a user (dataset, widget, layer, etc). These fields are meant to track which of
+these resources have been successfully deleted.
 
 User deletions come with a basic CRUD set of endpoints, all of which are only available to users with the `ADMIN` role,
 and you will get a `403` HTTP error
@@ -48,7 +47,6 @@ curl -X GET https://api.resourcewatch.org/v1/deletion \
         "widgetsDeleted": false,
         "userAccountDeleted": false,
         "userDataDeleted": false,
-        "graphDataDeleted": false,
         "collectionsDeleted": false,
         "favouritesDeleted": false,
         "vocabulariesDeleted": false,
@@ -111,10 +109,10 @@ The deletion list provides filtering based on these 3 fields:
 
 ### Errors for getting all deletions
 
-| Error code | Error message      | Description                                               |
-|------------|--------------------|-----------------------------------------------------------|
-| 401        | Not authenticated  | You need to be logged in to be able to get all deletions. |
-| 403        | Not authorized     | You need to have the `ADMIN` role                         |
+| Error code | Error message     | Description                                               |
+|------------|-------------------|-----------------------------------------------------------|
+| 401        | Not authenticated | You need to be logged in to be able to get all deletions. |
+| 403        | Not authorized    | You need to have the `ADMIN` role                         |
 
 ## Getting a deletion by id
 
@@ -141,7 +139,6 @@ curl -X GET https://api.resourcewatch.org/v1/deletion/<deletion-id> \
       "widgetsDeleted": false,
       "userAccountDeleted": false,
       "userDataDeleted": false,
-      "graphDataDeleted": false,
       "collectionsDeleted": false,
       "favouritesDeleted": false,
       "vocabulariesDeleted": false,
@@ -193,7 +190,6 @@ curl -X POST "https://api.resourcewatch.org/v1/deletion" \
       "widgetsDeleted": false,
       "userAccountDeleted": false,
       "userDataDeleted": false,
-      "graphDataDeleted": false,
       "collectionsDeleted": false,
       "favouritesDeleted": false,
       "vocabulariesDeleted": false,
@@ -240,7 +236,6 @@ default.
 | 401        | Not authenticated                     | You need to be logged in to be able to create a deletion. |
 | 403        | Not authorized                        | You need to have the `ADMIN` role                         |
 
-
 ## Updating a deletion
 
 > Updating a deletion
@@ -270,7 +265,6 @@ curl -X PATCH "https://api.resourcewatch.org/v1/deletion/<deletion-id>" \
       "widgetsDeleted": false,
       "userAccountDeleted": false,
       "userDataDeleted": false,
-      "graphDataDeleted": false,
       "collectionsDeleted": false,
       "favouritesDeleted": false,
       "vocabulariesDeleted": false,
@@ -287,17 +281,17 @@ curl -X PATCH "https://api.resourcewatch.org/v1/deletion/<deletion-id>" \
 }
 ```
 
-Use this endpoint to update an existing deletion. Besides the several boolean type fields, you can also update the `status`
+Use this endpoint to update an existing deletion. Besides the several boolean type fields, you can also update
+the `status`
 field to either `done` or `pending`.
 
 ### Errors for updating a deletion
 
-| Error code | Error message                         | Description                                               |
-|------------|---------------------------------------|-----------------------------------------------------------|
-| 401        | Not authenticated                     | You need to be logged in to be able to update a deletion. |
-| 403        | Not authorized                        | You need to have the `ADMIN` role                         |
-| 404        | Deletion not found                    | There is no deletion with the provided id                 |
-
+| Error code | Error message      | Description                                               |
+|------------|--------------------|-----------------------------------------------------------|
+| 401        | Not authenticated  | You need to be logged in to be able to update a deletion. |
+| 403        | Not authorized     | You need to have the `ADMIN` role                         |
+| 404        | Deletion not found | There is no deletion with the provided id                 |
 
 ## Delete a deletion
 
@@ -324,7 +318,6 @@ curl -X DELETE "https://api.resourcewatch.org/v1/deletion/<deletion-id>" \
       "widgetsDeleted": false,
       "userAccountDeleted": false,
       "userDataDeleted": false,
-      "graphDataDeleted": false,
       "collectionsDeleted": false,
       "favouritesDeleted": false,
       "vocabulariesDeleted": false,
@@ -341,13 +334,13 @@ curl -X DELETE "https://api.resourcewatch.org/v1/deletion/<deletion-id>" \
 }
 ```
 
-Use this endpoint to delete an existing deletion. 
+Use this endpoint to delete an existing deletion.
 
 ### Errors for deleting a deletion
 
-| Error code | Error message                         | Description                                               |
-|------------|---------------------------------------|-----------------------------------------------------------|
-| 401        | Not authenticated                     | You need to be logged in to be able to delete a deletion. |
-| 403        | Not authorized                        | You need to have the `ADMIN` role                         |
-| 404        | Deletion not found                    | There is no deletion with the provided id                 |
+| Error code | Error message      | Description                                               |
+|------------|--------------------|-----------------------------------------------------------|
+| 401        | Not authenticated  | You need to be logged in to be able to delete a deletion. |
+| 403        | Not authorized     | You need to have the `ADMIN` role                         |
+| 404        | Deletion not found | There is no deletion with the provided id                 |
 
