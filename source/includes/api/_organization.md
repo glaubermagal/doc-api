@@ -16,10 +16,13 @@ Each organization can have multiple users, yet not all users in the same organiz
 operate over said organization's resources. To differentiate between these types of access, every user associated with
 an organization does so through one of the following roles:
 
-- `ORG_ADMIN`
-- `ORG_MEMBER`
+- Organization administrator, or `ORG_ADMIN`: users with this role have full access to the organization and its
+  applications, and can perform any operation over them. Each organization must have one and only one user with this
+  role at any given time.
+- Organization member, or`ORG_MEMBER`: users with this role can access but not modify the organization details and
+  applications. Each organization can have any number of these users.
 
-TODO: document ACLs once they are defined
+A user can be associated with any number of organizations, and can have a different role for each of them.
 
 ## Getting all organizations
 
@@ -75,6 +78,8 @@ curl -X GET https://api.resourcewatch.org/v1/organization
 This endpoint will allow you to get the list of the organizations available in the API. By default, this endpoint will
 give you a paginated list of 10 organizations.
 
+In order to use this endpoint, you need to be authenticated as an `ADMIN` or `MANAGER` user.
+
 For a detailed description of each field, check out the [Organization reference](reference.html#organization-reference)
 section.
 
@@ -129,6 +134,19 @@ curl -X GET "https://api.resourcewatch.org/v1/organization/51943691-eebc-4cb4-bd
 
 If you know the id of an organization, then you can access it directly. The id is case-sensitive.
 
+In order to use this endpoint, you must be logged in and either:
+
+- have either `ADMIN` or `MANAGER` [user role](/doc-api/concepts.html#user-roles).
+- be associated with the target organization, as either a member or as an admin -
+  see [Organization ownership and user association](#organization-ownership-and-user-association) for more details.
+
+### Errors for getting an organization by id
+
+| Error code | Error message (example) | Description                                                                   |
+|------------|-------------------------|-------------------------------------------------------------------------------|
+| 401        | `Not authenticated`     | No authorization token was provided.                                          |
+| 403        | `Not authorized`        | You do not have the necessary permissions to see this organization's details. |
+
 ## Creating an organization
 
 ```shell
@@ -169,8 +187,10 @@ curl -X POST "https://api.resourcewatch.org/v1/organization" \
 }
 ```
 
-Creating an organization is currently reserved for RW API administrators, so if you'd like to create your own, please
-[contact us](https://resourcewatch.org/about/contact-us) letting us know about you and your organization.
+Creating an organization is currently reserved for RW API administrators (users with
+the `ADMIN` [role](/doc-api/concepts.html#user-roles), so if you'd like to create your own,
+please [contact us](https://resourcewatch.org/about/contact-us) letting us know about you and your
+organization.
 
 Creating an organization is done using a POST request and passing the relevant data as body files. The supported body
 fields are as defined on the [organization reference](reference.html#organization-reference) section, but the minimum
@@ -191,7 +211,7 @@ It's worth keeping in mind that applications can either belong to a single user 
 an organization with `applications` associated with it, you may be removing associations between the
 provided `applications` and other users/organizations.
 
-#### Errors for creating an organization
+### Errors for creating an organization
 
 | Error code | Error message                                    | Description                                                                                  |
 |------------|--------------------------------------------------|----------------------------------------------------------------------------------------------|
@@ -202,7 +222,7 @@ provided `applications` and other users/organizations.
 | 401        | Not authenticated                                | You are not authenticated. Only authenticated users can create organizations.                |
 | 403        | Not authorized                                   | You are authenticated but do not have the necessary permissions to create this organization. |
 
-#### Updating an organization
+## Updating an organization
 
 > Updating an organization
 
@@ -294,16 +314,27 @@ It's worth keeping in mind that applications can either belong to a single user 
 an organization with `applications` associated with it, you may be removing associations between the
 provided `applications` and other users/organizations.
 
-#### Errors for updating an organization
+In order to use this endpoint, you must be logged in and either:
 
-| Error code | Error message                                    | Description                                                                                  |
-|------------|--------------------------------------------------|----------------------------------------------------------------------------------------------|
-| 400        | `<field>` is not allowed                         | You have provided a body value that is not supported by the endpoint.                        |
-| 400        | "users" must contain at least 1 items            | You must provide at least one user.                                                          |
-| 400        | "users" must contain a user with role ORG_ADMIN' | You must provide at least a user with `ORG_ADMIN` role.                                      |
-| 401        | Not authenticated                                | You are not authenticated. Only authenticated users can update organizations.                |
-| 403        | Not authorized                                   | You are authenticated but do not have the necessary permissions to update this organization. |
-| 404        | Organization with id <id> doesn't exist          | An organization with the provided id does not exist.                                         |
+- have the `ADMIN` [user role](/doc-api/concepts.html#user-roles).
+- be the organization admin -
+  see [Organization ownership and user association](#organization-ownership-and-user-association) for more details.
+
+Additionally, if you are using this endpoint to add existing applications to an organization, you must either
+
+- have the `ADMIN` [user role](/doc-api/concepts.html#user-roles).
+- be the owner of the application.
+
+### Errors for updating an organization
+
+| Error code | Error message                                    | Description                                                                                                                                                 |
+|------------|--------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 400        | `<field>` is not allowed                         | You have provided a body value that is not supported by the endpoint.                                                                                       |
+| 400        | "users" must contain at least 1 items            | You must provide at least one user.                                                                                                                         |
+| 400        | "users" must contain a user with role ORG_ADMIN' | You must provide at least a user with `ORG_ADMIN` role.                                                                                                     |
+| 401        | Not authenticated                                | You are not authenticated. Only authenticated users can update organizations.                                                                               |
+| 403        | Not authorized                                   | You are authenticated but do not have the necessary permissions to update this organization, or to add one of the provided application to the organization. |
+| 404        | Organization with id <id> doesn't exist          | An organization with the provided id does not exist.                                                                                                        |
 
 ## Deleting an organization
 
@@ -344,16 +375,19 @@ curl -X DELETE https://api.resourcewatch.org/v1/organization/<organization-id> \
 }
 ```
 
-Use this endpoint if you wish to delete an organization.
+Use this endpoint if you wish to delete an organization. In order to use this endpoint, you must be logged in and have
+the `ADMIN` [user role](/doc-api/concepts.html#user-roles).
 
-#### Errors for deleting an organization
+Only organizations that do not have any applications associated with them can be deleted.
 
-| Error code | Error message                           | Description                                                                                  |
-|------------|-----------------------------------------|----------------------------------------------------------------------------------------------|
-| 401        | Unauthorized                            | You need to be logged in to be able to delete an organization.                               |
-| 401        | Not authenticated                       | You are not authenticated. Only authenticated users can delete organizations.                |
-| 403        | Not authorized                          | You are authenticated but do not have the necessary permissions to delete this organization. |
-| 404        | Organization with id <id> doesn't exist | An organization with the provided id does not exist.                                         |
+### Errors for deleting an organization
+
+| Error code | Error message                                                | Description                                                                                                                                    |
+|------------|--------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+| 400        | Organizations with associated applications cannot be deleted | You are trying to delete an organization that still has applications associated with it. Either transfer ownership or delete the applications. |
+| 401        | Not authenticated                                            | You are not authenticated. Only authenticated users can delete organizations.                                                                  |
+| 403        | Not authorized                                               | You are authenticated but do not have the necessary permissions to delete this organization.                                                   |
+| 404        | Organization with id <id> doesn't exist                      | An organization with the provided id does not exist.                                                                                           |
 
 ## Organization reference
 
