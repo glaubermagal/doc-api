@@ -98,6 +98,11 @@ curl -X GET https://api.resourcewatch.org/v1/application
 This endpoint will allow you to get the list of the applications available in the API. By default, this endpoint will
 give you a paginated list of 10 applications.
 
+Depending on your [user role](/doc-api/concepts.html#user-roles), the behavior of this endpoint will vary:
+
+- If you have the `ADMIN` or `MANAGER` roles, you will see all applications for all users.
+- If you have the `USER` role, you will only see applications for which you are the owner.
+
 For a detailed description of each field, check out the [Application reference](reference.html#application-reference)
 section.
 
@@ -112,6 +117,13 @@ curl -X GET https://api.resourcewatch.org/v1/application?page[number]=2&page[siz
 The application service adheres to the conventions defined in
 the [Pagination guidelines for the RW API](concepts.html#pagination), so we recommend reading that section for more
 details on how paginate your applications list.
+
+### Errors for getting all applications
+
+| Error code | Error message (example)                         | Description                                   |
+|------------|-------------------------------------------------|-----------------------------------------------|
+| 400        | `"page.size" must be less than or equal to 100` | You cannot request page sizes larger than 100 |
+| 401        | `Not authenticated`                             | No authorization token was provided.          |
 
 ## Getting an application by id
 
@@ -144,6 +156,20 @@ curl -X GET "https://api.resourcewatch.org/v1/application/51943691-eebc-4cb4-bdf
 ```
 
 If you know the id of an application, then you can access it directly. The id is case-sensitive.
+
+To access the details of a given application using this endpoint, you need to meet one of the following conditions:
+
+- Have the `ADMIN` or `MANAGER` [user role](/doc-api/concepts.html#user-roles).
+- Own the application
+- Be a member of the organization that owns the application.
+
+### Errors for getting an application by id
+
+| Error code | Error message (example) | Description                                                                                |
+|------------|-------------------------|--------------------------------------------------------------------------------------------|
+| 401        | `Not authenticated`     | No authorization token was provided.                                                       |
+| 403        | `Not authorized`        | You don't have the necessary permissions to see the details for this application.          |
+| 404        | `Application not found` | The application id provided is invalid or does not match any of the existing applications. |
 
 ## Creating an application
 
@@ -185,12 +211,16 @@ subsequent requests for other resources, like datasets, widgets, etc. If you hav
 details of [what is an application](reference.html#what-is-an-application)
 and [application ownership](reference.html#application-ownership) before proceeding.
 
-Creating an application is done using a POST request and passing the relevant data as body files. The supported body
+Creating an application is done using a POST request and passing the relevant data as body fields. The supported body
 fields are as defined on the [application reference](reference.html#application-reference) section, but the minimum
-field list you must specify for any application is:
+value you need to provide is the `name`.
 
-- `name`
-- `user` or `organization`
+Unless specified otherwise, an application owned by the user who created it. If you have the `ADMIN` user role, you can
+specify the id of the user who will own the application through the `user` body field. You can alternatively use the
+`organization` body field to specify the id of the organization that will own the application - you can only do so if
+you have the `ADMIN` user role, or own that organization.
+
+Any logged in user can create an application.
 
 A successful application creation request will return a 200 HTTP code, and the application details as stored on the RW
 API. Pay special attention to the `id`, as it will allow you
@@ -198,15 +228,16 @@ to [access your application](reference.html#getting-an-application-by-id) later.
 
 #### Errors for creating an application
 
-| Error code | Error message                                             | Description                                                                                 |
-|------------|-----------------------------------------------------------|---------------------------------------------------------------------------------------------|
-| 400        | `<field>` is required                                     | Your are missing a required field value.                                                    |
-| 400        | `<field>` is not allowed                                  | You have provided a body value that is not supported by the endpoint.                       |
-| 400        | "value" must contain at least one of [user, organization] | You must provided exactly one of either `user` or `organization`                            |
-| 401        | Not authenticated                                         | You are not authenticated. Only authenticated users can create applications.                |
-| 403        | Not authorized                                            | You are authenticated but do not have the necessary permissions to create this application. |
+| Error code | Error message                                                              | Description                                                                                             |
+|------------|----------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| 400        | `<field>` is required                                                      | Your are missing a required field value.                                                                |
+| 400        | `<field>` is not allowed                                                   | You have provided a body value that is not supported by the endpoint.                                   |
+| 400        | "value" must contain at least one of [user, organization]                  | You must provided exactly one of either `user` or `organization`                                        |
+| 401        | Not authenticated                                                          | You are not authenticated. Only authenticated users can create applications.                            |
+| 403        | Not authorized                                                             | You are authenticated but do not have the necessary permissions to create this application.             |
+| 403        | User can only create applications for themselves or organizations they own | You are trying to create an application for a user or organization to which you don't have permissions. |
 
-#### Updating an application
+## Updating an application
 
 > Updating an application
 
@@ -311,6 +342,9 @@ This endpoint allows you to modify an existing application. You can modify the n
 either the `user` or `orgnaization`). You can also request for a new API key to be issued for your application - in
 which case the previous API key will become invalid, and all requests using it may stop functioning.
 
+To be able to modify an application, you must either have the `ADMIN` user role, be the owner of the application, or
+belong to the organization that owns the application with the `ORG_ADMIN` role.
+
 #### Errors for updating an application
 
 | Error code | Error message                                                                     | Description                                                                                 |
@@ -355,6 +389,9 @@ curl -X DELETE https://api.resourcewatch.org/v1/application/<application-id> \
 
 Use this endpoint if you wish to delete an application. Deleting an application will render its API key invalid, and all
 requests made using it will return an error.
+
+To be able to delete an application, you must either have the `ADMIN` user role, be the owner of the application, or
+belong to the organization that owns the application with the `ORG_ADMIN` role.
 
 #### Errors for deleting an application
 
