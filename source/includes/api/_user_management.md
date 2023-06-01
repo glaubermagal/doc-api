@@ -115,6 +115,8 @@ curl -X POST "https://api.resourcewatch.org/auth/login" \
     "updatedAt": "2018-11-15T04:46:35.313Z",
     "role": "USER",
     "provider": "local",
+    "organizations": [],
+    "applications": [],
     "extraUserData": {
       "apps": [
         "rw"
@@ -134,7 +136,7 @@ redirected to that URL in case of login success.
 
 For JSON requests, in case of successful logins, the user details will be returned as a JSON object.
 
-**Errors**
+#### Errors for logging in
 
 | Error code | Error message              | Description                                 |
 |------------|----------------------------|---------------------------------------------|
@@ -175,7 +177,7 @@ curl -X GET "https://api.resourcewatch.org/auth/check-logged" \
 Checks if you are logged in. This is typically used to determine if a session has been established between the the
 user's browser and the RW API.
 
-**Errors**
+#### Errors for checking if the user is logged
 
 | Error code | Error message      | Description            |
 |------------|--------------------|------------------------|
@@ -211,7 +213,7 @@ Generates a JSON Web Token for the current user session. This is useful when usi
 a session is established using a cookie returned on login. This cookie authenticates the user, and allows retrieving the
 token.
 
-**Errors**
+#### Errors for generating a new token
 
 | Error code | Error message      | Description            |
 |------------|--------------------|------------------------|
@@ -306,6 +308,8 @@ curl -X POST "https://api.resourcewatch.org/auth/sign-up" \
     "name": "Your name",
     "email": "your-email@provider.com",
     "createdAt": "2018-11-27T10:59:03.531Z",
+    "organizations": [],
+    "applications": [],
     "role": "USER",
     "extraUserData": {
       "apps": [
@@ -348,7 +352,7 @@ This endpoint also supports receiving a `callbackUrl` parameter (this can either
 part of the request body). This field contains the URL where the user will be redirected to after confirming their
 account. If not provided, it will default to the value of the `HTTP Referrer` header of the sign-up request.
 
-**Errors**
+#### Errors for registering a new user account
 
 | Error code | Error message      | Description                                               |
 |------------|--------------------|-----------------------------------------------------------|
@@ -397,7 +401,7 @@ This endpoint supports receiving a `callbackUrl` parameter (this can either be p
 the request body). This field contains the URL where the user will be redirected to after resetting their password. If
 not provided, it will default to the value of the `HTTP Referrer` header of the sign-up request.
 
-**Errors**
+#### Errors for requesting a password reset
 
 | Error code | Error message                                                                                                                               | Description                                                                                                                                                                                                                                                                                                                                                              |
 |------------|---------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -456,7 +460,7 @@ party-based and confirmed email-based user accounts are listed - user accounts t
 listed. It's also important to keep in mind that, by default, only users belonging to the same apps as the requesting
 user will be shown - you can use [filters](#filters449) to modify this behavior.
 
-**Errors**
+#### Errors for getting all users
 
 | Error code | Error message      | Description                                    |
 |------------|--------------------|------------------------------------------------|
@@ -554,9 +558,9 @@ curl -X GET "https://api.resourcewatch.org/auth/user?strategy=cursor"
     }
   ],
   "links": {
-    "self": "http://api.resourcewatch.org/auth/user?strategy=cursor&page[before]=00ucw0wd1cUIGDMed5d6&page[size]=10",
-    "first": "http://api.resourcewatch.org/auth/user?strategy=cursor&page[size]=10",
-    "next": "http://api.resourcewatch.org/auth/user?strategy=cursor&page[after]=00ucw0wd1cUIGDMed5d6&page[size]=10"
+    "self": "https://api.resourcewatch.org/auth/user?strategy=cursor&page[before]=00ucw0wd1cUIGDMed5d6&page[size]=10",
+    "first": "https://api.resourcewatch.org/auth/user?strategy=cursor&page[size]=10",
+    "next": "https://api.resourcewatch.org/auth/user?strategy=cursor&page[after]=00ucw0wd1cUIGDMed5d6&page[size]=10"
   }
 }
 ```
@@ -714,7 +718,7 @@ curl -X GET "https://api.resourcewatch.org/auth/user/me"
 This endpoint allows you to get the details of the user account associated with the current token. It's available to all
 authenticated users.
 
-**Errors**
+#### Errors for getting the current user
 
 | Error code | Error message      | Description                                    |
 |------------|--------------------|------------------------------------------------|
@@ -755,7 +759,7 @@ curl -X GET "https://api.resourcewatch.org/auth/user/<user_id>"
 This endpoint allows you to get the details of the user account associated with the current token. It's available to
 users with role `ADMIN`.
 
-**Errors**
+#### Errors for getting a user by id
 
 | Error code | Error message      | Description                                             |
 |------------|--------------------|---------------------------------------------------------|
@@ -822,14 +826,16 @@ It's worth keeping in mind that applications can either belong to a single user 
 an user with `applications` associated with it, you may be removing associations between the
 provided `applications` and other users/organizations.
 
-**Errors**
+#### Errors for creating user account details
 
-| Error code | Error message      | Description                                                                                  |
-|------------|--------------------|----------------------------------------------------------------------------------------------|
-| 400        | Email exists.      | An user account with the provided email address already exists.                              |
-| 400        | Apps required.     | You must provide at least one `extraUserData.apps` value.                                    |
-| 401        | Not authenticated. | You need to be logged in to use this endpoint.                                               |
-| 403        | Forbidden.         | You can only assign the new user `extraUserData.apps` values that your own user account has. |
+| Error code | Error message                                                      | Description                                                                                                          |
+|------------|--------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------|
+| 400        | Email exists.                                                      | An user account with the provided email address already exists.                                                      |
+| 400        | Apps required.                                                     | You must provide at least one `extraUserData.apps` value.                                                            |
+| 400        | "organizations[0].role" must be [ORG_MEMBER]                       | When creating a new user and associating it with an organization, you can only use the ORG_MEMBER organization role. |
+| 401        | Not authenticated.                                                 | You need to be logged in to use this endpoint.                                                                       |
+| 403        | Forbidden.                                                         | You can only assign the new user `extraUserData.apps` values that your own user account has.                         |
+| 403        | You don't have permissions to associate this/these organization(s) | You can only associate the new user with organizations if you have the ADMIN role or are the organization admin      |
 
 ### Update your user account details
 
@@ -896,11 +902,13 @@ provided `applications` and other users/organizations.
 Updating your account details may invalidate your token and cause your apps to stop working.
 </aside>
 
-**Errors**
+#### Errors for updating your user account details
 
-| Error code | Error message      | Description                                    |
-|------------|--------------------|------------------------------------------------|
-| 401        | Not authenticated. | You need to be logged in to use this endpoint. |
+| Error code | Error message                                                                             | Description                                                                                                              |
+|------------|-------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| 401        | Not authenticated.                                                                        | You need to be logged in to use this endpoint.                                                                           |
+| 400        | "organizations[0].role" must be [ORG_MEMBER]                                              | When updating your user and associating it with an organization, you can only use the ORG_MEMBER organization role.      |
+| 403        | You don't have permissions to associate application <application id> with user <user id>. | You are trying to create or modify an association between a user and an application for which you don't have permission. |
 
 ### Update another user's account details
 
@@ -967,13 +975,13 @@ provided `applications` and other users/organizations.
 Updating a user's account details may invalidate their token and cause their apps to stop working.
 </aside>
 
-**Errors**
+#### Errors for updating another user's account details
 
-| Error code | Error message      | Description                                             |
-|------------|--------------------|---------------------------------------------------------|
-| 401        | Not authenticated. | You need to be logged in to use this endpoint.          |
-| 403        | Not authorized.    | You need to have the `ADMIN` role to use this endpoint. |
-
+| Error code | Error message                                | Description                                                                                                            |
+|------------|----------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| 400        | "organizations[0].role" must be [ORG_MEMBER] | When updating another user and associating it with an organization, you can only use the ORG_MEMBER organization role. |
+| 401        | Not authenticated.                           | You need to be logged in to use this endpoint.                                                                         |
+| 403        | Not authorized.                              | You need to have the `ADMIN` role to use this endpoint.                                                                |
 
 ### Getting all resources for a user id
 
@@ -1073,7 +1081,7 @@ on the RW API. It's available to users with the `ADMIN` role, and will list reso
 - Topic
 - Dashboard
 
-**Errors**
+#### Errors for getting all resources for a user id
 
 | Error code | Error message      | Description                                             |
 |------------|--------------------|---------------------------------------------------------|
@@ -1141,7 +1149,7 @@ corresponding [deletion](developer.html#user-deletion) is created, which can be 
 different resource deletion process. Managing deletion resources is considered a RW API developer feature, and it's not
 meant to be used by regular RW API users.
 
-**Errors**
+#### Errors for deleting a user
 
 | Error code | Error message      | Description                                                                            |
 |------------|--------------------|----------------------------------------------------------------------------------------|
