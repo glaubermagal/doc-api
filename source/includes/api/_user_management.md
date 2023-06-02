@@ -1142,6 +1142,10 @@ their `userId` or equivalent property) to the user:
 - Profile
 - Topic
 - Dashboard
+- Applications
+- Organization memberships of type "ORG_MEMBER"
+  - Organization memberships of type "ORG_ADMIN" will prevent a user deletion
+  - No actual organizations are deleted as part of this process. Only the user's membership is deleted.
 
 The deletion of the above resources is done using a "best effort" approach: if some/all of them fail, the user deletion
 process will not be stopped or error, and the user account will be deleted anyways. When a user is deleted, a
@@ -1151,7 +1155,8 @@ meant to be used by regular RW API users.
 
 #### Errors for deleting a user
 
-| Error code | Error message      | Description                                                                            |
-|------------|--------------------|----------------------------------------------------------------------------------------|
-| 401        | Not authenticated. | You need to be logged in to use this endpoint.                                         |
-| 403        | Not authorized.    | You need to have `ADMIN` role or be logged as the user to delete to use this endpoint. |
+| Error code | Error message                                       | Description                                                                                                                                |
+|------------|-----------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| 400        | Cannot delete user that is admin of an organization | Cannot delete user that is admin of an organization. Either delete the organization or promote another user to admin of that organization. |
+| 401        | Not authenticated.                                  | You need to be logged in to use this endpoint.                                                                                             |
+| 403        | Not authorized.                                     | You need to have `ADMIN` role or be logged as the user to delete to use this endpoint.                                                     |
