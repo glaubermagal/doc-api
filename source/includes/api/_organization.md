@@ -327,14 +327,15 @@ Additionally, if you are using this endpoint to add existing applications to an 
 
 ### Errors for updating an organization
 
-| Error code | Error message                                    | Description                                                                                                                                                 |
-|------------|--------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 400        | `<field>` is not allowed                         | You have provided a body value that is not supported by the endpoint.                                                                                       |
-| 400        | "users" must contain at least 1 items            | You must provide at least one user.                                                                                                                         |
-| 400        | "users" must contain a user with role ORG_ADMIN' | You must provide at least a user with `ORG_ADMIN` role.                                                                                                     |
-| 401        | Not authenticated                                | You are not authenticated. Only authenticated users can update organizations.                                                                               |
-| 403        | Not authorized                                   | You are authenticated but do not have the necessary permissions to update this organization, or to add one of the provided application to the organization. |
-| 404        | Organization with id <id> doesn't exist          | An organization with the provided id does not exist.                                                                                                        |
+| Error code | Error message                                          | Description                                                                                                                                                 |
+|------------|--------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 400        | `<field>` is not allowed                               | You have provided a body value that is not supported by the endpoint.                                                                                       |
+| 400        | "users" must contain at least 1 items                  | You must provide at least one user.                                                                                                                         |
+| 400        | "users" must contain a user with role ORG_ADMIN        | You must provide at least a user with `ORG_ADMIN` role.                                                                                                     |
+| 400        | "users" must contain single a user with role ORG_ADMIN | You must provide only one user with `ORG_ADMIN` role.                                                                                                       |
+| 401        | Not authenticated                                      | You are not authenticated. Only authenticated users can update organizations.                                                                               |
+| 403        | Not authorized                                         | You are authenticated but do not have the necessary permissions to update this organization, or to add one of the provided application to the organization. |
+| 404        | Organization with id <id> doesn't exist                | An organization with the provided id does not exist.                                                                                                        |
 
 ## Deleting an organization
 
