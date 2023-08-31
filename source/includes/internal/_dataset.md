@@ -10,6 +10,7 @@ Besides the dataset types documented on the core dataset docs, there are additio
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
    "dataset": {
@@ -49,6 +50,7 @@ When creating a NEXGDDP dataset, the RW API will try to validate it by connectin
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
    "dataset": {

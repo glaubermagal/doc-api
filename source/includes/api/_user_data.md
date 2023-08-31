@@ -39,14 +39,16 @@ should upgrade at your earliest convenience. Functionality and data wise, `/v2` 
 
 ```shell
 curl -X GET "https://api.resourcewatch.org/v2/user" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Get user data for a given user id
 
 ```shell
 curl -X GET "https://api.resourcewatch.org/v2/user/5bfd237767b3176dd63f2eb7" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Response:
@@ -105,6 +107,7 @@ There are two endpoints that allow you to retrieve user data:
 ```shell
 curl -X POST https://api.resourcewatch.org/v2/user \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
   "fullName": "John Doe",
@@ -176,6 +179,7 @@ This endpoint allows you to store user data for a user that did not previously h
 ```shell
 curl -X PATCH https://api.resourcewatch.org/v2/user/5bfd237767b3176dd63f2eb7 \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
   "fullName": "John Doe",
@@ -249,7 +253,8 @@ You can only update user data for the user provided in the authentication token.
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v2/user/5bfd237767b3176dd63f2eb7 \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 ```json

@@ -8,10 +8,12 @@ A dashboard contains the information to display a web page belonging to a user.
 
 ## Getting all dashboards
 
-> This endpoint will allow to get all dashboards belonging to a user:
+
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dashboard -H 'Authorization: Bearer <your-token>'
+curl -X GET https://api.resourcewatch.org/v1/dashboard \
+-H 'Authorization: Bearer <your-token>' \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -50,11 +52,11 @@ curl -X GET https://api.resourcewatch.org/v1/dashboard -H 'Authorization: Bearer
         }
     ],
     "links": {
-        "self": "http://staging-api.globalforestwatch.org/v1/dashboard?page%5Bnumber%5D=1&page%5Bsize%5D=10",
-        "first": "http://staging-api.globalforestwatch.org/v1/dashboard?page%5Bnumber%5D=1&page%5Bsize%5D=10",
+        "self": "https://api.resourcewatch.org/v1/dashboard?page%5Bnumber%5D=1&page%5Bsize%5D=10",
+        "first": "https://api.resourcewatch.org/v1/dashboard?page%5Bnumber%5D=1&page%5Bsize%5D=10",
         "prev": null,
-        "next": "http://staging-api.globalforestwatch.org/v1/dashboard?page%5Bnumber%5D=2&page%5Bsize%5D=10",
-        "last": "http://staging-api.globalforestwatch.org/v1/dashboard?page%5Bnumber%5D=14&page%5Bsize%5D=10"
+        "next": "https://api.resourcewatch.org/v1/dashboard?page%5Bnumber%5D=2&page%5Bsize%5D=10",
+        "last": "https://api.resourcewatch.org/v1/dashboard?page%5Bnumber%5D=14&page%5Bsize%5D=10"
     },
     "meta": {
         "total-pages": 14,
@@ -64,34 +66,40 @@ curl -X GET https://api.resourcewatch.org/v1/dashboard -H 'Authorization: Bearer
 }
 ```
 
+This endpoint will allow to get all dashboards belonging to a user.
+
 ### Filters
 
 > Example request using query string filters:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dashboard?name=text&private=false
+curl -X GET https://api.resourcewatch.org/v1/dashboard?name=text&private=false \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Deprecated filter syntax:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dashboard?filter[name]=text&filter[private]=false
+curl -X GET https://api.resourcewatch.org/v1/dashboard?filter[name]=text&filter[private]=false \
+-H "x-api-key: <your-api-key>"
 ```
 
 Available filters parameters:
 
-Field          |                         Description                                               | Type
--------------- | :-------------------------------------------------------------------------------: | ------:
-name           | Filter dashboards by name (partial matches and case-insensitive supported).       | Text
-published      | Filter dashboards by publishing status (true, false).                             | Boolean
-private        | Filter dashboards by private status (true, false).                                | Boolean
-user           | Filter dashboards by author user id.                                              | Text
-user.role      | The role of the user who created the dashboard. If the requesting user does not have the ADMIN role, this filter is ignored. **Please keep in mind that, due to the limitations of the [underlying endpoint used to find user ids by role](developer.html#user-management), the performance of the request while using this filter might be degraded.** | `ADMIN`, `MANAGER` or `USER`
-application    | The application to which the dashboard belongs. Read more about this field [here](concepts.html#applications). | Text (single value)
-env            | Environment to which the dashboard belongs. Multiple values can be combined using `,` as a separator. Does not support regexes. Read more about this field in the [Environments concept section](concepts.html#environments). | Text
-is-highlighted | Filter dashboards by highlighted ones (true,false).                               | Boolean
-is-featured    | Filter dashboards by featured ones (true,false).                                  | Boolean
-author-title   | Filter dashboards by the title of the author of the dashboard.                    | Text
+| Field          | Description                                                                                                                                                                                                                   |                         Type |
+|----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------:|
+| name           | Filter dashboards by name (partial matches and case-insensitive supported).                                                                                                                                                   |                         Text |
+| published      | Filter dashboards by publishing status (true, false).                                                                                                                                                                         |                      Boolean |
+| private        | Filter dashboards by private status (true, false).                                                                                                                                                                            |                      Boolean |
+| user           | Filter dashboards by author user id.                                                                                                                                                                                          |                         Text |
+| user.role      | The role of the user who created the dashboard. If the requesting user does not have the ADMIN role, this filter is ignored.                                                                                                  | `ADMIN`, `MANAGER` or `USER` |
+| application    | The application to which the dashboard belongs. Read more about this field [here](concepts.html#applications).                                                                                                                |          Text (single value) |
+| env            | Environment to which the dashboard belongs. Multiple values can be combined using `,` as a separator. Does not support regexes. Read more about this field in the [Environments concept section](concepts.html#environments). |                         Text |
+| is-highlighted | Filter dashboards by highlighted ones (true,false).                                                                                                                                                                           |                      Boolean |
+| is-featured    | Filter dashboards by featured ones (true,false).                                                                                                                                                                              |                      Boolean |
+| author-title   | Filter dashboards by the title of the author of the dashboard.                                                                                                                                                                |                         Text |
+
+**Warning:** Please keep in mind that, due to the limitations of the [underlying endpoint used to find user ids by role](developer.html#user-management), the performance of the request while using `user.role` filter might be degraded.
 
 **Deprecation notice:** The format *filter[filterName]=value* which was previously supported for some filters, is now deprecated, in favor of *filterName=value*.
 
@@ -100,7 +108,8 @@ author-title   | Filter dashboards by the title of the author of the dashboard. 
 > Example request to load page 2 using 25 results per page
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dashboard?page[number]=2&page[size]=25
+curl -X GET https://api.resourcewatch.org/v1/dashboard?page[number]=2&page[size]=25 \
+-H "x-api-key: <your-api-key>"
 ```
 
 The Dashboards service adheres to the conventions defined in the [Pagination guidelines for the RW API](concepts.html#pagination), so we recommend reading that section for more details on how paginate your dashboards list.
@@ -110,25 +119,29 @@ The Dashboards service adheres to the conventions defined in the [Pagination gui
 > Sorting dashboards
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dashboard?sort=name
+curl -X GET https://api.resourcewatch.org/v1/dashboard?sort=name \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Sorting dashboards by multiple criteria
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dashboard?sort=name,slug
+curl -X GET https://api.resourcewatch.org/v1/dashboard?sort=name,slug \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Explicit order of sorting
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dashboard?sort=-name,+slug
+curl -X GET https://api.resourcewatch.org/v1/dashboard?sort=-name,+slug \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Sorting dashboards by the role of the user who owns the dashboard
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dashboard?sort=user.role
+curl -X GET https://api.resourcewatch.org/v1/dashboard?sort=user.role \
+-H "x-api-key: <your-api-key>"
 ```
 
 The Dashboards service currently supports sorting using the `sort` query parameter. Sorting dashboards adheres to the conventions defined in the [Sorting guidelines for the RW API](concepts.html#sorting), so we strongly recommend reading that section before proceeding. In addition to all dashboard model fields, you can sort the returned results by the name (using `user.name`) or role (using `user.role`) of the user owner of the dashboard. Keep in mind that sorting by user data is restricted to ADMIN users.
@@ -144,7 +157,8 @@ When loading dashboards, you can optionally pass an `includes` query argument to
 > Example request including the information for the user who owns the dashboard:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dashboard?includes=user
+curl -X GET https://api.resourcewatch.org/v1/dashboard?includes=user \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -201,7 +215,8 @@ If the data is not available (for example, the user has since been deleted), no 
 > How to get a dashboard by its ID:
 
 ```shell
-curl -X GET http://api.resourcewatch.org/dashboard/24
+curl -X GET https://api.resourcewatch.org/dashboard/24 \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Response:
@@ -247,6 +262,7 @@ curl -X GET http://api.resourcewatch.org/dashboard/24
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dashboard \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
       "data": {
@@ -315,24 +331,24 @@ When creating a dashboard, the `application` field should be present and cannot 
 
 Supported fields:
 
-Name            | Description                                                                  | Accepted values
--------------   | ---------------------------------------------------------------------------- | ----------------------------
-name            | Short name for the dashboard                                                 | any valid text
-summary         | Summary of the content of the dashboard                                      | any valid text
-description     | Description of the dashboard                                                 | any valid text
-content         | Content of the dashboard, typically encoded as a JSON string                 | any valid text
-published       | If the dashboard is in a publishable state                                   | boolean
-photo           | Object containing a set of image urls associated with the dashboard          | object
-private         | If the dashboard is private or publicly available.                           | boolean
-production      | If the dashboard is available in the production environment.                 | boolean
-preproduction   | If the dashboard is available in the preproduction environment.              | boolean
-staging         | If the dashboard is available in the staging environment.                    | boolean
-application     | Application(s) to which the dashboard belongs. Defaults to `["rw"]`. Read more about this field [here](concepts.html#applications). | array of strings
-env             | Environment to which the dashboard belongs. Read more about this field in the [Environments concept section](concepts.html#environments). | string
-is-highlighted  | If this dashboard is highlighted (`true`/`false`). Defaults to `false`. Only accessible to users with `ADMIN` role. | boolean
-is-featured     | If this dashboard is featured (`true`/`false`). Defaults to `false`. Can only be set by user with `ADMIN` role. | boolean
-author-title    | The title of the author of the dashboard.                                    | any valid text
-author-image    | File for the image of the author of the dashboard.                           | valid image file (jpg, jpeg, png)
+| Name           | Description                                                                                                                               | Accepted values                   |
+|----------------|-------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
+| name           | Short name for the dashboard                                                                                                              | any valid text                    |
+| summary        | Summary of the content of the dashboard                                                                                                   | any valid text                    |
+| description    | Description of the dashboard                                                                                                              | any valid text                    |
+| content        | Content of the dashboard, typically encoded as a JSON string                                                                              | any valid text                    |
+| published      | If the dashboard is in a publishable state                                                                                                | boolean                           |
+| photo          | Object containing a set of image urls associated with the dashboard                                                                       | object                            |
+| private        | If the dashboard is private or publicly available.                                                                                        | boolean                           |
+| production     | If the dashboard is available in the production environment.                                                                              | boolean                           |
+| preproduction  | If the dashboard is available in the preproduction environment.                                                                           | boolean                           |
+| staging        | If the dashboard is available in the staging environment.                                                                                 | boolean                           |
+| application    | Application(s) to which the dashboard belongs. Defaults to `["rw"]`. Read more about this field [here](concepts.html#applications).       | array of strings                  |
+| env            | Environment to which the dashboard belongs. Read more about this field in the [Environments concept section](concepts.html#environments). | string                            |
+| is-highlighted | If this dashboard is highlighted (`true`/`false`). Defaults to `false`. Only accessible to users with `ADMIN` role.                       | boolean                           |
+| is-featured    | If this dashboard is featured (`true`/`false`). Defaults to `false`. Can only be set by user with `ADMIN` role.                           | boolean                           |
+| author-title   | The title of the author of the dashboard.                                                                                                 | any valid text                    |
+| author-image   | File for the image of the author of the dashboard.                                                                                        | valid image file (jpg, jpeg, png) |
 
 ## Editing a dashboard
 
@@ -341,6 +357,7 @@ author-image    | File for the image of the author of the dashboard.            
 ```shell
 curl -X PATCH https://api.resourcewatch.org/v1/dashboard/<id of the dashboard> \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
       "data": {
@@ -402,6 +419,7 @@ When updating the `application` field of a dashboard, a user cannot add values n
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/dashboard/<id of the dashboard> \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"
 ```
 
@@ -417,6 +435,7 @@ In order to perform this operation, the following conditions must be met:
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dashboard/<id>/clone \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "data": {

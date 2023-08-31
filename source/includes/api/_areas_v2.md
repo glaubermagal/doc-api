@@ -26,7 +26,8 @@ This interaction between Areas and Subscriptions is transparent for the API user
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v2/area \
-  -H "Authorization: Bearer <your-token>"
+  -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -69,7 +70,8 @@ The `/v2/areas` endpoint returns all the areas of interest associated with the u
 > Example request to load page 2 using 25 results per page
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v2/area?page[number]=2&page[size]=25
+curl -X GET https://api.resourcewatch.org/v2/area?page[number]=2&page[size]=25 \
+-H "x-api-key: <your-api-key>"
 ```
 
 The Areas v2 service adheres to the conventions defined in the [Pagination guidelines for the RW API](concepts.html#pagination), so we recommend reading that section for more details on how paginate your areas list.
@@ -81,7 +83,8 @@ In the specific case of the Areas v2 service, the default value for the `page[si
 > Filtering areas
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v2/area?application=rw&public=true
+curl -X GET https://api.resourcewatch.org/v2/area?application=rw&public=true \
+-H "x-api-key: <your-api-key>"
 ```
 
 The `/v2/areas` endpoint provides the following parameters to tailor the returned listing:
@@ -99,19 +102,22 @@ The `/v2/areas` endpoint provides the following parameters to tailor the returne
 > Sorting areas
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v2/area?sort=name"
+curl -X GET "https://api.resourcewatch.org/v2/area?sort=name" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Sorting layers by multiple criteria
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v2/area?sort=name,status"
+curl -X GET "https://api.resourcewatch.org/v2/area?sort=name,status" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Explicit order of sorting
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v2/area?sort=-name,+status"
+curl -X GET "https://api.resourcewatch.org/v2/area?sort=-name,+status" \
+-H "x-api-key: <your-api-key>"
 ```
 
 The Areas v2 service currently supports sorting using the `sort` query parameter. Sorting v2 areas adheres to the conventions defined in the [Sorting guidelines for the RW API](concepts.html#sorting), so we strongly recommend reading that section before proceeding. Additionally, you can check out the [Area reference](reference.html#area-reference) section for a detailed description of the fields you can use when sorting.
@@ -132,7 +138,8 @@ Finds all areas for the user who requested the list of areas. For each area, if 
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v2/area?all=true \
-  -H "Authorization: Bearer <your-token>"
+  -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -190,7 +197,8 @@ For a detailed description of each field, check out the [Area reference](referen
 > Example request to load page 2 using 25 results per page
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v2/area?page[number]=2&page[size]=25&all=true
+curl -X GET https://api.resourcewatch.org/v2/area?page[number]=2&page[size]=25&all=true \
+-H "x-api-key: <your-api-key>"
 ```
 
 The Areas v2 service adheres to the conventions defined in the [Pagination guidelines for the RW API](concepts.html#pagination), so we recommend reading that section for more details on how paginate your areas list.
@@ -200,7 +208,8 @@ The Areas v2 service adheres to the conventions defined in the [Pagination guide
 > Filtering areas
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v2/area?application=rw&public=true&all=true
+curl -X GET https://api.resourcewatch.org/v2/area?application=rw&public=true&all=true \
+-H "x-api-key: <your-api-key>"
 ```
 
 The filters for this endpoint are the same as the `/v2/areas` endpoint described above:
@@ -229,7 +238,8 @@ Then, for each area in the Areas service database, if it has an associated subsc
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v2/area/:id \
-  -H "Authorization: Bearer <your-token>"
+  -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -290,6 +300,7 @@ Try to find an area with the id provided:
 ```shell
 curl -X POST https://api.resourcewatch.org/v2/area \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json" -d \
  '{
     "name": "Example area",
@@ -309,8 +320,9 @@ curl -X POST https://api.resourcewatch.org/v2/area \
 > Example request to create an area with an associated image
 
 ```shell
-curl --location --request POST 'https://api.resourcewatch.org/v2/area' \
---header 'Authorization: Bearer <your-token>' \
+curl --location --request POST 'https://api.resourcewatch.org/v2/area' \ \
+-H "x-api-key: <your-api-key>"
+-H 'Authorization: Bearer <your-token>' \
 --form 'name="Example area"' \
 --form 'geostore="a15899292fc118a345741728ef84a21a"' \
 --form 'deforestationAlerts="true"' \
@@ -397,6 +409,7 @@ The subscription is created only if the area has selected set to `true` at least
 ```shell
 curl -X PATCH https://api.resourcewatch.org/v2/area/:id \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json" -d \
  '{
     "name": "Example area",
@@ -415,8 +428,9 @@ curl -X PATCH https://api.resourcewatch.org/v2/area/:id \
 > Example request to update an area with an associated image
 
 ```shell
-curl --location --request PATCH 'https://api.resourcewatch.org/v2/area/:id' \
---header 'Authorization: Bearer <your-token>' \
+curl --location --request PATCH 'https://api.resourcewatch.org/v2/area/:id' \ \
+-H "x-api-key: <your-api-key>"
+-H 'Authorization: Bearer <your-token>' \
 --form 'name="Example area"' \
 --form 'geostore="a15899292fc118a345741728ef84a21a"' \
 --form 'deforestationAlerts="true"' \
@@ -503,7 +517,8 @@ PATCHing an area is a bit more complex, and it comes down to 3 major cases:
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v2/area/:id \
-  -H "Authorization: Bearer <your-token>" 
+  -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" 
 ```
 
 > Returns 204 No Content in case of success.
@@ -525,7 +540,8 @@ DELETing an area deletes the area with id provided and any associated subscripti
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v2/area/by-user/:user-id \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -577,6 +593,7 @@ This endpoint deletes all areas for the provided `userId`. Any microservice or u
 ```shell
 curl -X POST https://api.resourcewatch.org/v2/area/update \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json" -d \
  '{
     "geostores": ["123", "234"],
@@ -637,7 +654,8 @@ If you want to understand more about how these emails are sent or how you can up
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v2/area/sync \
-  -H "Authorization: Bearer <your-token>"
+  -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -698,7 +716,7 @@ You can find more details in the [source code](https://github.com/gfw-api/gfw-ar
 | userId              | String  | Yes (autopopulated) | <none>        | Id of the user who owns the area. Set automatically on creation. Cannot be modified by users.                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | use                 | Object  | No                  | <none>        | If this area references a land use concession, this field will contain an object that identifies the concrete area referred.                                                                                                                                                                                                                                                                                                                                                                                    |
 | use.id              | String  | No                  | <none>        | The id of the land use concession to track.                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| use.name            | String  | No                  | <none>        | The name of the land use concession to track. The supported values for this field include `mining` for [mining areas](http://api.resourcewatch.org/v1/dataset/c2142922-84d9-4564-8216-a4867b9e48c5), `logging` for [Congo Basin logging roads](https://wri-01.carto.com/tables/gfw_oil_palm/public/map), `oilpalm` for [palm oil plantations](https://wri-01.carto.com/tables/gfw_woodfiber/public/map) and `fiber` for [wood fiber plantations](https://wri-01.carto.com/tables/osm_logging_roads/public/map). |
+| use.name            | String  | No                  | <none>        | The name of the land use concession to track. The supported values for this field include `mining` for [mining areas](https://api.resourcewatch.org/v1/dataset/c2142922-84d9-4564-8216-a4867b9e48c5), `logging` for [Congo Basin logging roads](https://wri-01.carto.com/tables/gfw_oil_palm/public/map), `oilpalm` for [palm oil plantations](https://wri-01.carto.com/tables/gfw_woodfiber/public/map) and `fiber` for [wood fiber plantations](https://wri-01.carto.com/tables/osm_logging_roads/public/map). |
 | iso                 | Object  | No                  | <none>        | If this area references an admin country or region, this field will contain an object that identifies the concrete area referred.                                                                                                                                                                                                                                                                                                                                                                               |
 | iso.country         | String  | No                  | <none>        | The [ISO 3166-1 alpha-3 code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) of the country being referred by this area.                                                                                                                                                                                                                                                                                                                                                                                     |
 | iso.region          | String  | No                  | <none>        | The [GADM id](https://gadm.org/data.html) of the region inside the country to reference (optional, you can reference the whole country, or just on specific region of the country).                                                                                                                                                                                                                                                                                                                             |

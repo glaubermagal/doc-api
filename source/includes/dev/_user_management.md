@@ -7,9 +7,10 @@ When communicating with the Authorization microservice from other microservices,
 
 ```shell
 curl -X POST https://api.resourcewatch.org/auth/user/find-by-ids \
--H "Authorization: Bearer <your-token>"
--H "Content-Type: application/json"  -d \
- '{ "ids": ["5e4d273dce77c53768bc24f9"] }'
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
+-H "Content-Type: application/json" \
+-d '{ "ids": ["5e4d273dce77c53768bc24f9"] }'
 ```
 
 > Example response:
@@ -45,14 +46,16 @@ Please keep in mind that, under the hood, user management relies on Okta - for t
 
 ```shell
 curl -X GET https://api.resourcewatch.org/auth/user/ids/:role \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example request to find user ids of ADMIN users:
 
 ```shell
 curl -X GET https://api.resourcewatch.org/auth/user/ids/ADMIN \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:

@@ -22,7 +22,8 @@ As you may or may not know, HTTPS - the secure variant of HTTP protocol - establ
 > Example cURL command with detailed header information:
 
 ```shell
-curl -svo /dev/null https://api.resourcewatch.org/v1/dataset
+curl -svo /dev/null https://api.resourcewatch.org/v1/dataset \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response of the command above including a MISS `x-cache` header:

@@ -7,20 +7,20 @@ These actions can be creating a dataset or overwriting its content.
 
 A task may contains the following fields:
 
-Field             |                                     Description                                      |    Type
------------------ | :----------------------------------------------------------------------------------: | ------:
-id                |                                   Id of the task                                     |    Text
-type              |  Task type - see full list [here](https://github.com/resource-watch/doc-importer-messages/blob/master/task.messages.js#L4) |   Text
-message           |                        Task message, which parametrizes the task                     |   Object
-status            |  Status of the task - see full list [here](https://github.com/resource-watch/doc-orchestrator/blob/master/app/src/app.constants.js#L3) |    Text
-reads             |                     Number of data reads performed by the task                       |  Number
-writes            |                     Number of data writes performed by the task                      |  Number
-index             |                     Name of the Elasticsearch index used in this task                |    Text
-datasetId         |                     Id of the dataset to which this task relates                     |    Text
-logs              |                     List of the individual operations carried out by this task       |   Array
-error             |                     Error message generated should the task fail                     |    Text
-createdAt         | Date and time in which the task was created                                          | DateTime
-updatedAt         | Date and time in which the task was last updated                                     | DateTime
+| Field     |                                                              Description                                                              |     Type |
+|-----------|:-------------------------------------------------------------------------------------------------------------------------------------:|---------:|
+| id        |                                                            Id of the task                                                             |     Text |
+| type      |       Task type - see full list [here](https://github.com/resource-watch/doc-importer-messages/blob/master/task.messages.js#L4)       |     Text |
+| message   |                                               Task message, which parametrizes the task                                               |   Object |
+| status    | Status of the task - see full list [here](https://github.com/resource-watch/doc-orchestrator/blob/master/app/src/app.constants.js#L3) |     Text |
+| reads     |                                              Number of data reads performed by the task                                               |   Number |
+| writes    |                                              Number of data writes performed by the task                                              |   Number |
+| index     |                                           Name of the Elasticsearch index used in this task                                           |     Text |
+| datasetId |                                             Id of the dataset to which this task relates                                              |     Text |
+| logs      |                                      List of the individual operations carried out by this task                                       |    Array |
+| error     |                                             Error message generated should the task fail                                              |     Text |
+| createdAt |                                              Date and time in which the task was created                                              | DateTime |
+| updatedAt |                                           Date and time in which the task was last updated                                            | DateTime |
 
 A task is fundamentally an internal element to the API, and it's visibility and interaction is limited to maintenance and debug actions.
 At its core, a task represents a single package that contains:
@@ -40,7 +40,8 @@ At its core, a task represents a single package that contains:
 To obtain all tasks:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/doc-importer/task
+curl -X GET https://api.resourcewatch.org/v1/doc-importer/task \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -155,7 +156,8 @@ curl -X GET https://api.resourcewatch.org/v1/doc-importer/task
 > Example request to load page 2 using 25 results per page
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/doc-importer/task?page[number]=2&page[size]=25
+curl -X GET https://api.resourcewatch.org/v1/doc-importer/task?page[number]=2&page[size]=25 \
+-H "x-api-key: <your-api-key>"
 ```
 
 The Tasks service adheres to the conventions defined in the [Pagination guidelines for the RW API](concepts.html#pagination), so we recommend reading that section for more details on how paginate your tasks list.
@@ -164,46 +166,51 @@ The Tasks service adheres to the conventions defined in the [Pagination guidelin
 
 Available filters:
 
-Field           |                                     Description                                      |    Type
---------------- | :----------------------------------------------------------------------------------: | ------:
-type            |  Task type                                                                           |    Text
-status          |  Task status                                                                         |    Text
-datasetID       |  Id of the dataset to which the task refers                                          |    Text
-createdAt       |  Tasks created on the given date                                                     |    Date
-updatedAt       |  Tasks last updated on the given date                                                |    Date
-createdBefore   |  Tasks created before the given date                                                 |    Date
-createdAfter    |  Tasks created after the given date                                                  |    Date
-updatedBefore   |  Tasks last updated before the given date                                            |    Date
-updatedAfter    |  Tasks last updated after the given date                                             |    Date
+| Field         |                Description                 | Type |
+|---------------|:------------------------------------------:|-----:|
+| type          |                 Task type                  | Text |
+| status        |                Task status                 | Text |
+| datasetID     | Id of the dataset to which the task refers | Text |
+| createdAt     |      Tasks created on the given date       | Date |
+| updatedAt     |    Tasks last updated on the given date    | Date |
+| createdBefore |    Tasks created before the given date     | Date |
+| createdAfter  |     Tasks created after the given date     | Date |
+| updatedBefore |  Tasks last updated before the given date  | Date |
+| updatedAfter  |  Tasks last updated after the given date   | Date |
 
 > Return tasks with type TASK_OVERWRITE
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/doc-importer/task?type=TASK_OVERWRITE
+curl -X GET https://api.resourcewatch.org/v1/doc-importer/task?type=TASK_OVERWRITE \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Return the tasks with status SAVED
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/doc-importer/task?status=SAVED
+curl -X GET https://api.resourcewatch.org/v1/doc-importer/task?status=SAVED \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Return the tasks created on Feb 1st 2019
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/doc-importer/task?createdAt=2019-02-01
+curl -X GET https://api.resourcewatch.org/v1/doc-importer/task?createdAt=2019-02-01 \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Return the tasks last updated between Jan 2nd and Feb 2nd 2019
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/doc-importer/task?updatedAfter=2019-01-02&updatedBefore=2019-02-02
+curl -X GET https://api.resourcewatch.org/v1/doc-importer/task?updatedAfter=2019-01-02&updatedBefore=2019-02-02 \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Return the tasks last updated before and Feb 2nd 2019 and with status ERROR
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/doc-importer/task?updatedBefore=2019-02-02&status=ERROR
+curl -X GET https://api.resourcewatch.org/v1/doc-importer/task?updatedBefore=2019-02-02&status=ERROR \
+-H "x-api-key: <your-api-key>"
 ```
 
 
@@ -213,7 +220,8 @@ curl -X GET https://api.resourcewatch.org/v1/doc-importer/task?updatedBefore=201
 To obtain the task:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/doc-importer/task/55b02cfd-dabf-4ad0-a04d-5501cf248a0c
+curl -X GET https://api.resourcewatch.org/v1/doc-importer/task/55b02cfd-dabf-4ad0-a04d-5501cf248a0c \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -273,5 +281,6 @@ be considered a "only do it if you know what you are doing" operation, and requi
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/doc-importer/task/<task_id> \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"
 ```

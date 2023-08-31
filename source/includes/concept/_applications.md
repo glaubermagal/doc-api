@@ -21,13 +21,15 @@ If you would like to see your application added to the list of applications supp
 > Fetching datasets for the Resource Watch application
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?application=rw
+curl -X GET https://api.resourcewatch.org/v1/dataset?application=rw \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Fetching datasets for the Global Forest Watch application
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?application=gfw
+curl -X GET https://api.resourcewatch.org/v1/dataset?application=gfw \
+-H "x-api-key: <your-api-key>"
 ```
 
 This section describes some best practices when using the `application` field. Please keep in mind that, since it is up to each RW API service to implement how this field is used, there might be some differences in the usage of this field between RW API services. Refer to each RW API resource or endpoint's documentation for more details on each specific case.

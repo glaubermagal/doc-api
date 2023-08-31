@@ -4,7 +4,7 @@
 
 *Note: We strongly recommend that you read the [dataset concept](concepts.html#dataset) and [dataset endpoints](reference.html#dataset) sections before proceeding.*
 
-A subscription allows you to get notified of updates on a datasets' data - either for every update, or for updates restricted to geographical areas of your interest. For example, you can use subscriptions to subscribe to deforestation alerts ([GLAD alerts dataset](http://api.resourcewatch.org/v1/dataset/61170ad0-9d6a-4347-8e58-9b551eeb341e)) in the Amazon forest, or track fire alerts ([VIIRS fire alerts dataset](http://api.resourcewatch.org/v1/dataset/64c948a6-5e34-4ef2-bb69-6a6535967bd5)) in your area of residence.
+A subscription allows you to get notified of updates on a datasets' data - either for every update, or for updates restricted to geographical areas of your interest. For example, you can use subscriptions to subscribe to deforestation alerts ([GLAD alerts dataset](https://api.resourcewatch.org/v1/dataset/61170ad0-9d6a-4347-8e58-9b551eeb341e)) in the Amazon forest, or track fire alerts ([VIIRS fire alerts dataset](https://api.resourcewatch.org/v1/dataset/64c948a6-5e34-4ef2-bb69-6a6535967bd5)) in your area of residence.
 
 In the following sections, we will cover how you can interact and manage subscriptions in the RW API. We will see how you can customize subscriptions so that we only get notified for changes in a dataset's data for specific geographic regions. You will learn how to use them to get notified via email or calls to a URL you provide. We will also dive into subscription lifecycle, and understand how we can confirm subscriptions, resend confirmation emails and how to unsubscribe and stop receiving notifications.
 
@@ -128,7 +128,8 @@ You can see in the image below an example of an email notification for GLAD defo
 
 ```shell
 curl -X GET "https://api.resourcewatch.org/v1/subscriptions" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -188,7 +189,8 @@ The `/v1/subscriptions` endpoint supports the following optional query parameter
 
 ```shell
 curl -X GET "https://api.resourcewatch.org/v1/subscriptions/<subscription_id>" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Response:
@@ -236,6 +238,7 @@ If you know the id of a subscription, then you can access it directly by perform
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/subscriptions" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "datasets": "20cc5eca-8c63-4c41-8e8e-134dcf1e6d76",
@@ -309,6 +312,7 @@ When it comes to geo-referenced data, subscriptions are intrinsically tied to a 
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/subscriptions" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "datasets": ["<dataset-id>"],
@@ -339,6 +343,7 @@ A subscription can refer to a specific area of interest that has been created us
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/subscriptions" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "datasets": ["<dataset-id>"],
@@ -362,6 +367,7 @@ curl -X POST "https://api.resourcewatch.org/v1/subscriptions" \
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/subscriptions" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "datasets": ["<dataset-id>"],
@@ -397,6 +403,7 @@ A subscription can refer to a country, one of its regions, or a subregion within
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/subscriptions" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "datasets": ["<dataset-id>"],
@@ -426,6 +433,7 @@ A subscription can refer to a specific protected area by the id of that area in 
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/subscriptions" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "datasets": ["<dataset-id>"],
@@ -455,6 +463,7 @@ A subscription can refer to a specific geostore that has been created using the 
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/subscriptions" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "datasets": ["<dataset-id>"],
@@ -484,6 +493,7 @@ A subscription can refer to a specific geostore that has been created using the 
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/subscriptions" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "datasets": ["<dataset-id>"],
@@ -505,7 +515,7 @@ A subscription can refer to a land use area provided by different datasets. At t
 
 The ids to be used for land use areas can be obtained from the following CartoDB datasets:
 
-* Mining area IDs can be obtained by querying [this dataset](http://api.resourcewatch.org/v1/dataset/c2142922-84d9-4564-8216-a4867b9e48c5).
+* Mining area IDs can be obtained by querying [this dataset](https://api.resourcewatch.org/v1/dataset/c2142922-84d9-4564-8216-a4867b9e48c5).
 * Palm oil plantation IDs can be obtained from [this CartoDB table](https://wri-01.carto.com/tables/gfw_oil_palm/public/map).
 * Wood fiber plantation IDs can be obtained from [this CartoDB table](https://wri-01.carto.com/tables/gfw_woodfiber/public/map).
 * Congo Basin logging road IDs can be obtained from [this CartoDB table](https://wri-01.carto.com/tables/osm_logging_roads/public/map).
@@ -521,7 +531,8 @@ The ids to be used for land use areas can be obtained from the following CartoDB
 
 ```shell
 curl -X PATCH "https://api.resourcewatch.org/v1/subscriptions/<subscription_id>" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 -H "Content-Type: application/json"  -d \
  '{
     "datasets": ["20cc5eca-8c63-4c41-8e8e-134dcf1e6d76"],
@@ -592,7 +603,8 @@ If the update of the subscription is successful, the HTTP response code will be 
 
 ```shell
 curl -X DELETE "https://api.resourcewatch.org/v1/subscriptions/<subscription_id>" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -638,7 +650,8 @@ To delete a subscription associated with your user account, you should use the D
 
 ```shell
 curl -X DELETE "https://api.resourcewatch.org/v1/subscriptions/by-user/<user_id>" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -685,7 +698,8 @@ To delete every subscription associated with a specific user account, the DELETE
 > Example GET request to confirm a subscription:
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/subscriptions/<subscription_id>/confirm"
+curl -X GET "https://api.resourcewatch.org/v1/subscriptions/<subscription_id>/confirm" \
+-H "x-api-key: <your-api-key>"
 ```
 
 Upon creation of the subscription, a confirmation email is sent to the email of the user who created the subscription. This email will contain a link, which you will need to click in order to confirm the subscription. You can also confirm the subscription by performing a GET request to the `/v1/subscriptions/:id/confirm` endpoint, as exemplified on the side.
@@ -698,7 +712,8 @@ Upon creation of the subscription, a confirmation email is sent to the email of 
 
 ```shell
 curl -X GET "https://api.resourcewatch.org/v1/subscriptions/<subscription_id>/send_confirmation" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 For convenience, the RW API offers an additional endpoint to resend the confirmation email. In order to do this, you should perform a GET request to the `/v1/subscriptions/:id/send_confirmation`. As with most of the other subscription endpoints, please keep in mind that you must be authenticated in order to use this endpoint.
@@ -713,7 +728,8 @@ This endpoint does not change the subscription - i.e. if the subscription was al
 
 ```shell
 curl -X GET "https://api.resourcewatch.org/v1/subscriptions/<subscription_id>/unsubscribe" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 **Note: When you unsubscribe, the underlying subscription resource is deleted.**.
@@ -732,7 +748,8 @@ The following section details the endpoints that can be used to access statistic
 
 ```shell
 curl -X GET "https://api.resourcewatch.org/v1/subscriptions/statistics?start=:start&end=:end" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -822,7 +839,8 @@ This endpoint supports the following query parameters as filters:
 
 ```shell
 curl -X GET "https://api.resourcewatch.org/v1/subscriptions/statistics-group?start=:start&end=:end" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:

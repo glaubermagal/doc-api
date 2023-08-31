@@ -14,7 +14,8 @@ do, as it's the technology used by many of the widgets you'll find on the RW API
 > Getting a list of widgets
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget"
+curl -X GET "https://api.resourcewatch.org/v1/widget" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -81,7 +82,8 @@ call to match your needs.
 > Return the widgets associated with a dataset
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget"
+curl -X GET "https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -126,11 +128,11 @@ curl -X GET "https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget"
     }
   ],
   "links": {
-    "self": "http://api.resourcewatch.org/v1/dataset/06c44f9a-aae7-401e-874c-de13b7764959/widget?page[number]=1&page[size]=10",
-    "first": "http://api.resourcewatch.org/v1/dataset/06c44f9a-aae7-401e-874c-de13b7764959/widget?page[number]=1&page[size]=10",
-    "last": "http://api.resourcewatch.org/v1/dataset/06c44f9a-aae7-401e-874c-de13b7764959/widget?page[number]=2&page[size]=10",
-    "prev": "http://api.resourcewatch.org/v1/dataset/06c44f9a-aae7-401e-874c-de13b7764959/widget?page[number]=1&page[size]=10",
-    "next": "http://api.resourcewatch.org/v1/dataset/06c44f9a-aae7-401e-874c-de13b7764959/widget?page[number]=2&page[size]=10"
+    "self": "https://api.resourcewatch.org/v1/dataset/06c44f9a-aae7-401e-874c-de13b7764959/widget?page[number]=1&page[size]=10",
+    "first": "https://api.resourcewatch.org/v1/dataset/06c44f9a-aae7-401e-874c-de13b7764959/widget?page[number]=1&page[size]=10",
+    "last": "https://api.resourcewatch.org/v1/dataset/06c44f9a-aae7-401e-874c-de13b7764959/widget?page[number]=2&page[size]=10",
+    "prev": "https://api.resourcewatch.org/v1/dataset/06c44f9a-aae7-401e-874c-de13b7764959/widget?page[number]=1&page[size]=10",
+    "next": "https://api.resourcewatch.org/v1/dataset/06c44f9a-aae7-401e-874c-de13b7764959/widget?page[number]=2&page[size]=10"
   },
   "meta": {
     "total-pages": 2,
@@ -151,6 +153,7 @@ a dataset, as shown in this example.
 ```shell
 curl -X POST "https://api.resourcewatch.org/widget/find-by-ids" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H 'Content-Type: application/json' \
 -d '{
 	"ids": ["<dataset 1 id>", "<dataset 2 id>"]
@@ -204,6 +207,7 @@ This endpoint allows users to load all widgets belonging to multiple datasets in
 ```shell
 curl -X POST "https://api.resourcewatch.org/widget/find-by-ids" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H 'Content-Type: application/json' \
 -d '{
 	"ids": ["<dataset 1 id>", "<dataset 2 id>"],
@@ -217,6 +221,7 @@ curl -X POST "https://api.resourcewatch.org/widget/find-by-ids" \
 ```shell
 curl -X POST "https://api.resourcewatch.org/widget/find-by-ids" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H 'Content-Type: application/json' \
 -d '{
 	"ids": ["<dataset 1 id>", "<dataset 2 id>"],
@@ -245,7 +250,8 @@ respective sections.
 > Example request to load page 2 using 25 results per page
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget?page[number]=2&page[size]=25"
+curl -X GET "https://api.resourcewatch.org/v1/widget?page[number]=2&page[size]=25" \
+-H "x-api-key: <your-api-key>"
 ```
 
 The Widgets service adheres to the conventions defined in
@@ -257,32 +263,38 @@ details on how paginate your widgets list.
 > Return the widgets filtered by those whose name contains emissions
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget?name=emissions"
+curl -X GET "https://api.resourcewatch.org/v1/widget?name=emissions" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Return the widgets filtered by dataset
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget?dataset=11de2bc1-368b-42ed-a207-aaff8ece752b"
-curl -X GET "https://api.resourcewatch.org/v1/dataset/11de2bc1-368b-42ed-a207-aaff8ece752b/widget"
+curl -X GET "https://api.resourcewatch.org/v1/widget?dataset=11de2bc1-368b-42ed-a207-aaff8ece752b" \
+-H "x-api-key: <your-api-key>"
+curl -X GET "https://api.resourcewatch.org/v1/dataset/11de2bc1-368b-42ed-a207-aaff8ece752b/widget" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Filter widgets by default value
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget?default=false"
+curl -X GET "https://api.resourcewatch.org/v1/widget?default=false" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Filter widgets by environment
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget?env=staging"
+curl -X GET "https://api.resourcewatch.org/v1/widget?env=staging" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Return the widgets filtered by those whose applications contain both `rw` and `prep` applications simultaneously
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget?app=rw@prep"
+curl -X GET "https://api.resourcewatch.org/v1/widget?app=rw@prep" \
+-H "x-api-key: <your-api-key>"
 ```
 
 The widget list endpoint provides a wide range of filters that you can use to tailor your widget listing. Filtering
@@ -309,25 +321,29 @@ Additionally, you can use the following filters:
 > Sorting widgets
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget?sort=name"
+curl -X GET "https://api.resourcewatch.org/v1/widget?sort=name" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Sorting widgets by multiple criteria
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget?sort=name,slug"
+curl -X GET "https://api.resourcewatch.org/v1/widget?sort=name,slug" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Explicit order of sorting
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget?sort=-name,+slug"
+curl -X GET "https://api.resourcewatch.org/v1/widget?sort=-name,+slug" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Sorting widgets by the role of the user who owns the widget
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget?sort=user.role"
+curl -X GET "https://api.resourcewatch.org/v1/widget?sort=user.role" \
+-H "x-api-key: <your-api-key>"
 ```
 
 The Widget service currently supports sorting using the `sort` query parameter. Sorting widgets adheres to the
@@ -350,7 +366,8 @@ When loading widget data, you can optionally pass an `includes` query argument t
 Loads related [vocabularies](reference.html#vocabularies-and-tags). If none are found, an empty array is returned.
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget?includes=vocabulary"
+curl -X GET "https://api.resourcewatch.org/v1/widget?includes=vocabulary" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -411,7 +428,8 @@ curl -X GET "https://api.resourcewatch.org/v1/widget?includes=vocabulary"
 #### Include User
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget?includes=user"
+curl -X GET "https://api.resourcewatch.org/v1/widget?includes=user" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -468,7 +486,8 @@ while including user information might be degraded.**
 #### Include Metadata
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget?includes=metadata"
+curl -X GET "https://api.resourcewatch.org/v1/widget?includes=metadata" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -537,7 +556,8 @@ Loads the metadata available for the widget. If none are found, an empty array i
 #### Requesting multiple additional entities
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget?includes=metadata,user,vocabulary"
+curl -X GET "https://api.resourcewatch.org/v1/widget?includes=metadata,user,vocabulary" \
+-H "x-api-key: <your-api-key>"
 ```
 
 You can request multiple related entities in a single request using commas to separate multiple keywords
@@ -547,8 +567,10 @@ You can request multiple related entities in a single request using commas to se
 > Getting a widget by id:
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget/<widget_id>"
-curl -X GET "https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget_id>"
+curl -X GET "https://api.resourcewatch.org/v1/widget/<widget_id>" \
+-H "x-api-key: <your-api-key>"
+curl -X GET "https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget_id>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -595,7 +617,8 @@ If you know the `id` of a widget, then you can access it directly. Ids are case-
 > Getting a widget by id with a custom query url value:
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget/<widget_id>?queryUrl=/v1/query?sql=Select%20*%20from%20data"
+curl -X GET "https://api.resourcewatch.org/v1/widget/<widget_id>?queryUrl=/v1/query?sql=Select%20*%20from%20data" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -654,7 +677,8 @@ these changes will NOT be persisted to the database, and will only affect the cu
 > Getting a widget by id with a custom query url parameters:
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget/<widget_id>?geostore=ungeostore"
+curl -X GET "https://api.resourcewatch.org/v1/widget/<widget_id>?geostore=ungeostore" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -701,7 +725,8 @@ curl -X GET "https://api.resourcewatch.org/v1/widget/<widget_id>?geostore=ungeos
 > Getting a widget by id with a custom query url value parameters:
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/widget/<widget_id>?queryUrl=/v1/query?sql=Select%20*%20from%20data&geostore=ungeostore"
+curl -X GET "https://api.resourcewatch.org/v1/widget/<widget_id>?queryUrl=/v1/query?sql=Select%20*%20from%20data&geostore=ungeostore" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -777,6 +802,7 @@ See [this section](reference.html#include-entities-associated-with-the-widgets) 
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "application":[
@@ -788,6 +814,7 @@ curl -X POST "https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget" \
 
 curl -X POST "https://api.resourcewatch.org/v1/widget" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "application":[
@@ -858,7 +885,8 @@ being mindful of this.
 > Preview of the thumbnail of a widget
 
 ```shell
-curl -X GET "https://resourcewatch.org/embed/widget/<widget_id>"
+curl -X GET "https://resourcewatch.org/embed/widget/<widget_id>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 When a widget is created or updated, the RW API will automatically try to generate a thumbnail preview of it. This is
@@ -888,6 +916,7 @@ affect the actual widget creation or update process.
 ```shell
 curl -X PATCH "https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget_id_or_slug>" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "name":"New Example Widget Name"
@@ -896,6 +925,7 @@ curl -X PATCH "https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<wid
 
 curl -X PATCH "https://api.resourcewatch.org/v1/widget/<widget_id_or_slug>" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "name":"New Example Widget Name",
@@ -976,12 +1006,14 @@ details on this process.
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/widget/<widget_id_or_slug>/clone" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"
 ```
 
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget_id_or_slug>/clone" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"
 ```
 
@@ -1035,6 +1067,7 @@ To perform this operation, the following conditions must be met:
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/widget/<widget_id_or_slug>/clone" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "name": "name for the cloned widget",
@@ -1045,6 +1078,7 @@ curl -X POST "https://api.resourcewatch.org/v1/widget/<widget_id_or_slug>/clone"
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget_id_or_slug>/clone" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "name": "name for the cloned widget",
@@ -1103,11 +1137,13 @@ details on this process.
 ```shell
 curl -X DELETE "https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget_id>" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"
 
 
 curl -X DELETE "https://api.resourcewatch.org/v1/widget/<widget_id>" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"
 ```
 
@@ -1176,11 +1212,13 @@ In order to delete a widget, the following conditions must be met:
 ```shell
 curl -X DELETE "https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget_id>" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"
 
 
 curl -X DELETE "https://api.resourcewatch.org/v1/widget/<widget_id>" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"
 ```
 

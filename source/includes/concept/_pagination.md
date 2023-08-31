@@ -3,19 +3,22 @@
 > Example request where default pagination is applied, returning one page of 10 elements (1st - 10th elements):
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset
+curl -X GET https://api.resourcewatch.org/v1/dataset \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example request fetching the 3rd page of 10 elements (21st - 30th elements):
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?page[number]=3
+curl -X GET https://api.resourcewatch.org/v1/dataset?page[number]=3 \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example request fetching the 5th page of 20 elements (81st - 100th elements):
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?page[number]=5&page[size]=20
+curl -X GET https://api.resourcewatch.org/v1/dataset?page[number]=5&page[size]=20 \
+-H "x-api-key: <your-api-key>"
 ```
 
 Many times, when you're calling RW API's list endpoints, there will be a lot of results to return. Without pagination, a simple search could return hundreds or even thousands of elements, causing extraneous network traffic. For that reason, many services list their resources as pages, to make sure that not only responses are easier to handle, but also that services are scalable. Most paginated results have a built-in default limit of 10 elements, but we recommend you always explicitly set the limit parameter to ensure you know how many results per page you'll get. 
@@ -36,7 +39,8 @@ Once again, keep in mind that it’s up to each individual RW API service (datas
 > Example request where default pagination is applied:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset
+curl -X GET https://api.resourcewatch.org/v1/dataset \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example paginated response:

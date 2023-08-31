@@ -9,6 +9,7 @@ When communicating with the Subscriptions microservice from other microservices,
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/subscriptions \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "name": "<name>",
@@ -51,7 +52,8 @@ The following fields are available to be provided when modifying a subscription:
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/subscriptions/find-by-ids \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 -H "Content-Type: application/json"  -d \
  '{ "ids": ["5e4d273dce77c53768bc24f9"] }'
 ```
@@ -100,7 +102,8 @@ You can find a set of subscriptions given their ids using the following endpoint
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/subscriptions/user/5e2f0eaf9de40a6c87dd9b7d \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -154,7 +157,8 @@ This endpoint supports the following optional query parameters as filters:
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/subscriptions/find-all \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -218,7 +222,8 @@ This endpoint supports the following optional query parameters as filters:
 
 ```shell
 curl -X POST 'http://api.resourcewatch.org/v1/subscriptions/test-alert' \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 --data-raw '{
     "subId": "12345ae0895047001a1d0391",
     "alert": "viirs-active-fires"

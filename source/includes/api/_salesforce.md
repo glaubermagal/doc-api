@@ -7,7 +7,8 @@ This service allows easy communication of RW API user data to [Salesforce](www.s
 > Searches for users by email address
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/salesforce/contact/search?email=user@email.com
+curl -X GET https://api.resourcewatch.org/v1/salesforce/contact/search?email=user@email.com \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Response:
@@ -49,6 +50,7 @@ Currently, only filtering by `email` is supported. It is also required.
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/salesforce/contact/log-action \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "email": "user@email.com",

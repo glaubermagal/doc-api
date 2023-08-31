@@ -5,19 +5,22 @@
 > Example request sorting by a single condition:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?sort=name
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=name \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example request sorting by multiple conditions:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?sort=name,description
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=name,description \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example request sorting by multiple conditions, descending and ascending:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?sort=-name,+description
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=-name,+description \
+-H "x-api-key: <your-api-key>"
 ```
 
 As a rule of thumb, you can sort RW API resources using the `sort` query parameter. Usually, sorting can be performed using any field from the resource schema, so be sure to check each resource's model reference to find which fields can be used for sorting. Sorting by nested model fields is not generally supported, but may be implemented for particular resources. In some exceptional cases, you also have the possibility of sorting by fields that are not present in the resource model (e.g., when fetching datasets, you can sort by `user.name` and `user.role` to sort datasets by the name or role of the owner of the dataset) - be sure to check each resource's documentation to find out which additional sorting criteria you have available.
@@ -44,25 +47,29 @@ The following endpoints adhere to the Sorting conventions defined above:
 > Example request filtering using a single condition:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?name=viirs
+curl -X GET https://api.resourcewatch.org/v1/dataset?name=viirs \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example request filtering using multiple conditions:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?name=birds&provider=cartodb
+curl -X GET https://api.resourcewatch.org/v1/dataset?name=birds&provider=cartodb \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example request filtering by an array field using the `,` OR multi-value separator:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?application=rw,gfw
+curl -X GET https://api.resourcewatch.org/v1/dataset?application=rw,gfw \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example request filtering by an array field using the `@` AND multi-value separator:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?application=rw@gfw
+curl -X GET https://api.resourcewatch.org/v1/dataset?application=rw@gfw \
+-H "x-api-key: <your-api-key>"
 ```
 
 Like in the case of sorting, most RW API resources allow filtering the returned results of list endpoints using query parameters. As a rule of thumb, you can use the API resource's fields as query parameter filters, as shown in the examples on the side. You can also combine different query parameters into a complex `and` logic filter. Note that you can achieve a logical `or` by passing a regular expression with two disjoint options, like this: `?name=<substr_a>|<substr_b>`.

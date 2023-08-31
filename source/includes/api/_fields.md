@@ -13,7 +13,8 @@ Fields are targeted at users consuming datasets available on the RW API, particu
 > Querying the fields of a dataset
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/fields/<dataset-id>
+curl -X GET https://api.resourcewatch.org/v1/fields/<dataset-id> \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Response example

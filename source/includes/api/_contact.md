@@ -8,6 +8,7 @@ The following contact endpoints are available
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/form/contact-us \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json" -d \
     '{
         "email": "example.example@vizzuality.com",
@@ -19,6 +20,7 @@ curl -X POST https://api.resourcewatch.org/v1/form/contact-us \
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/form/contact-us \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json" -d \
     '{
         "email": "example.example@vizzuality.com",
@@ -50,6 +52,7 @@ On success, a 200 HTTP code with no response body is returned.
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/form/request-webinar" \
 -H "Content-Type: application/json" \
+-H "x-api-key: <your-api-key>" \
 -d  \
 '{
     "name": "Example name",

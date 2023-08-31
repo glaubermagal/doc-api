@@ -6,6 +6,7 @@
 
 ```shell
 curl -X PATCH "https://api.resourcewatch.org/v1/layer/change-environment/<dataset-id>/<env>" \
+-H "x-api-key: <your-api-key>" \
 -H "Authorization: Bearer <microservice-token>" \
 -H "Content-Type: application/json"
 ```
@@ -29,6 +30,7 @@ Error code     | Error message  | Description
 
 ```shell
 curl -X DELETE "https://api.resourcewatch.org/v1/dataset/<dataset-id>/layer" \
+-H "x-api-key: <your-api-key>" \
 -H "Authorization: Bearer <microservice-token>" \
 -H "Content-Type: application/json"
 ```

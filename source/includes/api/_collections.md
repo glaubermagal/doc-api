@@ -13,6 +13,7 @@ Collection endpoints require authentication, and the collections are associated 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/collection \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "name": "Collection name"
@@ -44,6 +45,7 @@ curl -X POST https://api.resourcewatch.org/v1/collection \
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/collection \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "name": "Collection name",
@@ -97,6 +99,7 @@ To create a collection, you should send a POST request to the `/v1/collection` e
 ```shell
 curl -X PATCH https://api.resourcewatch.org/v1/collection/:id \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "name": "New name"
@@ -134,6 +137,7 @@ You can update the name of a collection, you can send a PATCH request to the `/v
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/collection/:id/resource \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "type": "dataset",
@@ -179,7 +183,8 @@ You can do a POST request to the `/v1/collection/:id/resource` to push a new res
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/collection \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -212,7 +217,8 @@ By making a GET request to the `/v1/collection` endpoint, you can obtain the col
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/collection \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -249,7 +255,8 @@ You can optionally add the `include=true` query parameter to load the associated
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/collection?page[number]=2&page[size]=25 \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 The Collections service adheres to the conventions defined in the [Pagination guidelines for the RW API](concepts.html#pagination), so we recommend reading that section for more details on how paginate your collections list.
@@ -261,7 +268,8 @@ In the specific case of the Collections service, the default value for the `page
 > Filtering collections by environment
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/collection?env=custom
+curl -X GET https://api.resourcewatch.org/v1/collection?env=custom \
+-H "x-api-key: <your-api-key>"
 ```
 
 The `/v1/collection` endpoint provides the following parameters to tailor the returned listing:
@@ -277,21 +285,24 @@ The `/v1/collection` endpoint provides the following parameters to tailor the re
 
 ```shell
 curl -X GET "https://api.resourcewatch.org/v1/collection?sort=name" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Sorting collections by multiple criteria
 
 ```shell
 curl -X GET "https://api.resourcewatch.org/v1/collection?sort=name,application" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Explicit order of sorting
 
 ```shell
 curl -X GET "https://api.resourcewatch.org/v1/collection?sort=-name,+application" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 The Collections service currently supports sorting using the `sort` query parameter. Sorting collections adheres to the conventions defined in the [Sorting guidelines for the RW API](concepts.html#sorting), so we strongly recommend reading that section before proceeding. Additionally, you can check out the [Collection reference](reference.html#collection-reference) section for a detailed description of the fields you can use when sorting.
@@ -302,7 +313,8 @@ The Collections service currently supports sorting using the `sort` query parame
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/collection/:id \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -333,7 +345,8 @@ This endpoint returns the collection with id of the param. If the collection bel
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/collection/:id \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > In case of success, the deleted collection is returned in the response body:
@@ -364,7 +377,8 @@ This endpoint deletes the collection with id of the param. If the collection bel
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/collection/:id/resource/:resourceType/:resourceId \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > In case of success, the updated collection is returned in the response body:
@@ -395,7 +409,8 @@ Using this endpoint you can also delete a resource in a collection with the id, 
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/collection/by-user/:userId \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > In case of success, the deleted collections are returned in the response body:
@@ -434,7 +449,8 @@ This endpoint deletes the collections owned by the user with id `userId`. Any AD
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/collection/find-by-ids \
--H "Content-Type: application/json"  -d \
+-H "Content-Type: application/json"  \
+-H "x-api-key: <your-api-key>" -d \
  '{
     "ids": ["5f56170c1fca55001ad51779"],
     "userId": "5dd7b92abf56ca0011875ae2"
@@ -465,7 +481,8 @@ curl -X POST https://api.resourcewatch.org/v1/collection/find-by-ids \
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/collection/find-by-ids?application=gfw \
--H "Content-Type: application/json"  -d \
+-H "Content-Type: application/json"  \
+-H "x-api-key: <your-api-key>" -d \
  '{
     "ids": ["5f56170c1fca55001ad51779"],
     "userId": "5dd7b92abf56ca0011875ae2"

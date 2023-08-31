@@ -6,6 +6,7 @@ This section describes some aspects of widget functionality that are only availa
 
 ```shell
 curl -X PATCH "https://api.resourcewatch.org/v1/widget/change-environment/<dataset-id>/<env>" \
+-H "x-api-key: <your-api-key>" \
 -H "Authorization: Bearer <microservice-token>" \
 -H "Content-Type: application/json"
 ```
@@ -16,16 +17,17 @@ The update process is not atomic. A successful request will return a 204 `No con
 
 #### Errors for updating the env for all widgets for a dataset
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-401            | Unauthorized   | You need to be logged in to be able to update widgets.
-403            | Forbidden      | This endpoint is only available to microservices, through their special token.
-404            | Dataset not found | A dataset with the provided id does not exist.
+| Error code | Error message     | Description                                                                    |
+|------------|-------------------|--------------------------------------------------------------------------------|
+| 401        | Unauthorized      | You need to be logged in to be able to update widgets.                         |
+| 403        | Forbidden         | This endpoint is only available to microservices, through their special token. |
+| 404        | Dataset not found | A dataset with the provided id does not exist.                                 |
 
 ## Cloning widgets from other microservices
 
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/widget/<widget_id_or_slug>/clone" \
+-H "x-api-key: <your-api-key>" \
 -H "Authorization: Bearer <microservice-token>" \
 -H "Content-Type: application/json"  -d \
  '{
@@ -47,6 +49,7 @@ Note that the `userId` provided in the clone request body will not be validated 
 
 ```shell
 curl -X DELETE "https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget" \
+-H "x-api-key: <your-api-key>" \
 -H "Authorization: Bearer <microservice-token>" \
 -H "Content-Type: application/json"
 ```
@@ -101,8 +104,8 @@ The process of deleting multiple widgets is not atomic. Widgets will be deleted 
 
 #### Errors for deleting all widgets for a dataset
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-401            | Unauthorized   | You need to be logged in to be able to delete widgets.
-403            | Forbidden      | This endpoint is only available to microservices, through their special token.
-404            | Dataset not found | A dataset with the provided id does not exist.
+| Error code | Error message     | Description                                                                    |
+|------------|-------------------|--------------------------------------------------------------------------------|
+| 401        | Unauthorized      | You need to be logged in to be able to delete widgets.                         |
+| 403        | Forbidden         | This endpoint is only available to microservices, through their special token. |
+| 404        | Dataset not found | A dataset with the provided id does not exist.                                 |

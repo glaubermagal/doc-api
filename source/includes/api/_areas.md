@@ -10,7 +10,8 @@ The following sections describe endpoints API users can use to interact with ver
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/area
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Response:
@@ -76,7 +77,8 @@ Returns the list of areas created by the user provided.
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/area?application=rw
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 | Parameter   |                                 Description                                 | Type |                               Values |
@@ -89,7 +91,8 @@ curl -X GET https://api.resourcewatch.org/v1/area?application=rw
 > Example request to load page 2 using 25 results per page
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/area?page[number]=2&page[size]=25
+curl -X GET https://api.resourcewatch.org/v1/area?page[number]=2&page[size]=25 \
+-H "x-api-key: <your-api-key>"
 ```
 
 The Areas service adheres to the conventions defined in the [Pagination guidelines for the RW API](concepts.html#pagination), so we recommend reading that section for more details on how paginate your areas list.
@@ -101,19 +104,22 @@ In the specific case of the Areas service, the default value for the `page[size]
 > Sorting areas
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/area?sort=name
+curl -X GET https://api.resourcewatch.org/v1/area?sort=name \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Sorting areas by multiple criteria
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/area?sort=name,createdAt
+curl -X GET https://api.resourcewatch.org/v1/area?sort=name,createdAt \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Sort by name descending, createdAt ascending
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/area?sort=-name,+createdAt
+curl -X GET https://api.resourcewatch.org/v1/area?sort=-name,+createdAt \
+-H "x-api-key: <your-api-key>"
 ```
 
 The Areas service currently supports sorting using the `sort` query parameter. Sorting areas adheres to the conventions defined in the [Sorting guidelines for the RW API](concepts.html#sorting), so we strongly recommend reading that section before proceeding.
@@ -134,6 +140,7 @@ Creates a new area
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/area \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "name": <name>,
@@ -149,6 +156,7 @@ Create an area with name 'Portugal area' and Geostore ID '713899292fc118a9157417
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/area?application=rw \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "name": "Portugal area",
@@ -191,21 +199,24 @@ Deletes an area
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/area/<area-id> \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 ### Example
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/area/59ca3213d08a7d001054522b \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 ## Delete areas by user id
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/area/by-user/<user-id> \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -278,14 +289,16 @@ Gets all the information from an area
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/area/<area-id> \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 ### Example
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/area/59ca32ea3209db0014e9a7b7 \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 ```json

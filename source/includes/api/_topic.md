@@ -16,7 +16,8 @@ A topic contains the information to display a web page belonging to a user.
 This endpoint will allow to get all topics belonging to a user:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/topic -H 'Authorization: Bearer exampleToken'
+curl -X GET https://api.resourcewatch.org/v1/topic -H 'Authorization: Bearer exampleToken' \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Response:
@@ -54,16 +55,17 @@ curl -X GET https://api.resourcewatch.org/v1/topic -H 'Authorization: Bearer exa
 
 Available filters parameters:
 
-Field     |                         Description                          |    Type
---------- | :----------------------------------------------------------: | ------:
-published |   Filter topics by publishing status (true, false)           | Boolean
-private   |   Filter topics by private status (true, false)              | Boolean
-user      |           Filter topics by author user id                    | Text
-application | The application to which the topic belongs. Read more about this field [here](concepts.html#applications). | Text (single value)
-env       | Environment to which the topic belongs. Multiple values can be combined using `,` as a separator. Does not support regexes. Read more about this field in the [Environments concept section](concepts.html#environments). | String 
+| Field       |                                                                                                        Description                                                                                                        |                Type |
+|-------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|--------------------:|
+| published   |                                                                                     Filter topics by publishing status (true, false)                                                                                      |             Boolean |
+| private     |                                                                                       Filter topics by private status (true, false)                                                                                       |             Boolean |
+| user        |                                                                                              Filter topics by author user id                                                                                              |                Text |
+| application |                                                        The application to which the topic belongs. Read more about this field [here](concepts.html#applications).                                                         | Text (single value) |
+| env         | Environment to which the topic belongs. Multiple values can be combined using `,` as a separator. Does not support regexes. Read more about this field in the [Environments concept section](concepts.html#environments). |              String |
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/topic?user=57bc2608f098ce98007985e4&private=false
+curl -X GET https://api.resourcewatch.org/v1/topic?user=57bc2608f098ce98007985e4&private=false \
+-H "x-api-key: <your-api-key>"
 ```
 
 <aside class="warning">
@@ -75,7 +77,8 @@ curl -X GET https://api.resourcewatch.org/v1/topic?user=57bc2608f098ce98007985e4
 
 ```shell
 # Deprecated syntax
-curl -X GET https://api.resourcewatch.org/v1/topic?filter[user]=57bc2608f098ce98007985e4&filter[private]=false
+curl -X GET https://api.resourcewatch.org/v1/topic?filter[user]=57bc2608f098ce98007985e4&filter[private]=false \
+-H "x-api-key: <your-api-key>"
 ```
 
 ### Sorting
@@ -95,7 +98,8 @@ If the data is not available (for example, the user has since been deleted), no 
 **Please keep in mind that, due to the limitations of the [underlying endpoint used to find users by ids](developer.html#finding-users-by-ids), the performance of the request while including user information might be degraded.**
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/topic?includes=user
+curl -X GET https://api.resourcewatch.org/v1/topic?includes=user \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -140,23 +144,24 @@ When creating a topic, the `application` field should be present and cannot cont
 
 Supported fields:
 
-Name          | Description                                                                  | Accepted values
-------------- | ---------------------------------------------------------------------------- | ----------------------------
-name          | Short name for the topic                                                     | any valid text
-slug          | Unique identifier for the topic                                              | any valid text
-summary       | Summary of the content of the topic                                          | any valid text
-description   | Description of the topic                                                     | any valid text
-content       | Content of the topic, typically encoded as a JSON string                     | any valid text
-published     | If the topic is in a publishable state                                       | boolean
-photo         | Object containing a set of image urls associated with the topic              | object
-user_id       | Id of the user who created the topic                                         | string with valid user id (not validated)
-private       |                                                                              | boolean
-application   | Application(s) to which the topic belongs. Defaults to `["rw"]`. Read more about this field [here](concepts.html#applications). | array of strings
-env           | Environment to which the topic belongs. Read more about this field in the [Environments concept section](concepts.html#environments). | string
+| Name        | Description                                                                                                                           | Accepted values                           |
+|-------------|---------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|
+| name        | Short name for the topic                                                                                                              | any valid text                            |
+| slug        | Unique identifier for the topic                                                                                                       | any valid text                            |
+| summary     | Summary of the content of the topic                                                                                                   | any valid text                            |
+| description | Description of the topic                                                                                                              | any valid text                            |
+| content     | Content of the topic, typically encoded as a JSON string                                                                              | any valid text                            |
+| published   | If the topic is in a publishable state                                                                                                | boolean                                   |
+| photo       | Object containing a set of image urls associated with the topic                                                                       | object                                    |
+| user_id     | Id of the user who created the topic                                                                                                  | string with valid user id (not validated) |
+| private     |                                                                                                                                       | boolean                                   |
+| application | Application(s) to which the topic belongs. Defaults to `["rw"]`. Read more about this field [here](concepts.html#applications).       | array of strings                          |
+| env         | Environment to which the topic belongs. Read more about this field in the [Environments concept section](concepts.html#environments). | string                                    |
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/topics \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
       "data": {
@@ -227,6 +232,7 @@ When updating the `application` field of a topic, a user cannot add values not a
 ```shell
 curl -X PATCH https://api.resourcewatch.org/v1/topics/<id of the topic> \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
       "data": {
@@ -270,7 +276,8 @@ Clones an existing topic using its ID.
 If the original topic contains functioning widgets, they will be duplicated and the new ids will be used by the new topic.
 
 ```shell
-curl -X POST https://api.resourcewatch.org/v1/topics/10/clone -H 'Authorization: Bearer exampleToken'
+curl -X POST https://api.resourcewatch.org/v1/topics/10/clone -H 'Authorization: Bearer exampleToken' \
+-H "x-api-key: <your-api-key>"
 ```
 
 ```json

@@ -40,6 +40,7 @@ of it, the behavior described for a type of resource will be the same for all 3 
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/AAA/widget/BBB/vocabulary/VVV \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "application": <application>,
@@ -117,6 +118,7 @@ vocabularies and their tags, and another to retrieve all tags for a given vocabu
 
 ```shell
 curl -L -X GET 'https://api.resourcewatch.org/dataset/<dataset-id>/vocabulary' \
+-H "x-api-key: <your-api-key>" \
 -H 'Content-Type: application/json'
 ```
 
@@ -124,6 +126,7 @@ curl -L -X GET 'https://api.resourcewatch.org/dataset/<dataset-id>/vocabulary' \
 
 ```shell
 curl -L -X GET 'https://api.resourcewatch.org/v1/dataset/<dataset-id>/layer/<layer_id>/vocabulary' \
+-H "x-api-key: <your-api-key>" \
 -H 'Content-Type: application/json'
 ```
 
@@ -131,6 +134,7 @@ curl -L -X GET 'https://api.resourcewatch.org/v1/dataset/<dataset-id>/layer/<lay
 
 ```shell
 curl -L -X GET 'https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget_id>/vocabulary' \
+-H "x-api-key: <your-api-key>" \
 -H 'Content-Type: application/json'
 ```
 
@@ -177,6 +181,7 @@ a different application.
 
 ```shell
 curl -L -X GET 'https://api.resourcewatch.org/dataset/<dataset-id>/vocabulary/<vocabulary-id>' \
+-H "x-api-key: <your-api-key>" \
 -H 'Content-Type: application/json'
 ```
 
@@ -184,6 +189,7 @@ curl -L -X GET 'https://api.resourcewatch.org/dataset/<dataset-id>/vocabulary/<v
 
 ```shell
 curl -L -X GET 'https://api.resourcewatch.org/v1/dataset/<dataset-id>/layer/<layer_id>/vocabulary/<vocabulary-id>' \
+-H "x-api-key: <your-api-key>" \
 -H 'Content-Type: application/json'
 ```
 
@@ -191,6 +197,7 @@ curl -L -X GET 'https://api.resourcewatch.org/v1/dataset/<dataset-id>/layer/<lay
 
 ```shell
 curl -L -X GET 'https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget_id>/vocabulary/<vocabulary-id>' \
+-H "x-api-key: <your-api-key>" \
 -H 'Content-Type: application/json'
 ```
 
@@ -225,6 +232,7 @@ parameters to load data for a different application.
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/vocabulary/find-by-ids \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "ids": [<ids>]
@@ -235,6 +243,7 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/vocabulary/find-by-ids \
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/vocabulary/find-by-ids \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "ids": [<ids>]
@@ -245,6 +254,7 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/vocabu
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/<dataset-id>/layer/vocabulary/find-by-ids \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "ids": [<ids>]
@@ -302,9 +312,9 @@ a query parameter to filter by a specific application.
 
 #### Errors for getting vocabularies and tags for multiple resources
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-404            | Bad request - Missing 'ids' from request body   | Your request body is missing the `ids` field
+| Error code | Error message                                 | Description                                  |
+|------------|-----------------------------------------------|----------------------------------------------|
+| 404        | Bad request - Missing 'ids' from request body | Your request body is missing the `ids` field |
 
 ## Creating vocabularies/tags for a resource
 
@@ -319,6 +329,7 @@ vocabularies/tags to them.
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/<dataset-id>/vocabulary/<vocabulary-id> \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "application": <application>,
@@ -330,6 +341,7 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/<dataset-id>/vocabulary/<v
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget-id>/vocabulary/<vocabulary-id> \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "application": <application>,
@@ -341,6 +353,7 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widge
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/<dataset-id>/layer/<layer-id>/vocabulary/<vocabulary-id> \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "application": <application>,
@@ -408,14 +421,14 @@ purged without prior warning.
 
 #### Errors for creating a single vocabulary/tags for a resource
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | This relationship already exists | The resource already has a vocabulary with the same name for the specified application
-400            | - tags: tags can not be empty. -  | `tags` body fields is empty
-400            | - tags: tags check failed. -  | Either the `tags` or `applications` body fields are missing or have an invalid value
-401            | Unauthorized   | You are not authenticated.
-403            | Forbidden      | You are trying to create a vocabulary for a resource whose `application` value is not associated with your user account.
-404            | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]}      | You are trying to create a vocabulary for a dataset that doesn't exist.
+| Error code | Error message                                                                                     | Description                                                                                                              |
+|------------|---------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| 400        | This relationship already exists                                                                  | The resource already has a vocabulary with the same name for the specified application                                   |
+| 400        | - tags: tags can not be empty. -                                                                  | `tags` body fields is empty                                                                                              |
+| 400        | - tags: tags check failed. -                                                                      | Either the `tags` or `applications` body fields are missing or have an invalid value                                     |
+| 401        | Unauthorized                                                                                      | You are not authenticated.                                                                                               |
+| 403        | Forbidden                                                                                         | You are trying to create a vocabulary for a resource whose `application` value is not associated with your user account. |
+| 404        | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]} | You are trying to create a vocabulary for a dataset that doesn't exist.                                                  |
 
 ### Creating multiple vocabularies/tags for a resource
 
@@ -423,6 +436,7 @@ Error code     | Error message  | Description
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/<dataset-id>/vocabulary \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "vocabulary1": {
@@ -440,6 +454,7 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/<dataset-id>/vocabulary \
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget-id>/vocabulary \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
     "vocabulary1": {
@@ -457,6 +472,7 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widge
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/<dataset-id>/layer/<layer-id>/vocabulary \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
     "vocabulary1": {
@@ -533,13 +549,13 @@ purged without prior warning.
 
 #### Errors for creating a single vocabulary/tags for a resource
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | This relationship already exists | The resource already has one or more vocabularies with the same name(s) for the specified application(s)
-400            | - `<value>`: `<value>` check failed. -  | The body object has a `<value>` key which content is invalid (is not an object or is missing `tags` and/or `application`).
-401            | Unauthorized   | You are not authenticated.
-403            | Forbidden      | You are trying to create a vocabulary for a resource whose `application` value is not associated with your user account.
-404            | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]}      | You are trying to create a vocabulary for a dataset that doesn't exist.
+| Error code | Error message                                                                                     | Description                                                                                                                |
+|------------|---------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| 400        | This relationship already exists                                                                  | The resource already has one or more vocabularies with the same name(s) for the specified application(s)                   |
+| 400        | - `<value>`: `<value>` check failed. -                                                            | The body object has a `<value>` key which content is invalid (is not an object or is missing `tags` and/or `application`). |
+| 401        | Unauthorized                                                                                      | You are not authenticated.                                                                                                 |
+| 403        | Forbidden                                                                                         | You are trying to create a vocabulary for a resource whose `application` value is not associated with your user account.   |
+| 404        | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]} | You are trying to create a vocabulary for a dataset that doesn't exist.                                                    |
 
 ## Updating vocabularies/tags
 
@@ -559,6 +575,7 @@ There are three types of endpoints for updating existing vocabulary/tags:
 
 ```shell
 curl -X PATCH https://api.resourcewatch.org/v1/dataset/<dataset-id>/vocabulary/<vocabulary-id> \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "application": <application>,
@@ -570,6 +587,7 @@ curl -X PATCH https://api.resourcewatch.org/v1/dataset/<dataset-id>/vocabulary/<
 
 ```shell
 curl -X PATCH https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget-id>/vocabulary/<vocabulary-id> \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "application": <application>,
@@ -581,6 +599,7 @@ curl -X PATCH https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widg
 
 ```shell
 curl -X PATCH https://api.resourcewatch.org/v1/dataset/<dataset-id>/layer/<layer-id>/vocabulary/<vocabulary-id> \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "application": <application>,
@@ -655,13 +674,13 @@ purged without prior warning.
 
 #### Errors for updating a single vocabulary/tags for a resource
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | - `<value>`: `<value>` check failed. -  | The body object has a `<value>` key which content is invalid (is not an object, or is missing `tags` and/or `application`).
-401            | Unauthorized   | You are not authenticated.
-403            | Forbidden      | You are trying to update a vocabulary for a resource whose `application` value is not associated with your user account.
-404            | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]}      | You are trying to create a vocabulary for a dataset that doesn't exist.
-404            | Relationship between undefined and dataset - `<dataset id>` and dataset: `<dataset id>` doesn't exist      | You are trying to update a vocabulary that doesn't exist. Check your vocabulary name and application
+| Error code | Error message                                                                                         | Description                                                                                                                 |
+|------------|-------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| 400        | - `<value>`: `<value>` check failed. -                                                                | The body object has a `<value>` key which content is invalid (is not an object, or is missing `tags` and/or `application`). |
+| 401        | Unauthorized                                                                                          | You are not authenticated.                                                                                                  |
+| 403        | Forbidden                                                                                             | You are trying to update a vocabulary for a resource whose `application` value is not associated with your user account.    |
+| 404        | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]}     | You are trying to create a vocabulary for a dataset that doesn't exist.                                                     |
+| 404        | Relationship between undefined and dataset - `<dataset id>` and dataset: `<dataset id>` doesn't exist | You are trying to update a vocabulary that doesn't exist. Check your vocabulary name and application                        |
 
 ### Updating multiple vocabularies/tags for a dataset
 
@@ -669,6 +688,7 @@ Error code     | Error message  | Description
 
 ```shell
 curl -X PUT https://api.resourcewatch.org/v1/dataset/<dataset-id>/vocabulary \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "vocabulary1": {
@@ -743,14 +763,14 @@ Specifically:
 
 #### Errors for updating multiple vocabularies/tags for a dataset
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | - tags: tags can not be empty. -  | `tags` body fields is empty
-400            | - tags: tags check failed. -  | Either the `tags` or `applications` body fields are missing or have an invalid value.
-401 | Unauthorized | You are not authenticated.
-403 | Forbidden | You are trying to update a vocabulary for a resource whose `application` value is not associated with your user account.
-404 | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]} | You are trying to create a vocabulary for a dataset that doesn't exist.
-404 | Relationship between undefined and dataset - `<dataset id>` and dataset: `<dataset id>` doesn't exist | You are trying to update a vocabulary that doesn't exist. Check your vocabulary name and application
+| Error code | Error message                                                                                         | Description                                                                                                              |
+|------------|-------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| 400        | - tags: tags can not be empty. -                                                                      | `tags` body fields is empty                                                                                              |
+| 400        | - tags: tags check failed. -                                                                          | Either the `tags` or `applications` body fields are missing or have an invalid value.                                    |
+| 401        | Unauthorized                                                                                          | You are not authenticated.                                                                                               |
+| 403        | Forbidden                                                                                             | You are trying to update a vocabulary for a resource whose `application` value is not associated with your user account. |
+| 404        | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]}     | You are trying to create a vocabulary for a dataset that doesn't exist.                                                  |
+| 404        | Relationship between undefined and dataset - `<dataset id>` and dataset: `<dataset id>` doesn't exist | You are trying to update a vocabulary that doesn't exist. Check your vocabulary name and application                     |
 
 ### Concatenating tags to a dataset vocabulary
 
@@ -758,6 +778,7 @@ Error code     | Error message  | Description
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/<dataset-id>/vocabulary/<vocabulary-id>/concat \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
     "tags":["tag1", "tag2"],
@@ -810,13 +831,13 @@ applications.
 
 #### Errors for concatenating tags to a dataset vocabulary
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | - tags: tags can not be empty. -  | `tags` body fields is empty
-400            | - tags: tags check failed. -  | Either the `tags` or `applications` body fields are missing or have an invalid value.
-401 | Unauthorized | You are not authenticated.
-403 | Forbidden | You are trying to concatenate a vocabulary for a dataset whose `application` value is not associated with your user account.
-404 | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]} | The dataset specified in the request URL doesn't exist.
+| Error code | Error message                                                                                     | Description                                                                                                                  |
+|------------|---------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| 400        | - tags: tags can not be empty. -                                                                  | `tags` body fields is empty                                                                                                  |
+| 400        | - tags: tags check failed. -                                                                      | Either the `tags` or `applications` body fields are missing or have an invalid value.                                        |
+| 401        | Unauthorized                                                                                      | You are not authenticated.                                                                                                   |
+| 403        | Forbidden                                                                                         | You are trying to concatenate a vocabulary for a dataset whose `application` value is not associated with your user account. |
+| 404        | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]} | The dataset specified in the request URL doesn't exist.                                                                      |
 
 ## Cloning vocabularies/tags for a dataset
 
@@ -824,6 +845,7 @@ Error code     | Error message  | Description
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/<dataset-id>/vocabulary/clone/dataset \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
     "newDataset": "<target-dataset-id>"
@@ -896,13 +918,13 @@ may be purged without prior warning.
 
 #### Errors for cloning vocabularies/tags for a dataset
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | This relationship already exists | The target dataset already has one or more vocabularies with the same name(s) and application(s) as the source dataset.
-400            | - newDataset: newDataset can not be empty. -   | The body object must have a `newDataset` key with the id of the target dataset.
-401            | Unauthorized   | You are not authenticated.
-403            | Forbidden      | You are trying to clone vocabulary for a source dataset whose `application` value is not associated with your user account.
-404            | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]}      | You are trying to clone a vocabularies for a source dataset that doesn't exist.
+| Error code | Error message                                                                                     | Description                                                                                                                 |
+|------------|---------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| 400        | This relationship already exists                                                                  | The target dataset already has one or more vocabularies with the same name(s) and application(s) as the source dataset.     |
+| 400        | - newDataset: newDataset can not be empty. -                                                      | The body object must have a `newDataset` key with the id of the target dataset.                                             |
+| 401        | Unauthorized                                                                                      | You are not authenticated.                                                                                                  |
+| 403        | Forbidden                                                                                         | You are trying to clone vocabulary for a source dataset whose `application` value is not associated with your user account. |
+| 404        | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]} | You are trying to clone a vocabularies for a source dataset that doesn't exist.                                             |
 
 ## Deleting vocabularies/tags for a resource
 
@@ -916,19 +938,22 @@ want to carry out on your data.
 > Deleting a single vocabulary/tag for a dataset
 
 ```shell
-curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id>/vocabulary/<vocabulary-id>
+curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id>/vocabulary/<vocabulary-id> \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Deleting a single vocabulary/tag for a widget
 
 ```shell
-curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget-id>/vocabulary/<vocabulary-id>
+curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget-id>/vocabulary/<vocabulary-id> \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Deleting a single vocabulary/tag for a layer
 
 ```shell
-curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id>/layer/<layer-id>/vocabulary/<vocabulary-id>
+curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id>/layer/<layer-id>/vocabulary/<vocabulary-id> \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response
@@ -985,31 +1010,34 @@ automatically - this is a known limitation of the current implementation and may
 
 #### Errors for deleting a single vocabulary/tags for a resource
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-401            | Unauthorized   | You are not authenticated.
-403            | Forbidden      | You are trying to delete a vocabulary for a resource whose `application` value is not associated with your user account.
-404            | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]}      | You are trying to create a vocabulary for a dataset that doesn't exist.
-404            | Relationship between `<vocabulary-id> and dataset - `<dataset id> and dataset: `<dataset id> doesn't exist      | You are trying to delete a vocabulary that doesn't exist.
+| Error code | Error message                                                                                              | Description                                                                                                              |
+|------------|------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| 401        | Unauthorized                                                                                               | You are not authenticated.                                                                                               |
+| 403        | Forbidden                                                                                                  | You are trying to delete a vocabulary for a resource whose `application` value is not associated with your user account. |
+| 404        | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]}          | You are trying to create a vocabulary for a dataset that doesn't exist.                                                  |
+| 404        | Relationship between `<vocabulary-id> and dataset - `<dataset id> and dataset: `<dataset id> doesn't exist | You are trying to delete a vocabulary that doesn't exist.                                                                |
 
 ### Deleting all vocabulary/tags for a resource
 
 > Deleting all vocabularies/tag for a dataset
 
 ```shell
-curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id>/vocabulary
+curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id>/vocabulary \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Deleting all vocabularies/tag for a widget
 
 ```shell
-curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget-id>/vocabulary
+curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/<widget-id>/vocabulary \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Deleting all vocabularies/tag for a layer
 
 ```shell
-curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id>/layer/<layer-id>/vocabulary
+curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id>/layer/<layer-id>/vocabulary \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response
@@ -1069,11 +1097,11 @@ automatically - this is a known limitation of the current implementation and may
 
 #### Errors for deleting all vocabularies/tags for a resource
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-401            | Unauthorized   | You are not authenticated.
-403            | Forbidden      | You are trying to delete vocabularies for a resource whose `application` value is not associated with your user account.
-404            | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]}      | You are trying to delete vocabularies for a dataset that doesn't exist.
+| Error code | Error message                                                                                     | Description                                                                                                              |
+|------------|---------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| 401        | Unauthorized                                                                                      | You are not authenticated.                                                                                               |
+| 403        | Forbidden                                                                                         | You are trying to delete vocabularies for a resource whose `application` value is not associated with your user account. |
+| 404        | 404 - {\"errors\":[{\"status\":404,\"detail\":\"Dataset with id `<dataset id>` doesn't exist\"}]} | You are trying to delete vocabularies for a dataset that doesn't exist.                                                  |
 
 ## Getting vocabularies and tags across resources
 
@@ -1085,7 +1113,8 @@ which they are associated
 > Getting all vocabularies, their resources and tags
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/vocabulary
+curl -X GET https://api.resourcewatch.org/v1/vocabulary \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response
@@ -1159,7 +1188,8 @@ You can filter by multiple `env` values (`OR` logic) using a comma separated lis
 > Getting a single vocabulary, all its resources and tags
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/vocabulary/<vocabulary-id>
+curl -X GET https://api.resourcewatch.org/v1/vocabulary/<vocabulary-id> \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response
@@ -1225,7 +1255,8 @@ You can filter by multiple `env` values (`OR` logic) using a comma separated lis
 > Getting the tags for a single vocabulary
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/vocabulary/<vocabulary-id>/tags
+curl -X GET https://api.resourcewatch.org/v1/vocabulary/<vocabulary-id>/tags \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response
@@ -1252,19 +1283,22 @@ or `app` query parameters.
 > Getting datasets by vocabulary and tag
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset/vocabulary/find?<vocabulary-id>=<tag>
+curl -X GET https://api.resourcewatch.org/v1/dataset/vocabulary/find?<vocabulary-id>=<tag> \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Getting widgets by vocabulary and tag
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/vocabulary/find?<vocabulary-id>=<tag>
+curl -X GET https://api.resourcewatch.org/v1/dataset/<dataset-id>/widget/vocabulary/find?<vocabulary-id>=<tag> \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Getting layers by vocabulary and tag
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset/<dataset-id>/layer/vocabulary/find?<vocabulary-id>=<tag>
+curl -X GET https://api.resourcewatch.org/v1/dataset/<dataset-id>/layer/vocabulary/find?<vocabulary-id>=<tag> \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response
@@ -1318,6 +1352,6 @@ query parameter with the value of the application you wish to filter by.
 
 #### Errors for getting resources by vocabulary and tag
 
-Error code     | Error message  | Description
--------------- | -------------- | --------------
-400            | Vocabulary and Tags are required in the queryParams   | You must specify at least one vocabulary/tag to filter by.
+| Error code | Error message                                       | Description                                                |
+|------------|-----------------------------------------------------|------------------------------------------------------------|
+| 400        | Vocabulary and Tags are required in the queryParams | You must specify at least one vocabulary/tag to filter by. |

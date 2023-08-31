@@ -28,7 +28,8 @@ For a detailed description of each field, check out the [Dataset reference](refe
 > Getting a list of datasets
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset
+curl -X GET https://api.resourcewatch.org/v1/dataset \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Response:
@@ -93,7 +94,8 @@ curl -X GET https://api.resourcewatch.org/v1/dataset
 > Example request to load page 2 using 25 results per page
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?page[number]=2&page[size]=25
+curl -X GET https://api.resourcewatch.org/v1/dataset?page[number]=2&page[size]=25 \
+-H "x-api-key: <your-api-key>"
 ```
 
 The Dataset service adheres to the conventions defined in
@@ -105,7 +107,8 @@ details on how paginate your datasets list.
 > Search for datasets
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?search=wind
+curl -X GET https://api.resourcewatch.org/v1/dataset?search=wind \
+-H "x-api-key: <your-api-key>"
 ```
 
 The dataset service offers a simple yet powerful search mechanism that will help you look for datasets. The query
@@ -121,13 +124,15 @@ argument `search` allows you to specify a search string that will match:
 > Filtering datasets
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?name=birds&provider=cartodb
+curl -X GET https://api.resourcewatch.org/v1/dataset?name=birds&provider=cartodb \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Matching vocabulary tags
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?vocabulary[legacy]=umd
+curl -X GET https://api.resourcewatch.org/v1/dataset?vocabulary[legacy]=umd \
+-H "x-api-key: <your-api-key>"
 ```
 
 The dataset list provides a wide range of parameters that you can use to tailor your dataset listing. Most of these
@@ -202,25 +207,29 @@ following fields as filters supported by the dataset list endpoint:
 > Sorting datasets
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?sort=name
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=name \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Sorting datasets by multiple criteria
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?sort=name,description
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=name,description \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Sort by name descending, description ascending
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?sort=-name,+description
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=-name,+description \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Sorting datasets by the role of the user who owns the dataset
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?sort=user.role
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=user.role \
+-H "x-api-key: <your-api-key>"
 ```
 
 The Dataset service currently supports sorting using the `sort` query parameter. Sorting dataset adheres to the
@@ -240,11 +249,13 @@ request while using this sort might be degraded.**
 > Sorting datasets with special criteria
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?sort=-most-favorited
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=-most-favorited \
+-H "x-api-key: <your-api-key>"
 ```
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?sort=relevance&status=saved&search=agriculture
+curl -X GET https://api.resourcewatch.org/v1/dataset?sort=relevance&status=saved&search=agriculture \
+-H "x-api-key: <your-api-key>"
 ```
 
 Special search criteria must be used as sole sorting criteria, as it's not possible to combine any of them with any
@@ -265,7 +276,8 @@ order. By default, ascending order is assumed.
 > Loads metadata and widgets associated with each dataset:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?includes=metadata,widget
+curl -X GET https://api.resourcewatch.org/v1/dataset?includes=metadata,widget \
+-H "x-api-key: <your-api-key>"
 ```
 
 ```json
@@ -317,13 +329,15 @@ curl -X GET https://api.resourcewatch.org/v1/dataset?includes=metadata,widget
 > Loading layers for the given dataset
 
 ```shell
-curl -X GET https://api.resourcewatch.org/dataset?includes=layer
+curl -X GET https://api.resourcewatch.org/dataset?includes=layer \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Loading the information about the user who authored the dataset
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset?includes=user
+curl -X GET https://api.resourcewatch.org/v1/dataset?includes=user \
+-H "x-api-key: <your-api-key>"
 ```
 
 When fetching datasets, you can request additional entities to be loaded. The following entities are available:
@@ -349,13 +363,15 @@ entities.
 > Getting a dataset by id:
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/dataset/51943691-eebc-4cb4-bdfb-057ad4fc2145"
+curl -X GET "https://api.resourcewatch.org/v1/dataset/51943691-eebc-4cb4-bdfb-057ad4fc2145" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Getting a dataset by slug:
 
 ```shell
-curl -X GET "https://api.resourcewatch.org/v1/dataset/Timber-Production-RDC"
+curl -X GET "https://api.resourcewatch.org/v1/dataset/Timber-Production-RDC" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Response (equal for both cases):
@@ -406,7 +422,8 @@ the same way you do when loading multiple datasets.
 > Getting a dataset by its including its relationships:
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/dataset/06c44f9a-aae7-401e-874c-de13b7764959?includes=metadata,vocabulary,widget,layer
+curl -X GET https://api.resourcewatch.org/v1/dataset/06c44f9a-aae7-401e-874c-de13b7764959?includes=metadata,vocabulary,widget,layer \
+-H "x-api-key: <your-api-key>"
 ```
 
 ## Getting multiple datasets by ids
@@ -423,7 +440,8 @@ This endpoint allows you to load multiple datasets by id in a single request.
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/find-by-ids \
--H "Content-Type: application/json"  -d \
+-H "Content-Type: application/json"  \
+-H "x-api-key: <your-api-key>" -d \
 '{
     "ids": [
         "0706f039-b929-453e-b154-7392123ae99e",
@@ -525,6 +543,7 @@ updated.
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
   "dataset": {
@@ -572,6 +591,7 @@ corresponding Carto table - the result of this will determine if the dataset's s
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
   "dataset": {
@@ -589,11 +609,11 @@ curl -X POST https://api.resourcewatch.org/v1/dataset \
 
 To create a dataset connected to a GFW data source, besides the common required fields, you must provide the following required data:
 
-Field           | Description                                                                            | Example value   |
---------------- | :------------------------------------------------------------------------------------: | --------------: |
-`connectorType` | The type of connector. Must be set to `rest`.                                          | `rest`          |
-`provider`      | The provider should be set to `gfw`.                                               | `gfw`       |
-`connectorUrl`  | The URL for the GFW table or file that this dataset will be using.                         | `https://data-api.globalforestwatch.org/dataset/wur_radd_alerts/latest` |
+| Field           |                            Description                             |                                                           Example value |
+|-----------------|:------------------------------------------------------------------:|------------------------------------------------------------------------:|
+| `connectorType` |           The type of connector. Must be set to `rest`.            |                                                                  `rest` |
+| `provider`      |                The provider should be set to `gfw`.                |                                                                   `gfw` |
+| `connectorUrl`  | The URL for the GFW table or file that this dataset will be using. | `https://data-api.globalforestwatch.org/dataset/wur_radd_alerts/latest` |
 
 The RW API will use the information above to directly query the GFW dataset specified on the `connectorUrl` field whenever this dataset is accessed on the RW API. This has a few implications that you should be aware of:
 
@@ -618,6 +638,7 @@ When creating a GFW-based dataset, the RW API will try to validate the `connecto
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
   "dataset": {
@@ -666,6 +687,7 @@ or `error`.
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
   "dataset": {
@@ -708,6 +730,7 @@ the result of this will determine if the dataset's status will be set to `saved`
 ```shell
 curl -X POST 'https://api.resourcewatch.org/v1/dataset' -d \
 -H 'Authorization: Bearer <your-token>'  \
+-H "x-api-key: <your-api-key>" \
 -H 'Content-Type: application/json' -d \
 '{
    "dataset": {
@@ -749,6 +772,7 @@ When creating a WMS-based dataset, no validation is done - the dataset is automa
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
   "dataset": {
@@ -772,6 +796,7 @@ curl -X POST https://api.resourcewatch.org/v1/dataset \
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
   "dataset": {
@@ -899,6 +924,7 @@ the [Elasticsearch documentation](https://www.elastic.co/guide/en/elasticsearch/
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/upload \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -F provider=csv,
 -F dataset=@<your-file>
 ```
@@ -925,6 +951,7 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/upload \
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"
 '{
   "dataset": {
@@ -974,6 +1001,7 @@ before proceeding, so you can find the endpoint that best matches your needs.
 ```shell
 curl -X PATCH https://api.resourcewatch.org/v1/dataset/<dataset-id-or-slug> \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json" -d \
 '{
     "name": "Another name for the dataset"
@@ -1036,6 +1064,7 @@ Use this endpoint when:
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/:dataset_id/concat \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
     "provider": "json",
@@ -1049,6 +1078,7 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/:dataset_id/concat \
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/:dataset_id/append \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
     "provider": "json",
@@ -1062,6 +1092,7 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/:dataset_id/append \
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/:dataset_id/concat \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
     "provider": "json",
@@ -1137,6 +1168,7 @@ Use this endpoint when:
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/:dataset_id/data-overwrite \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
    "sources": ["<url of the data source>"],
@@ -1149,6 +1181,7 @@ curl -X POST https://api.resourcewatch.org/v1/dataset/:dataset_id/data-overwrite
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/:dataset_id/data-overwrite \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
 '{
    "data": [{},{}],
@@ -1213,7 +1246,8 @@ Use this endpoint when:
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/5306fd54-df71-4e20-8b34-2ff464ab28be/clone \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 -H "Content-Type: application/json" -d \
 '{
   "dataset": {
@@ -1292,7 +1326,8 @@ vocabulary-related data and metadata from the original dataset to the new one.
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/dataset/<dataset-id> \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 -H "Content-Type: application/json"
 ```
 
@@ -1333,7 +1368,8 @@ In order to delete a dataset, the following conditions must be met:
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/dataset/by-user/<user-id> \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 -H "Content-Type: application/json"
 ```
 
@@ -1456,6 +1492,7 @@ and thus were not deleted.
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"
 '{
     "connectorType":"document",
@@ -1523,7 +1560,8 @@ field.
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/dataset/0c630feb-8146-4fcc-a9be-be5adcb731c8/flush \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Response:
@@ -1556,7 +1594,8 @@ In order to flush a dataset's cache, the following conditions must be met:
 
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/0c630feb-8146-4fcc-a9be-be5adcb731c8/recover \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Response:

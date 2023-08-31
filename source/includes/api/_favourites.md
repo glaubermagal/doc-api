@@ -30,6 +30,7 @@ To create a favorite, you need to define all next fields in the request body. Th
 ```shell
 curl -X POST https://api.resourcewatch.org/v1/favourite \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json"  -d \
  '{
    "resourceType":"<resourceType>",
@@ -46,14 +47,16 @@ This endpoint returns the favorites of the logged user.
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/favourite \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 You can also retrieve all data about the resources by including the query parameter "include=true" in the request.
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/favourite?include=true \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 ## Get favorite by id
@@ -65,7 +68,8 @@ This endpoint returns the favorite with id of the param. If the favorite belongs
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/favourite/:id \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 ## Delete favorite
@@ -77,7 +81,8 @@ This endpoint deletes the favorite with id of the param. If the favorite belongs
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/favourite/:id \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 ## Delete a favourite by user id
@@ -86,7 +91,8 @@ curl -X DELETE https://api.resourcewatch.org/v1/favourite/:id \
 
 ```shell
 curl -X DELETE https://api.resourcewatch.org/v1/favourite/by-user/:userId \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 

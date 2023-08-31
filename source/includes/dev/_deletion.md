@@ -26,7 +26,8 @@ if you try to access them without having the necessary permissions.
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/deletion \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -83,7 +84,8 @@ This endpoint allows you to list all existing deletion records.
 > Example request to load page 2 using 25 results per page
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/deletion?page[number]=2&page[size]=25
+curl -X GET https://api.resourcewatch.org/v1/deletion?page[number]=2&page[size]=25 \
+-H "x-api-key: <your-api-key>"
 ```
 
 This endpoint adheres to the conventions defined in
@@ -96,7 +98,8 @@ details on how paginate your deletion list.
 > Filtering deletions
 
 ```shell
-curl -X GET https://api.resourcewatch.org/v1/deletion?status=done
+curl -X GET https://api.resourcewatch.org/v1/deletion?status=done \
+-H "x-api-key: <your-api-key>"
 ```
 
 The deletion list provides filtering based on these 3 fields:
@@ -120,7 +123,8 @@ The deletion list provides filtering based on these 3 fields:
 
 ```shell
 curl -X GET https://api.resourcewatch.org/v1/deletion/<deletion-id> \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Example response:
@@ -171,7 +175,8 @@ This endpoints allows you to retrieve the details of a single deletion record fr
 
 ```shell
 curl -X POST "https://api.resourcewatch.org/v1/deletion" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Response:
@@ -212,6 +217,7 @@ curl -X POST "https://api.resourcewatch.org/v1/deletion" \
 curl -X POST "https://api.resourcewatch.org/v1/deletion" \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -d  \
 '{
     "userId": "bd8a36df-2e52-4b2d-b7be-a48bdcd7c769",
@@ -243,6 +249,7 @@ default.
 ```shell
 curl -X PATCH "https://api.resourcewatch.org/v1/deletion/<deletion-id>" \
 -H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>" \
 -H "Content-Type: application/json" -d \
 '{
   "status":"done"
@@ -299,7 +306,8 @@ field to either `done` or `pending`.
 
 ```shell
 curl -X DELETE "https://api.resourcewatch.org/v1/deletion/<deletion-id>" \
--H "Authorization: Bearer <your-token>"
+-H "Authorization: Bearer <your-token>" \
+-H "x-api-key: <your-api-key>"
 ```
 
 > Response:
