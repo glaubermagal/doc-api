@@ -1,5 +1,7 @@
 # Authentication
 
+## JWT tokens
+
 Most RW API endpoints are public, but some actions require user authentication. Each endpoint's documentation will
 specify whether authentication is required and under what conditions.
 

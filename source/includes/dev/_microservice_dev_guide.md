@@ -111,18 +111,18 @@ For Python, you can use something like <a href="https://github.com/pyenv/pyenv">
 </aside>
 
 ```shell
-# Install Node.js v12 for the dataset microservice
-nvm install 12
+# Install Node.js v20.4 for the dataset microservice
+nvm install 20.4
 
-# Switch to the v12 installation
-nvm use 12
+# Switch to the v0.4 installation
+nvm use 20.4
 ```
 
 Once you've installed a version manager like `nvm`, you need to check which version of the language to install. For
 Node.js microservices, the `package.json` file typically has a `engine` value which will tell you which version(s) of
 Node.js are supported. Another place where you'll find this info (which also works for other languages) is the content
-of the `Dockerfile` (typically in the first line) - in the dataset microservice, for example, `FROM node:12-alpine`
-means this microservice runs on Node.js v12.
+of the `Dockerfile` (typically in the first line) - in the dataset microservice, for
+example, `FROM node:20.4-alpine3.18` means this microservice runs on Node.js v20.4.
 
 ```shell
 # To install dependencies, navigate to the directory where you cloned the microservice and run:
@@ -143,7 +143,7 @@ applications
 like [Postgres](https://www.postgresql.org/), [Redis](https://redis.io/), [RabbitMQ](https://www.rabbitmq.com/)
 or [Open Distro for Elasticsearch](https://opendistro.github.io/for-elasticsearch/) also being required on certain
 microservices. If a version number is not identified on the `README.md` file, the `docker-compose-test.yml` file may
-help. `image: mongo:3.4` means this microservice depends on MongoDB v3.4.
+help. `image: mongo:3.6` means this microservice depends on MongoDB v3.6.
 
 Besides these dependencies, microservices may also depend on other microservices, for complex functionality or user
 management. We'll dive deeper into that on the [Local gateway](#local-gateway) section. If your endpoint does not rely
@@ -386,7 +386,8 @@ It's important to note a few details about this:
 
 - This configuration will try to reach all microservices on the same host (provided by you as a Terraform variable).
 - Each microservice is expected to be running on a specific port. You will find a folder per
-  microservice [in this folder](https://github.com/resource-watch/api-infrastructure/tree/21aec8ae26cedf8423e353c27112d5d021974065/terraform-k8s-infrastructure/modules/k8s_microservice_routing). Each folder will contain a `main.tf` file, and in the first few lines of it, you will 
+  microservice [in this folder](https://github.com/resource-watch/api-infrastructure/tree/21aec8ae26cedf8423e353c27112d5d021974065/terraform-k8s-infrastructure/modules/k8s_microservice_routing).
+  Each folder will contain a `main.tf` file, and in the first few lines of it, you will
   find the port in which you must expose that microservice. All ports are in the 30500+ range.
 - You only need to start the microservices that you plan on using - no need to start all of them.
 
@@ -821,15 +822,15 @@ convenience
 feature that [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself) certain aspects, such as:
 
 - Requests to other RW API microservices.
-- [JWT token](https://jwt.io/) parsing and user handling.
+- [JWT tokens](reference.html#jwt-tokens) and [API key](reference.html#api-keys) parsing and handling.
 - [Fastly](https://www.fastly.com) integration.
 
 These 3 aspects can be handled by RW API integration libraries, that can be used as-is as part of the microservice
 development
-lifecycle. Currently, there are libraries for 3 development environments:
+lifecycle. Currently, there are libraries for 3 development environments that support the latest RW API features:
 
-- [nodejs package for Koa](https://github.com/resource-watch/rw-api-microservice-node)
-- [Python module for Flask](https://github.com/resource-watch/rw-api-microservice-python)
+- [nodejs package for Koa](https://github.com/resource-watch/rw-api-microservice-node) v5.1.3 and later
+- [Python module for Flask](https://github.com/resource-watch/rw-api-microservice-python) v3.0.0 and later
 - [Rails engine](https://github.com/resource-watch/rw-api-microservice-rails)
 
 Due to the way in which the different development environments are structured, not all 3 libraries implement the 3
@@ -854,14 +855,17 @@ two key pieces of information to achieve said communication:
 Your code can then call a known RW API endpoint using the following approach:
 
 ```javascript
-// loading the details of a user by its id
+// Loading the details of a user by its id
+// The API Key should be retrieved from the client application's request headers
 const { RWAPIMicroservice } = require('rw-api-microservice-node');
 
-const getUserById = async (userId) => {
+const getUserById = async (userId, apiKey) => {
   const body = await RWAPIMicroservice.requestToMicroservice({
     uri: `/auth/user/${userId}`,
     method: 'GET',
-    json: true
+    headers: {
+      'x-api-key': apiKey,
+    }
   });
   logger.debug('User by id', body.data);
   return body.data;
@@ -896,6 +900,18 @@ const getUser = (ctx) => {
   return user;
 }
 ```
+
+### API key handling
+
+The RW API uses API keys to identify client applications, and to provide them with access to the API. These API keys are
+required on most endpoints, and are provided by client applications as part of the request headers. The integration
+library will automatically intercept these headers and, if present, validate them. It will also use that data to
+generate analytical records of the incoming request, and the user and application associated with them. This is done
+automatically and transparently to you as a developer, so you don't have to worry about it, but it may be useful to
+learn about it, as it may help you debug issues.
+
+You can optionally disable API key validation or analytics collection - see the integration library documentation for
+more details.
 
 ### Fastly integration
 
