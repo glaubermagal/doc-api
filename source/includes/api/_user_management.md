@@ -11,7 +11,7 @@ computers. However, some of the functionality we'll cover in this section is mea
 making JSON a less than ideal response format.
 
 Some (but not all) of the endpoints documented here will produce a response in either JSON or HTML format, depending on
-the value you provide on the `Content-type` HTTP request header.
+the value you provide on the `Content-Type` HTTP request header.
 Use `Content-Type: application/json` if you are calling the endpoint from an application, and would like to get a JSON
 formatted response.
 If you are accessing these endpoints from a browser, it will typically generate a request with
@@ -76,7 +76,7 @@ projects.
 
 ## Login (email + password)
 
-Login endpoints support both HTML and JSON output formats, depending on the `Content-type` provided in the request. Keep
+Login endpoints support both HTML and JSON output formats, depending on the `Content-Type` provided in the request. Keep
 in mind that HTML-based requests will result in redirects - for example, after successfully logging in, you will be
 taken to `/auth/success` - while JSON based requests will simply return the matching HTTP code - 200 in case of a
 successful login.
@@ -174,7 +174,7 @@ curl -X GET "https://api.resourcewatch.org/auth/check-logged" \
 }
 ```
 
-Checks if you are logged in. This is typically used to determine if a session has been established between the the
+Checks if you are logged in. This is typically used to determine if a session has been established between the
 user's browser and the RW API.
 
 #### Errors for checking if the user is logged
@@ -274,7 +274,7 @@ All forms of 3rd party login return to the same endpoint:
 
 ## Registration
 
-Registration endpoints support both HTML and JSON output formats, depending on the `Content-type` provided in the
+Registration endpoints support both HTML and JSON output formats, depending on the `Content-Type` provided in the
 request.
 
 ### View the registration page
@@ -326,8 +326,8 @@ curl -X POST "https://api.resourcewatch.org/auth/sign-up" \
 curl -X POST "https://api.resourcewatch.org/auth/sign-up?origin=rw" \
 -H "Content-Type: application/json"  -d \
  '{
-    "name: "Your name"
-    "email":"your-email@provider.com",
+    "name": "Your name",
+    "email": "your-email@provider.com",
     "apps": ["rw"]
 }'
 ```
@@ -340,7 +340,7 @@ success.
 
 For JSON requests, successful logins will return a JSON object containing the details of the user.
 
-Keep in mind that this endpoint creates a **deactivated** user account. A successful call to this endpoint send an email
+Keep in mind that this endpoint creates a **deactivated** user account. A successful call to this endpoint sends an email
 to the user, with a link that the user must click in order to confirm their account and define their password. Once
 confirmed using this process, the user account becomes activated and fully functional, and the user will be able to log
 in.
@@ -361,7 +361,7 @@ account. If not provided, it will default to the value of the `HTTP Referrer` he
 
 ## Password recovery
 
-Password recovery endpoints support both HTML and JSON output formats, depending on the `Content-type` provided in the
+Password recovery endpoints support both HTML and JSON output formats, depending on the `Content-Type` provided in the
 request. These can be used either as part of your application (for example, if you want your UI to have these features
 built in) or as a standalone, end user facing interface (for applications that prefer to rely on the existing UI
 elements provided by the RW API).
