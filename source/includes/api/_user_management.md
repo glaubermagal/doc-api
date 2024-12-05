@@ -769,7 +769,7 @@ users with role `ADMIN`.
 ### Create a user account
 
 ```shell
-curl -X POST "https://api.resourcewatch.org/auth/user"
+curl -X POST "https://api.resourcewatch.org/auth/user" \
 -H "Content-Type: application/json"  -d \
 -H "Authorization: Bearer <your-token>" \
  '{
