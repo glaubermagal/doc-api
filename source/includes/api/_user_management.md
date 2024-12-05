@@ -777,7 +777,7 @@ curl -X POST "https://api.resourcewatch.org/auth/user" \
     "email":"test@example.com",
     "photo": "https://photo-url.com",
     "extraUserData" : {
-        apps: ["rw", "gfw"]
+      "apps": ["rw", "gfw"]
     },
     "role": "MANAGER"
 }'
@@ -842,14 +842,14 @@ provided `applications` and other users/organizations.
 > Updates current user details
 
 ```shell
-curl -X PATCH "https://api.resourcewatch.org/auth/user/me"
+curl -X PATCH "https://api.resourcewatch.org/auth/user/me" \
 -H "Content-Type: application/json"  -d \
 -H "Authorization: Bearer <your-token>" \
  '{
     "name":"new-name",
     "photo": "https://photo-url.com",
     "extraUserData" : {
-        apps: ["rw", "gfw"]
+      "apps": ["rw", "gfw"]
     },
     "role": "MANAGER"
 }'
@@ -915,14 +915,14 @@ Updating your account details may invalidate your token and cause your apps to s
 > Updates details of user given its id
 
 ```shell
-curl -X PATCH "https://api.resourcewatch.org/auth/user/57bc2611f098ce9800798688"
+curl -X PATCH "https://api.resourcewatch.org/auth/user/57bc2611f098ce9800798688" \
 -H "Content-Type: application/json"  -d \
 -H "Authorization: Bearer <your-token>" \
  '{
     "name":"new-name",
     "photo": "https://photo-url.com",
     "extraUserData" : {
-        apps: ["rw", "gfw"]
+      "apps": ["rw", "gfw"]
     },
     "role": "MANAGER"
 }'
