@@ -96,7 +96,6 @@ curl -X POST "https://api.resourcewatch.org/v1/application" \
 curl -X GET "https://api.resourcewatch.org/auth/user/me"
 -H "Content-Type: application/json"  -d \
 -H "Authorization: Bearer <your-token>" \
--H "x-api-key: <your-api-key>" \
 -H "x-api-key: <your-api-key>"
 ```
 
